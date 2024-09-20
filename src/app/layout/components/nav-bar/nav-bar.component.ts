@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,13 +10,38 @@ import { RouterLink } from '@angular/router';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
+  @Input() isLoggedUser: boolean = false;
+  @Output() logout: EventEmitter<boolean> = new EventEmitter();
+  router = inject(Router);
   isMenuOpen = false;
 
+  /**
+   * Alterna el estado del menú de navegación entre abierto y cerrado.
+   * Cambia el valor de isMenuOpen.
+   */
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  /**
+   * Cierra el menú de navegación.
+   * Establece isMenuOpen en false.
+   */
   closeMenu() {
     this.isMenuOpen = false;
+  }
+
+  /**
+   * Gestiona la acción del usuario en función de su estado de logueo.
+   * Si el usuario no está logueado, lo redirige a la página de inicio de sesión.
+   * Si el usuario está logueado, emite un evento de cierre de sesión y lo redirige a la página de inicio.
+   */
+  manageUser(): void {
+    if (!this.isLoggedUser) {
+      this.router.navigateByUrl('/auth/login'); // Redirige a la página de inicio de sesión.
+    } else {
+      this.logout.emit(true); // Emite el evento de cierre de sesión.
+      this.router.navigateByUrl('/home'); // Redirige a la página de inicio.
+    }
   }
 }

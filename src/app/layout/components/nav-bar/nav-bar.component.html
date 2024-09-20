@@ -18,49 +18,50 @@
 
   <nav class="d-none d-md-flex align-items-center gap-4" id="navbarMenu">
     <a
-      class="text-white text-decoration-none text-center brand-text-headline-xs"
+      class="text-white text-decoration-none text-center brand-text-headline-xxs"
       routerLink="/"
       role="button"
-      >Home</a
+      >Inicio</a
     >
     <a
-      class="text-white text-decoration-none text-center brand-text-headline-xs"
+      class="text-white text-decoration-none text-center brand-text-headline-xxs"
       routerLink="/about"
       role="button"
-      >About</a
+      >Sobre Nosotros</a
     >
     <a
-      class="text-white text-decoration-none text-center brand-text-headline-xs"
-      routerLink="/auth/login"
+      class="text-white text-decoration-none text-center brand-text-headline-xxs"
       role="button"
-      >Sign in</a
+      (click)="manageUser()"
+      >{{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}</a
     >
   </nav>
 
-  <nav
-    class="d-md-none mobile-menu brand-text-headline-m brand-nav-bar-menu"
-    [ngClass]="{ 'd-block': isMenuOpen, 'd-none': !isMenuOpen }"
-  >
-    <a
-      class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
-      routerLink="/"
-      role="button"
-      (click)="closeMenu()"
-      >Home</a
+  @if (isMenuOpen) {
+    <nav
+      class="d-md-none mobile-menu brand-text-headline-m brand-nav-bar-menu"
+      [ngClass]="{ 'd-block': isMenuOpen, 'd-none': !isMenuOpen }"
     >
-    <a
-      class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
-      routerLink="/about"
-      role="button"
-      (click)="closeMenu()"
-      >About</a
-    >
-    <a
-      class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
-      routerLink="/auth/login"
-      role="button"
-      (click)="closeMenu()"
-      >Sign in</a
-    >
-  </nav>
+      <a
+        class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
+        routerLink="/"
+        role="button"
+        (click)="closeMenu()"
+        >Inicio</a
+      >
+      <a
+        class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
+        routerLink="/about"
+        role="button"
+        (click)="closeMenu()"
+        >Sobre Nosotros</a
+      >
+      <a
+        class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
+        role="button"
+        (click)="manageUser(); closeMenu()"
+        >{{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}</a
+      >
+    </nav>
+  }
 </header>

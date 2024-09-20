@@ -1,6 +1,6 @@
-<app-nav-bar />
+<app-nav-bar [isLoggedUser]="isLoggedIn()" (logout)="logout()" />
 <div class="d-flex flex-column">
-  <main class="container brand-router-outlet-container">
+  <main class="brand-router-outlet-container">
     <router-outlet></router-outlet>
   </main>
   <app-footer></app-footer>
