@@ -1,0 +1,66 @@
+<header
+  class="d-flex justify-content-between align-items-center text-white px-4 brand-nav-bar"
+>
+  <a
+    class="text-decoration-none text-white fw-bold brand-cursor-pointer brand-text-headline-m"
+    routerLink="/"
+  >
+    ProjectZen
+  </a>
+
+  <button
+    class="navbar-toggler d-block d-md-none border-0 bg-transparent"
+    type="button"
+    (click)="toggleMenu()"
+  >
+    <span class="navbar-toggler-icon text-white">&#9776;</span>
+  </button>
+
+  <nav class="d-none d-md-flex align-items-center gap-4" id="navbarMenu">
+    <a
+      class="text-white text-decoration-none text-center brand-text-headline-xs"
+      routerLink="/"
+      role="button"
+      >Home</a
+    >
+    <a
+      class="text-white text-decoration-none text-center brand-text-headline-xs"
+      routerLink="/about"
+      role="button"
+      >About</a
+    >
+    <a
+      class="text-white text-decoration-none text-center brand-text-headline-xs"
+      routerLink="/auth/login"
+      role="button"
+      >Sign in</a
+    >
+  </nav>
+
+  <nav
+    class="d-md-none mobile-menu brand-text-headline-m brand-nav-bar-menu"
+    [ngClass]="{ 'd-block': isMenuOpen, 'd-none': !isMenuOpen }"
+  >
+    <a
+      class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
+      routerLink="/"
+      role="button"
+      (click)="closeMenu()"
+      >Home</a
+    >
+    <a
+      class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
+      routerLink="/about"
+      role="button"
+      (click)="closeMenu()"
+      >About</a
+    >
+    <a
+      class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
+      routerLink="/auth/login"
+      role="button"
+      (click)="closeMenu()"
+      >Sign in</a
+    >
+  </nav>
+</header>

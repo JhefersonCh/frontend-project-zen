@@ -1,0 +1,96 @@
+:root {
+  /* Colores base */
+  --white-color-base: #ffffff;
+  --black-color-base: #000000;
+
+  /* Paleta de colores base */
+  --deep-purple-50: #ede7f6;
+  --deep-purple-100: #d1c4e9;
+  --deep-purple-200: #b39ddb;
+  --deep-purple-300: #9575cd;
+  --deep-purple-400: #7e57c2;
+  --deep-purple-500: #673ab7;
+  --deep-purple-600: #5e35b1;
+  --deep-purple-700: #512da8;
+  --deep-purple-800: #4527a0;
+  --deep-purple-900: #311b92;
+  --deep-purple-A100: #b388ff;
+  --deep-purple-A200: #7c4dff;
+  --deep-purple-A400: #651fff;
+  --deep-purple-A700: #6200ea;
+  --deep-purple-dark: #21004e;
+
+  /* Colores semánticos principales */
+  --primary-color: var(--deep-purple-500);
+  --secondary-color: var(--deep-purple-A200);
+  --accent-color: var(--deep-purple-A400);
+  --background-color: var(--deep-purple-50);
+  --surface-color: #ffffff;
+  --error-color: #b00020;
+  --gray-color: #797979;
+
+  /* Colores de texto */
+  --text-primary: rgba(0, 0, 0, 0.87);
+  --text-secondary: rgba(0, 0, 0, 0.6);
+  --text-disabled: rgba(0, 0, 0, 0.38);
+  --text-on-primary: #ffffff;
+  --text-on-secondary: #ffffff;
+
+  /* Variaciones de los colores principales */
+  --primary-light: var(--deep-purple-300);
+  --primary-dark: var(--deep-purple-700);
+
+  /* Colores funcionales adicionales */
+  --success-color: #4caf50;
+  --warning-color: #ebe70e;
+  --info-color: #2196f3;
+
+  /* Tipografía */
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 18px;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  /* Espaciado */
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 24px;
+
+  /* Bordes */
+  --border-radius: 4px;
+  --border-width: 1px;
+  --border-color: var(--deep-purple-200);
+  --global-border: 1px solid var(--border-color);
+
+  /* Transiciones */
+  --transition-fast: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Sombras */
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* Medidas globales */
+  --brand-height-router-outlet-container: calc(
+    100vh -
+      (var(--heigth-nav-bar) + var(--heigth-footer) + var(--margin-top-footer))
+  );
+  --brand-default-animations-duration: 0.3s;
+
+  /*Para tamaños de pantalla*/
+  --max-width-layout: 1440px;
+  --max-width-tablet: 899.98px;
+  --max-width-phone: 575.98px;
+  --min-width-desktop: 576px;
+
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  /* Layout */
+  --heigth-nav-bar: 70px;
+  --heigth-footer: 56px;
+  --margin-top-footer: 24px;
+  --header-background: var(--deep-purple-900);
+  --header-menu-background: var(--gray-color);
+  --footer-background: var(--deep-purple-dark);
+}

@@ -1,0 +1,62 @@
+@import url('variables.css');
+
+/* Media queries para teléfonos */
+@media (max-width: var(--max-width-phone)) {
+  /* Agrega contenido específico para teléfonos aquí */
+}
+
+/* Media queries para tabletas */
+@media (max-width: var(--max-width-tablet)) {
+  /* Agrega contenido específico para tabletas aquí */
+}
+
+/* Media queries para escritorios */
+@media (min-width: var(--min-width-desktop)) {
+  /* Agrega contenido específico para escritorios aquí */
+}
+
+/* Padding responsivo */
+.padding-responsive {
+  padding: 30px;
+}
+
+@media (max-width: var(--max-width-phone)) {
+  .padding-responsive {
+    padding: 16px;
+  }
+}
+
+/* Padding vertical responsivo */
+.padding-y-responsive {
+  padding-top: 50px;
+  padding-bottom: 80px;
+}
+
+@media (max-width: var(--max-width-phone)) {
+  .padding-y-responsive {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+/* Mostrar en escritorio y ocultar en teléfono */
+.display-desktop {
+  display: block;
+}
+
+@media (max-width: var(--max-width-phone)) {
+  .display-desktop {
+    display: none;
+  }
+}
+
+/* Mostrar en teléfono y ocultar en escritorio */
+.display-phone {
+  display: none;
+}
+
+@media (max-width: var(--max-width-phone)) {
+  .display-phone {
+    display: block;
+  }
+}

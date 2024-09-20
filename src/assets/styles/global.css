@@ -1,0 +1,353 @@
+/* Importar el archivo de variables */
+@import url('variables.css');
+@import url('animations.css');
+
+/* Estilos globales */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-radius: 10px;
+  background-color: rgb(90, 90, 90);
+}
+
+::-webkit-scrollbar-track {
+  background: #292929;
+  width: 10px;
+}
+
+/* Tamaños de texto */
+.brand-text-body-xl {
+  font-size: 1.125rem;
+  line-height: normal;
+}
+
+.brand-text-body-l {
+  font-size: 1.12rem;
+  line-height: 1.5rem;
+}
+
+.brand-text-body-m {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.brand-text-body-s {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.brand-text-body-xs {
+  font-size: 0.75rem;
+  line-height: 1.12rem;
+}
+
+.brand-text-body-xxs {
+  font-size: 0.62rem;
+  line-height: 1.12rem;
+}
+
+/* Headlines */
+.brand-text-headline-l {
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+
+.brand-text-headline-m {
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+}
+
+.brand-text-headline-s {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.brand-text-headline-xs {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+/* Grosor de la fuente*/
+.brand-text-fw-regular {
+  font-weight: 400;
+}
+
+.brand-text-fw-medium {
+  font-weight: 500;
+}
+
+.brand-text-fw-bold {
+  font-weight: 600;
+}
+
+/* Colores de texto */
+.brand-text-primary {
+  color: var(--primary-color);
+}
+.brand-text-secondary {
+  color: var(--secondary-color);
+}
+.brand-text-accent {
+  color: var(--accent-color);
+}
+.brand-text-success {
+  color: var(--success-color);
+}
+.brand-text-warning {
+  color: var(--warning-color);
+}
+.brand-text-error {
+  color: var(--error-color);
+}
+.brand-text-info {
+  color: var(--info-color);
+}
+.brand-text-gray {
+  color: var(--gray-color);
+}
+.brand-text-black {
+  color: var(--black-color-base);
+}
+.brand-text-white {
+  color: var(--white-color-base);
+}
+
+/* 
+  Estilos de rotación 
+  Estos estilos aplican diferentes grados de rotación a los elementos con las clases correspondientes.
+*/
+.brand-rotate-0 {
+  transform: rotate(0deg);
+}
+.brand-rotate-1 {
+  transform: rotate(1deg);
+}
+.brand-rotate-2 {
+  transform: rotate(2deg);
+}
+.brand-rotate-3 {
+  transform: rotate(3deg);
+}
+.brand-rotate-6 {
+  transform: rotate(6deg);
+}
+.brand-rotate-12 {
+  transform: rotate(12deg);
+}
+.brand-rotate-45 {
+  transform: rotate(45deg);
+}
+.brand-rotate-90 {
+  transform: rotate(90deg);
+}
+.brand-rotate-180 {
+  transform: rotate(180deg);
+}
+
+.brand-cursor-pointer {
+  cursor: pointer;
+}
+
+.brand-only-phone {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .brand-only-phone {
+    display: block;
+  }
+}
+
+.brand-only-desktop {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .brand-only-desktop {
+    display: block;
+  }
+}
+
+/* Animación de entrada */
+.brand-router-outlet-container {
+  animation: fadeIn var(--brand-default-animations-duration) ease;
+  min-height: var(--brand-height-router-outlet-container);
+  position: relative;
+
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  @media (min-width: 768px) {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Bordes */
+.brand-border-radius {
+  border-radius: var(--border-radius);
+}
+
+.brand-border {
+  border: var(--global-border);
+}
+
+.brand-card-border-color {
+  border-color: var(--border-color);
+}
+
+.brand-icon {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Contenedor */
+.brand-container {
+  padding: 32px;
+  gap: 24px;
+  border-radius: 6px;
+  background-color: var(--white-color-base);
+}
+
+@media (max-width: 768px) {
+  .brand-container {
+    padding: 16px;
+  }
+}
+
+.brand-container-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .brand-container-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+.brand-required:after {
+  content: '*';
+  margin-left: 3px;
+  color: var(--brand-primary-color);
+  font-weight: 600;
+}
+
+.brand-with-max-content {
+  width: max-content;
+}
+
+.disabled-label {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.brand-box-shadow {
+  box-shadow: var(--box-shadow);
+}
+
+.disabled-div {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.brand-imgs {
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Padding a los lados */
+.pr-1 {
+  padding-right: 0.25rem; /* 4px */
+}
+.pr-2 {
+  padding-right: 0.5rem; /* 8px */
+}
+.pr-3 {
+  padding-right: 1rem; /* 16px */
+}
+.pr-4 {
+  padding-right: 1.5rem; /* 24px */
+}
+.pr-5 {
+  padding-right: 3rem; /* 48px */
+}
+
+.pl-1 {
+  padding-left: 0.25rem; /* 4px */
+}
+.pl-2 {
+  padding-left: 0.5rem; /* 8px */
+}
+.pl-3 {
+  padding-left: 1rem; /* 16px */
+}
+.pl-4 {
+  padding-left: 1.5rem; /* 24px */
+}
+.pl-5 {
+  padding-left: 3rem; /* 48px */
+}
+
+/* Margen a los lados */
+.mr-1 {
+  margin-right: 0.25rem; /* 4px */
+}
+.mr-2 {
+  margin-right: 0.5rem; /* 8px */
+}
+.mr-3 {
+  margin-right: 1rem; /* 16px */
+}
+.mr-4 {
+  margin-right: 1.5rem; /* 24px */
+}
+.mr-5 {
+  margin-right: 3rem; /* 48px */
+}
+
+.ml-1 {
+  margin-left: 0.25rem; /* 4px */
+}
+.ml-2 {
+  margin-left: 0.5rem; /* 8px */
+}
+.ml-3 {
+  margin-left: 1rem; /* 16px */
+}
+.ml-4 {
+  margin-left: 1.5rem; /* 24px */
+}
+.ml-5 {
+  margin-left: 3rem; /* 48px */
+}
+
+.brand-nav-bar {
+  height: var(--heigth-nav-bar);
+  background-color: var(--header-background);
+}
+
+.brand-footer {
+  min-height: var(--heigth-footer);
+  margin-top: var(--margin-top-footer);
+  background-color: var(--footer-background);
+}
+
+.brand-nav-bar-menu {
+  background-color: var(--header-menu-background) !important;
+}
