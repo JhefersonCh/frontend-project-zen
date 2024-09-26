@@ -41,9 +41,6 @@ module.exports = tseslint.config(
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility
     ],
-    rules: {
-      '@typescript-eslint/no-inferrable-types': 'off',
-      '@typescript-eslint/consistent-generic-constructors': 'off'
-    }
+    rules: {}
   }
 );

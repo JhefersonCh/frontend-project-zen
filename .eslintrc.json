@@ -17,10 +17,15 @@
       ],
       "rules": {
         "prettier/prettier": 0,
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-inferrable-types": "off",
-        "@typescript-eslint/consistent-generic-constructors": "off",
-        "@typescript-eslint/no-unused-vars": "error",
+        "no-unused-vars": "off", // Desactivado para evitar conflicto con @typescript-eslint/no-unused-vars
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "vars": "all", // Aplica a todas las variables
+            "args": "after-used", // Solo reporta argumentos no usados si hay otros que sí se usan
+            "ignoreRestSiblings": false // No ignorar los siblings en la desestructuración
+          }
+        ],
         "no-empty-function": [
           "error",
           {
@@ -127,10 +132,7 @@
         "plugin:@angular-eslint/template/recommended",
         "plugin:@angular-eslint/template/accessibility"
       ],
-      "rules": {
-        "@typescript-eslint/no-inferrable-types": "off",
-        "@typescript-eslint/consistent-generic-constructors": "off"
-      }
+      "rules": {}
     }
   ]
 }

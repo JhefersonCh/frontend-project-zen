@@ -8,8 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  standalone: true, // Define que es standalone
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, MatIconModule] // Importa los módulos necesarios
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, MatIconModule]
 })
 export class RegisterComponent {
   registerForm: FormGroup;
