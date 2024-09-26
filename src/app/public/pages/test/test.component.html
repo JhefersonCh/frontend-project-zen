@@ -1,0 +1,57 @@
+<form [formGroup]="form" class="w-100 d-flex justify-content-center">
+  <article class="d-flex flex-column w-50 gap-2">
+    <mat-form-field class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Pizza"
+        value="Sushi"
+        formControlName="name"
+      />
+      @if (form.get('name')?.hasError('required')) {
+        <mat-error>Name is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Pizza"
+        value="Sushi"
+        formControlName="email"
+      />
+      @if (form.get('email')?.hasError('required')) {
+        <mat-error>Email is required</mat-error>
+      }
+      @if (form.get('email')?.hasError('email')) {
+        <mat-error>Invalid email</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Password</mat-label>
+      <input
+        [type]="showPassword ? 'password' : 'text'"
+        matInput
+        placeholder="Ex. Pizza"
+        value="Sushi"
+        formControlName="password"
+      />
+      <mat-icon matPrefix>password</mat-icon>
+      <button
+        matSuffix
+        mat-icon-button
+        (click)="showPassword = !showPassword"
+        class="mr-1"
+      >
+        @if (showPassword) {
+          <fa-icon [icon]="eyeOpen"></fa-icon>
+        } @else {
+          <fa-icon [icon]="eyeClose"></fa-icon>
+        }
+      </button>
+      @if (form.get('password')?.hasError('required')) {
+        <mat-error>Password is required</mat-error>
+      }
+    </mat-form-field>
+  </article>
+</form>
