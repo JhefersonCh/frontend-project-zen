@@ -14,6 +14,9 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      '@typescript-eslint/no-inferrable-types': 'off',
+      '@typescript-eslint/consistent-generic-constructors': 'off',
+      '@angular-eslint/template/click-events-have-key-events': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {
@@ -38,6 +41,9 @@ module.exports = tseslint.config(
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility
     ],
-    rules: {}
+    rules: {
+      '@typescript-eslint/no-inferrable-types': 'off',
+      '@typescript-eslint/consistent-generic-constructors': 'off'
+    }
   }
 );
