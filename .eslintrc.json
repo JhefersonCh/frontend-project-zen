@@ -1,17 +1,11 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -24,13 +18,13 @@
       "rules": {
         "prettier/prettier": 0,
         "no-unused-vars": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/consistent-generic-constructors": "off",
         "@typescript-eslint/no-unused-vars": "error",
         "no-empty-function": [
           "error",
           {
-            "allow": [
-              "constructors"
-            ]
+            "allow": ["constructors"]
           }
         ],
         "no-unused-expressions": [
@@ -45,49 +39,30 @@
           "error",
           {
             "selector": "default",
-            "format": [
-              "camelCase"
-            ]
+            "format": ["camelCase"]
           },
           {
             "selector": "variable",
-            "format": [
-              "camelCase",
-              "UPPER_CASE"
-            ]
+            "format": ["camelCase", "UPPER_CASE"]
           },
           {
             "selector": "parameter",
-            "format": [
-              "camelCase"
-            ],
+            "format": ["camelCase"],
             "leadingUnderscore": "allow"
           },
           {
             "selector": "memberLike",
-            "modifiers": [
-              "private"
-            ],
-            "format": [
-              "camelCase"
-            ],
+            "modifiers": ["private"],
+            "format": ["camelCase"],
             "leadingUnderscore": "require"
           },
           {
             "selector": "typeLike",
-            "format": [
-              "PascalCase"
-            ]
+            "format": ["PascalCase"]
           }
         ],
-        "@typescript-eslint/semi": [
-          "error",
-          "always"
-        ],
-        "curly": [
-          "error",
-          "all"
-        ],
+        "@typescript-eslint/semi": ["error", "always"],
+        "curly": ["error", "all"],
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -104,52 +79,23 @@
             "type": "element"
           }
         ],
-        "no-restricted-imports": [
-          "error",
-          "rxjs/Rx"
-        ],
-        "object-curly-spacing": [
-          "error",
-          "always"
-        ],
-        "indent": [
-          "off"
-        ],
-        "max-classes-per-file": [
-          "off"
-        ],
-        "max-len": [
-          "error",
-          200
-        ],
-        "no-multiple-empty-lines": [
-          "error"
-        ],
+        "no-restricted-imports": ["error", "rxjs/Rx"],
+        "object-curly-spacing": ["error", "always"],
+        "indent": ["off"],
+        "max-classes-per-file": ["off"],
+        "max-len": ["error", 200],
+        "no-multiple-empty-lines": ["error"],
         "no-console": [
           "error",
           {
-            "allow": [
-              "warn"
-            ]
+            "allow": ["warn"]
           }
         ],
-        "no-empty": [
-          "off"
-        ],
-        "no-fallthrough": [
-          "error"
-        ],
-        "ordered-imports": [
-          "off"
-        ],
-        "quotes": [
-          "error",
-          "single"
-        ],
-        "semi": [
-          "error",
-          "always"
-        ],
+        "no-empty": ["off"],
+        "no-fallthrough": ["error"],
+        "ordered-imports": ["off"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
         "space-before-function-paren": [
           "error",
           {
@@ -158,34 +104,15 @@
             "named": "never"
           }
         ],
-        "comma-dangle": [
-          "error",
-          "never"
-        ],
-        "@angular-eslint/no-conflicting-lifecycle": [
-          "error"
-        ],
-        "@angular-eslint/no-host-metadata-property": [
-          "error"
-        ],
-        "@angular-eslint/no-input-rename": [
-          "error"
-        ],
-        "@angular-eslint/no-inputs-metadata-property": [
-          "error"
-        ],
-        "@angular-eslint/no-output-native": [
-          "error"
-        ],
-        "@angular-eslint/no-output-on-prefix": [
-          "error"
-        ],
-        "@angular-eslint/no-output-rename": [
-          "error"
-        ],
-        "@angular-eslint/no-outputs-metadata-property": [
-          "error"
-        ],
+        "comma-dangle": ["error", "never"],
+        "@angular-eslint/no-conflicting-lifecycle": ["error"],
+        "@angular-eslint/no-host-metadata-property": ["error"],
+        "@angular-eslint/no-input-rename": ["error"],
+        "@angular-eslint/no-inputs-metadata-property": ["error"],
+        "@angular-eslint/no-output-native": ["error"],
+        "@angular-eslint/no-output-on-prefix": ["error"],
+        "@angular-eslint/no-output-rename": ["error"],
+        "@angular-eslint/no-outputs-metadata-property": ["error"],
         "no-trailing-spaces": [
           "error",
           {
@@ -195,14 +122,15 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
+      "files": ["*.html"],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
         "plugin:@angular-eslint/template/accessibility"
       ],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/consistent-generic-constructors": "off"
+      }
     }
   ]
 }
