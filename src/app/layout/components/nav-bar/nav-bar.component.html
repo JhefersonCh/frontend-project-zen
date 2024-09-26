@@ -13,25 +13,33 @@
     type="button"
     (click)="toggleMenu()"
   >
-    <span class="navbar-toggler-icon text-white">&#9776;</span>
+    <span class="text-white brand-cursor-pointer brand-text-headline-m"
+      >&#9776;</span
+    >
   </button>
 
-  <nav class="d-none d-md-flex align-items-center gap-4" id="navbarMenu">
+  <nav class="d-none d-md-flex align-items-center gap-4">
     <a
-      class="text-white text-decoration-none text-center brand-text-headline-xxs"
+      class="nav-bar-element text-center brand-text-headline-xxs"
       routerLink="/"
       role="button"
+      (click)="optionSelected = 'home'"
+      [ngClass]="{ active: optionSelected === 'home' }"
       >Inicio</a
     >
     <a
-      class="text-white text-decoration-none text-center brand-text-headline-xxs"
-      routerLink="/about"
+      class="nav-bar-element text-center brand-text-headline-xxs"
+      routerLink="/about-us"
+      (click)="optionSelected = 'about-us'"
+      [ngClass]="{ active: optionSelected === 'about-us' }"
       role="button"
       >Sobre Nosotros</a
     >
     <a
-      class="text-white text-decoration-none text-center brand-text-headline-xxs"
+      class="nav-bar-element text-center brand-text-headline-xxs"
       role="button"
+      (click)="optionSelected = 'auth'"
+      [ngClass]="{ active: optionSelected === 'auth' }"
       (click)="manageUser()"
       >{{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}</a
     >
@@ -39,27 +47,32 @@
 
   @if (isMenuOpen) {
     <nav
-      class="d-md-none mobile-menu brand-text-headline-m brand-nav-bar-menu"
+      class="d-md-none mobile-menu brand-text-headline-m brand-nav-bar-menu w-100 position-absolute z-3"
       [ngClass]="{ 'd-block': isMenuOpen, 'd-none': !isMenuOpen }"
     >
       <a
-        class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
+        class="mobile-menu-element text-center d-block brand-text-headline-xs p-2"
         routerLink="/"
         role="button"
         (click)="closeMenu()"
+        (click)="optionSelected = 'home'"
+        [ngClass]="{ active: optionSelected === 'home' }"
         >Inicio</a
       >
       <a
-        class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
-        routerLink="/about"
-        role="button"
+        class="mobile-menu-element text-center d-block brand-text-headline-xs p-2"
+        routerLink="/about-us"
+        role="button-us"
+        (click)="optionSelected = 'about-us'"
+        [ngClass]="{ active: optionSelected === 'about-us' }"
         (click)="closeMenu()"
         >Sobre Nosotros</a
       >
       <a
-        class="text-white text-decoration-none text-center d-block brand-text-headline-xs p-2"
+        class="mobile-menu-element text-center d-block brand-text-headline-xs p-2"
         role="button"
-        (click)="manageUser(); closeMenu()"
+        (click)="manageUser(); closeMenu(); optionSelected = 'auth'"
+        [ngClass]="{ active: optionSelected === 'auth' }"
         >{{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}</a
       >
     </nav>

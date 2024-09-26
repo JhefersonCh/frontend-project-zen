@@ -1,5 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
@@ -9,11 +16,19 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
   @Input() isLoggedUser: boolean = false;
   @Output() logout: EventEmitter<boolean> = new EventEmitter();
   router = inject(Router);
   isMenuOpen = false;
+  optionSelected: string = '';
+  module: string[] = [];
+
+  ngOnInit(): void {
+    this.module = this.router.url.split('/');
+
+    this.optionSelected = this.module[1];
+  }
 
   /**
    * Alterna el estado del menú de navegación entre abierto y cerrado.

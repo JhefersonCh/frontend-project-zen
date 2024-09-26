@@ -190,13 +190,12 @@
   min-height: var(--brand-height-router-outlet-container);
   position: relative;
 
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  margin-top: var(--heigth-nav-bar);
+  margin-bottom: 0;
 
-  @media (min-width: 768px) {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-inline: 1rem;
 }
 
 /* Bordes */

@@ -1,5 +1,9 @@
-<app-nav-bar [isLoggedUser]="isLoggedIn()" (logout)="logout()" />
-<div class="d-flex flex-column">
+<app-nav-bar
+  [isLoggedUser]="isLoggedIn()"
+  (logout)="logout()"
+  class="fixed-top"
+/>
+<div>
   <main class="brand-router-outlet-container">
     <router-outlet></router-outlet>
   </main>

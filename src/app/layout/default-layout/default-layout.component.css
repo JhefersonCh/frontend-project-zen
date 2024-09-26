@@ -1,1 +1,6 @@
-
+@import url('../../../assets/styles/variables.css');
+.test {
+  height: calc(100vh - 150px);
+  position: relative;
+  overflow-y: auto;
+}

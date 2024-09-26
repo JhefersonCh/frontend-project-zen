@@ -30,9 +30,9 @@
   --gray-color: #797979;
 
   /* Colores de texto */
-  --text-primary: rgba(0, 0, 0, 0.87);
-  --text-secondary: rgba(0, 0, 0, 0.6);
-  --text-disabled: rgba(0, 0, 0, 0.38);
+  --text-primary: var(--deep-purple-900);
+  --text-secondary: var(--deep-purple-600);
+  --text-disabled: var(--deep-purple-100);
   --text-on-primary: #ffffff;
   --text-on-secondary: #ffffff;
 
@@ -60,7 +60,7 @@
   /* Bordes */
   --border-radius: 4px;
   --border-width: 1px;
-  --border-color: var(--deep-purple-200);
+  --border-color: var(--deep-purple-400);
   --global-border: 1px solid var(--border-color);
 
   /* Transiciones */
@@ -72,8 +72,7 @@
 
   /* Medidas globales */
   --brand-height-router-outlet-container: calc(
-    100vh -
-      (var(--heigth-nav-bar) + var(--heigth-footer) + var(--margin-top-footer))
+    100vh - (var(--heigth-nav-bar) + var(--heigth-footer))
   );
   --brand-default-animations-duration: 0.3s;
 
@@ -89,8 +88,11 @@
   /* Layout */
   --heigth-nav-bar: 70px;
   --heigth-footer: 56px;
-  --margin-top-footer: 24px;
   --header-background: var(--deep-purple-900);
   --header-menu-background: var(--gray-color);
   --footer-background: var(--deep-purple-dark);
+
+  /* Hover */
+  --primary-hover-color: var(--deep-purple-300);
+  --secondary-hover-color: var(--deep-purple-800);
 }

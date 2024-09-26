@@ -18,6 +18,7 @@
       "rules": {
         "prettier/prettier": 0,
         "no-unused-vars": "off", // Desactivado para evitar conflicto con @typescript-eslint/no-unused-vars
+        "@angular-eslint/template/click-events-have-key-events": "off",
         "@typescript-eslint/no-unused-vars": [
           "error",
           {
@@ -132,7 +133,9 @@
         "plugin:@angular-eslint/template/recommended",
         "plugin:@angular-eslint/template/accessibility"
       ],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/template/click-events-have-key-events": "off"
+      }
     }
   ]
 }

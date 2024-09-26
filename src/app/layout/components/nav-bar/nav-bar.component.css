@@ -1,19 +1,9 @@
 @import url('../../../../assets/styles/variables.css');
-.nav-link {
-  margin-right: 1rem;
-}
-.navbar-toggler-icon {
-  font-size: 24px;
-  cursor: pointer;
-}
 
 .mobile-menu {
-  position: absolute;
   top: var(--heigth-nav-bar);
   right: 0;
   background-color: #343a40;
-  width: 100%;
-  z-index: 999;
 }
 
 .mobile-menu a {
@@ -21,4 +11,31 @@
   display: block;
   text-align: center;
   border-bottom: 1px solid #555;
+}
+
+.nav-bar-element,
+.mobile-menu-element {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-bar-element:hover {
+  color: var(--primary-hover-color);
+}
+
+.mobile-menu-element:hover {
+  color: var(--secondary-hover-color);
+  font-weight: 600;
+}
+
+.nav-bar-element.active {
+  font-weight: bold;
+  font-size: 18px;
+  color: var(--deep-purple-200);
+}
+
+.mobile-menu-element.active {
+  font-weight: bold;
+  font-size: 24px;
+  color: var(--black-color-base);
 }
