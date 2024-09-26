@@ -1,1 +1,44 @@
-<p>Login works!</p>
+<div class="h-100 w-100 row align-items-center justify-content-center m-0 p-0">
+  <!-- Sección del formulario de login -->
+  <div class="col-md-6 d-flex">
+    <section class="w-100 h-100 d-flex flex-column align-items-center">
+      <div class="p-5 w-100 text-center">
+        <h3 class="fw-bold m-0 p-0">Iniciar sesión</h3>
+        <p class="mb-4">Ingresa tus credenciales para acceder:</p>
+        <form class="w-100">
+          <!-- Campo de correo electrónico con icono -->
+          <div class="mb-3 input-group">
+            <span class="input-group-text">
+              <mat-icon>email</mat-icon> <!-- Icono de correo -->
+            </span>
+            <input type="email" class="form-control" id="email" placeholder="Correo electrónico">
+          </div>
+
+          <!-- Campo de contraseña con icono y opción para mostrar/ocultar -->
+          <div class="mb-3 input-group">
+            <span class="input-group-text">
+              <mat-icon>lock</mat-icon> <!-- Icono de candado -->
+            </span>
+            <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" id="password" placeholder="Contraseña">
+            <span class="input-group-text">
+              <input type="checkbox" (change)="showPassword = !showPassword" aria-label="Mostrar contraseña">
+            </span>
+          </div>
+
+          <button type="submit" class="btn btn-dark w-100 mb-4 mt-1">Iniciar sesión</button>
+        </form>
+        <div>
+          <a routerLink="/auth/recover-password" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+          <br>
+          <span>¿No tienes una cuenta? </span>
+          <a routerLink="/auth/register" class="text-decoration-none" tabindex="0">Regístrate aquí</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Sección de la imagen -->
+  <div class="col-md-6 d-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
+    <img src="../../assets/login_and_register/img1.png" class="img-fluid" alt="Imagen de login">
+  </div>
+</div>

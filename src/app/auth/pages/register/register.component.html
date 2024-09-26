@@ -1,0 +1,56 @@
+<div class="h-100 w-100 row align-items-center justify-content-center m-0 p-0">
+  <!-- Sección de la imagen -->
+  <div class="col-md-6 d-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
+    <img src="../../assets/login_and_register/img1.png" class="img-fluid" alt="Imagen de registro">
+  </div>
+
+  <!-- Sección del formulario de registro -->
+  <div class="p-5 col-md-6 d-flex">
+    <section class="w-100 h-100 d-flex flex-column align-items-center">
+      <div class="w-100 h-100">
+        <div class="w-100 text-center">
+          <h3 class="fw-bold m-0 p-0">Registrarse</h3>
+          <p class="mb-4">Crea una nueva cuenta</p>
+        </div>
+        <div class="card-body">
+          <form class="w-100" (ngSubmit)="onSubmit()">
+            <!-- Campo de nombre completo con icono -->
+            <div class="mb-3 input-group">
+              <span class="input-group-text">
+                <mat-icon>person</mat-icon> <!-- Icono de usuario -->
+              </span>
+              <input type="text" class="form-control" id="name" placeholder="Nombre completo" formControlName="name">
+            </div>
+
+            <!-- Campo de correo electrónico con icono -->
+            <div class="mb-3 input-group">
+              <span class="input-group-text">
+                <mat-icon>email</mat-icon> <!-- Icono de correo -->
+              </span>
+              <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
+                formControlName="email">
+            </div>
+
+            <!-- Campo de contraseña con icono y opción para mostrar/ocultar -->
+            <div class="mb-3 input-group">
+              <span class="input-group-text">
+                <mat-icon>lock</mat-icon> <!-- Icono de candado -->
+              </span>
+              <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" id="password"
+                placeholder="Contraseña">
+              <span class="input-group-text">
+                <input type="checkbox" (change)="showPassword = !showPassword" aria-label="Mostrar contraseña">
+              </span>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100 mb-4">Registrarse</button>
+          </form>
+        </div>
+        <div class="text-center">
+          <span>¿Ya tienes una cuenta? </span>
+          <a routerLink="/auth/login" class="text-decoration-none">Inicia sesión aquí</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
