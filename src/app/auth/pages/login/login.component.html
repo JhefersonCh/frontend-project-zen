@@ -1,44 +1,44 @@
-<div class="h-100 w-100 row align-items-center justify-content-center m-0 p-0">
-  <!-- Sección del formulario de login -->
-  <div class="col-md-6 d-flex">
-    <section class="w-100 h-100 d-flex flex-column align-items-center">
-      <div class="p-5 w-100 text-center">
+<div class="h-100 w-100 row align-items-center justify-content-center">
+  <section class="col-12 col-md-6 justify-content-center text-lg-center">
+    <article class="d-flex flex-column">
+      <form [formGroup]="form" class="d-flex flex-column">
+
         <h3 class="fw-bold m-0 p-0">Iniciar sesión</h3>
         <p class="mb-4">Ingresa tus credenciales para acceder:</p>
-        <form class="w-100">
-          <!-- Campo de correo electrónico con icono -->
-          <div class="mb-3 input-group">
-            <span class="input-group-text">
-              <mat-icon>email</mat-icon> <!-- Icono de correo -->
-            </span>
-            <input type="email" class="form-control" id="email" placeholder="Correo electrónico">
-          </div>
 
-          <!-- Campo de contraseña con icono y opción para mostrar/ocultar -->
-          <div class="mb-3 input-group">
-            <span class="input-group-text">
-              <mat-icon>lock</mat-icon> <!-- Icono de candado -->
-            </span>
-            <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" id="password" placeholder="Contraseña">
-            <span class="input-group-text">
-              <input type="checkbox" (change)="showPassword = !showPassword" aria-label="Mostrar contraseña">
-            </span>
-          </div>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput placeholder="Email" formControlName="email" />
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="form.get('email')?.hasError('required')">Email requerido</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">Email inválido</mat-error>
+        </mat-form-field>
 
-          <button type="submit" class="btn btn-dark w-100 mb-4 mt-1">Iniciar sesión</button>
-        </form>
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Contraseña</mat-label>
+          <input [type]="showPassword ? 'password' : 'text'" matInput formControlName="password" />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button matSuffix mat-icon-button (click)="showPassword = !showPassword" class="mr-1">
+            <fa-icon [icon]="showPassword ? eyeOpen : eyeClose"></fa-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+        </mat-form-field>
+
+        <button type="submit" class="btn btn-dark w-100 mb-4 mt-1">Iniciar sesión</button>
+
         <div>
           <a routerLink="/auth/recover-password" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
           <br>
           <span>¿No tienes una cuenta? </span>
           <a routerLink="/auth/register" class="text-decoration-none" tabindex="0">Regístrate aquí</a>
         </div>
-      </div>
-    </section>
-  </div>
 
-  <!-- Sección de la imagen -->
-  <div class="col-md-6 d-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
-    <img src="../../assets/login_and_register/img1.png" class="img-fluid" alt="Imagen de login">
+      </form>
+    </article>
+  </section>
+
+  <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
+    <img src="../../assets/login_and_register/img2.png" alt="Descripción de la imagen"
+      class="img-fluid">
   </div>
 </div>

@@ -1,57 +1,48 @@
-<form [formGroup]="form" class="w-100 d-flex justify-content-center">
-  <article class="d-flex flex-column w-50 gap-2">
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Name</mat-label>
-      <input
-        matInput
-        placeholder="Ex. Pizza"
-        value="Sushi"
-        formControlName="name"
-      />
-      @if (form.get('name')?.hasError('required')) {
-        <mat-error>Name is required</mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Email</mat-label>
-      <input
-        matInput
-        placeholder="Ex. Pizza"
-        value="Sushi"
-        formControlName="email"
-      />
-      @if (form.get('email')?.hasError('required')) {
-        <mat-error>Email is required</mat-error>
-      }
-      @if (form.get('email')?.hasError('email')) {
-        <mat-error>Invalid email</mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Password</mat-label>
-      <input
-        [type]="showPassword ? 'password' : 'text'"
-        matInput
-        placeholder="Ex. Pizza"
-        value="Sushi"
-        formControlName="password"
-      />
-      <mat-icon matPrefix>password</mat-icon>
-      <button
-        matSuffix
-        mat-icon-button
-        (click)="showPassword = !showPassword"
-        class="mr-1"
-      >
-        @if (showPassword) {
-          <fa-icon [icon]="eyeOpen"></fa-icon>
-        } @else {
-          <fa-icon [icon]="eyeClose"></fa-icon>
-        }
-      </button>
-      @if (form.get('password')?.hasError('required')) {
-        <mat-error>Password is required</mat-error>
-      }
-    </mat-form-field>
-  </article>
-</form>
+<div class="h-100 w-100 row align-items-center justify-content-center">
+  <div class="col-md-6 d-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
+    <img src="../../assets/login_and_register/img2.png" alt="Descripción de la imagen"
+      class="col-md-6 d-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
+  </div>
+  <section class="w-50 justify-content-center text-lg-center">
+    <article class="d-flex flex-column">
+      <form [formGroup]="form" class="d-flex flex-column">
+
+        <h3 class="fw-bold m-0 p-0">Registarse</h3>
+        <p class="mb-4">Crea una nueva cuenta</p>
+
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Nombre completo</mat-label>
+          <input matInput placeholder="Email" formControlName="email" />
+          <mat-icon matPrefix>account_circle</mat-icon>
+          <mat-error *ngIf="form.get('name')?.hasError('required')">Nombre requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput placeholder="Email" formControlName="email" />
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="form.get('email')?.hasError('required')">Email requerido</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">Email inválido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" hideRequiredMarker="true">
+          <mat-label>Contraseña</mat-label>
+          <input [type]="showPassword ? 'password' : 'text'" matInput formControlName="password" />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button matSuffix mat-icon-button (click)="showPassword = !showPassword" class="mr-1">
+            <fa-icon [icon]="showPassword ? eyeOpen : eyeClose"></fa-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+        </mat-form-field>
+
+        <button type="submit" class="btn btn-dark w-100 mb-4">Registrarse </button>
+
+        <div class="text-center">
+          <span>¿Ya tienes una cuenta? </span>
+          <a routerLink="/auth/login" class="text-decoration-none">Inicia sesión aquí</a>
+        </div>
+
+      </form>
+    </article>
+  </section>
+</div>

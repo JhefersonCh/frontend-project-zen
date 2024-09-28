@@ -11,17 +11,21 @@ import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [
+  imports: [ 
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
     MatIcon,
     FontAwesomeModule,
-    MatButtonModule
+    MatButtonModule,
+    CommonModule,
+    RouterModule,
   ],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css'
@@ -34,9 +38,11 @@ export class TestComponent {
 
   constructor(private _fb: FormBuilder) {
     this.form = this._fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 }
+
+
+

@@ -1,32 +1,48 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, MatIconModule]
+  imports: [ 
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatIcon,
+    FontAwesomeModule,
+    MatButtonModule,
+    CommonModule,
+    RouterModule,
+  ],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  registerForm: FormGroup;
-  showPassword = false;
+  form: FormGroup;
+  eyeOpen = faEye;
+  eyeClose = faEyeSlash;
+  showPassword: boolean = false;
 
-  constructor(private fb: FormBuilder) {
-    this.registerForm = this.fb.group({
-      name: ['', [Validators.required]],
+  constructor(private _fb: FormBuilder) {
+    this.form = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-
-  onSubmit() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-      // Lógica para manejar el registro
-    }
-  }
 }
+
+
+
