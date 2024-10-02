@@ -1,48 +1,135 @@
-<div class="h-100 w-100 row align-items-center justify-content-center">
+<div class="w-100 h-100 d-flex justify-content-center align-items-center text-center">
+
   <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
-    <img src="../../assets/login_and_register/img2.png" alt="Descripción de la imagen"
-      class="img-fluid">
+    <img src="../../assets/login_and_register/img1.png" alt="Descripción de la imagen" class="img-fluid">
   </div>
-  <section class="col-12 col-md-6 justify-content-center text-lg-center">
-    <article class="d-flex flex-column">
-      <form [formGroup]="form" class="d-flex flex-column">
 
-        <h3 class="fw-bold m-0 p-0">Registarse</h3>
-        <p class="mb-4">Crea una nueva cuenta</p>
+  <!--<h3 class="fw-bold m-0 p-0">Registrarse</h3>-->
+  <!--<p class="mb-4">Crea una nueva cuenta</p>-->
 
-        <mat-form-field appearance="outline" hideRequiredMarker="true">
-          <mat-label>Nombre completo</mat-label>
-          <input matInput placeholder="Email" formControlName="email" />
-          <mat-icon matPrefix>account_circle</mat-icon>
-          <mat-error *ngIf="form.get('name')?.hasError('required')">Nombre requerido</mat-error>
+  <mat-vertical-stepper [linear]="true" #stepper class="w-100 h-100 bg-white">
+
+    <mat-step [stepControl]="formStep1">
+      <form [formGroup]="formStep1">
+        <ng-template matStepLabel>Información Personal</ng-template>
+
+        <input type="hidden" formControlName="creationDate" />
+
+        <mat-form-field appearance="outline" class="w-100 mt-3" hideRequiredMarker>
+          <mat-label>Tipo de Identificación</mat-label>
+          <mat-select formControlName="typeID" required>
+            <mat-option *ngFor="let tipo of tiposIdentificacion" [value]="tipo">
+              {{ tipo }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>table_chart</mat-icon>
+          <mat-error *ngIf="formStep1.get('typeID')?.hasError('required')">
+            Tipo de identificación requerido
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" hideRequiredMarker="true">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput placeholder="Email" formControlName="email" />
+        <mat-form-field appearance="outline" class="w-100 mt-3 " hideRequiredMarker>
+          <mat-label>Identificación</mat-label>
+          <input matInput formControlName="identification" required />
+          <mat-icon matPrefix>perm_identity</mat-icon>
+          <mat-error *ngIf="formStep1.get('identification')?.hasError('required')">
+            Número de identificación requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3" hideRequiredMarker>
+          <mat-label>Nombre Completo</mat-label>
+          <input matInput formControlName="fullName" required />
+          <mat-icon matPrefix>account_box</mat-icon>
+          <mat-error *ngIf="formStep1.get('fullName')?.hasError('required')">
+            Nombre completo requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3" hideRequiredMarker>
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput formControlName="email" required />
           <mat-icon matPrefix>email</mat-icon>
-          <mat-error *ngIf="form.get('email')?.hasError('required')">Email requerido</mat-error>
-          <mat-error *ngIf="form.get('email')?.hasError('email')">Email inválido</mat-error>
+          <mat-error *ngIf="formStep1.get('email')?.hasError('required')">
+            Email requerido
+          </mat-error>
+          <mat-error *ngIf="formStep1.get('email')?.hasError('email')">
+            Email inválido
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" hideRequiredMarker="true">
-          <mat-label>Contraseña</mat-label>
-          <input [type]="showPassword ? 'password' : 'text'" matInput formControlName="password" />
-          <mat-icon matPrefix>lock</mat-icon>
-          <button matSuffix mat-icon-button (click)="showPassword = !showPassword" class="mr-1">
-            <fa-icon [icon]="showPassword ? eyeOpen : eyeClose"></fa-icon>
-          </button>
-          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+        <mat-form-field appearance="outline" class="w-100 mt-3" hideRequiredMarker>
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="phone" required />
+          <mat-icon matPrefix>phone</mat-icon>
+          <mat-error *ngIf="formStep1.get('phone')?.hasError('required')">
+            Teléfono requerido
+          </mat-error>
         </mat-form-field>
 
-        <button type="submit" class="btn btn-dark w-100 mb-4">Registrarse </button>
-
-        <div class="text-center">
-          <span>¿Ya tienes una cuenta? </span>
-          <a routerLink="/auth/login" class="text-decoration-none">Inicia sesión aquí</a>
+        <div class="d-flex justify-content-center mt-3">
+          <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
         </div>
-
       </form>
-    </article>
-  </section>
+    </mat-step>
+
+    <mat-step [stepControl]="formStep2">
+      <form [formGroup]="formStep2">
+        <ng-template matStepLabel>Tu cuenta</ng-template>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3" hideRequiredMarker>
+          <mat-label>URL de Imagen</mat-label>
+          <input matInput formControlName="avatarUrl" required />
+          <mat-icon matPrefix>image</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3" hideRequiredMarker>
+          <mat-label>Nombre de usuario</mat-label>
+          <input matInput formControlName="username" required />
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="formStep2.get('username')?.hasError('required')">
+            Nombre de usuario requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3" hideRequiredMarker>
+          <mat-label>Contraseña</mat-label>
+          <input [type]="showPassword ? 'text' : 'password'" matInput formControlName="password" required />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button matSuffix mat-icon-button (click)="showPassword = !showPassword">
+            <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="formStep2.get('password')?.hasError('required')">
+            Contraseña requerida
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3" hideRequiredMarker>
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input [type]="showConfirmPassword ? 'text' : 'password'" matInput formControlName="confirmPassword"
+            required />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button matSuffix mat-icon-button (click)="showConfirmPassword = !showConfirmPassword">
+            <mat-icon>{{ showConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="formStep2.get('confirmPassword')?.hasError('required')">
+            Confirmar contraseña requerido
+          </mat-error>
+        </mat-form-field>
+
+        <div class="d-flex justify-content-between mt-3">
+          <button mat-raised-button matStepperPrevious class="btn btn-dark mr-3">Anterior</button>
+          <button mat-raised-button color="btn btn-dark" (click)="submitForm()">Registrarse</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-vertical-stepper>
+  <!--
+    <div class="text-center mt-4">
+    <span>¿Ya tienes una cuenta?</span>
+    <a routerLink="/auth/login" class="text-decoration-none">Inicia sesión aquí</a>
+  </div>
+  -->
+
+
 </div>
