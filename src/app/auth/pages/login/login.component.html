@@ -2,7 +2,7 @@
   <section class="col-12 col-md-6 justify-content-center text-lg-center">
     <article class="d-flex flex-column">
       <form [formGroup]="form" class="d-flex flex-column text-center">
-
+        
         <h3 class="fw-bold m-0 p-0">Iniciar sesión</h3>
         <p class="mb-4">Ingresa tus credenciales para acceder:</p>
 
@@ -13,7 +13,7 @@
           <mat-error *ngIf="form.get('email')?.hasError('required')">Email requerido</mat-error>
           <mat-error *ngIf="form.get('email')?.hasError('email')">Email inválido</mat-error>
         </mat-form-field>
-
+ 
         <mat-form-field appearance="outline" hideRequiredMarker="true">
           <mat-label>Contraseña</mat-label>
           <input [type]="showPassword ? 'password' : 'text'" matInput formControlName="password" />

@@ -35,7 +35,7 @@ export class LoginComponent {
   eyeOpen = faEye;
   eyeClose = faEyeSlash;
   showPassword: boolean = false;
-
+ 
   constructor(private _fb: FormBuilder) {
     this.form = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
