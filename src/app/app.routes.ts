@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './layout/default-layout/default-layout.component';
+import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home', // Redirigir a 'home' por defecto
+    redirectTo: '/home',
     pathMatch: 'full'
   },
   {
@@ -13,6 +14,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./public/public.routes').then((m) => m.publicRoutes)
       },
@@ -25,6 +27,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/home' // Redirigir cualquier ruta no encontrada a 'home'
+    redirectTo: '/home'
   }
 ];

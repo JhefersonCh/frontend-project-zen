@@ -14,7 +14,7 @@ export class AppComponent {
   constructor(
     private _iconRegistry: MatIconRegistry,
     private _router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     this._setMaterialOutlinedIconsDefault();
     this._listenRouterChanges();

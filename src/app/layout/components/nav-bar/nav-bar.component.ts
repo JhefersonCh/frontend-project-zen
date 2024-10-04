@@ -1,33 +1,66 @@
-import { NgClass } from '@angular/common';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { NgClass, NgIf } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   inject,
-  Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
-  Output
+  SimpleChanges
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
+import { AuthService } from '../../../auth/services/auth.service';
+import { LocalStorageService } from '../../../shared/services/localStorage.service';
+import { LogOutInterface } from '../../../auth/interfaces/logout.interface';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, NgIf],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
-export class NavBarComponent implements OnInit {
-  @Input() isLoggedUser: boolean = false;
-  @Output() logout: EventEmitter<boolean> = new EventEmitter();
-  router = inject(Router);
+export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
+  isLoggedUser: boolean = false;
+  router: Router = inject(Router);
+  private _authService: AuthService = inject(AuthService);
+  private _localStorageService: LocalStorageService =
+    inject(LocalStorageService);
+  private _subscription: Subscription = new Subscription();
   isMenuOpen = false;
   optionSelected: string = '';
   module: string[] = [];
+  isLoading: boolean = true;
 
   ngOnInit(): void {
+    this._subscription.add(
+      this._authService._isLoggedSubject.subscribe((isLogged) => {
+        this.isLoggedUser = isLogged;
+        this.isLoading = false;
+      })
+    );
+    this.isLoggedUser = this._authService.isAuthenticated();
+    this.isLoading = false;
     this.module = this.router.url.split('/');
-
     this.optionSelected = this.module[1];
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.module = this.router.url.split('/');
+        this.optionSelected = this.module[1];
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.['isLoggedUser']) {
+      this.router.navigate(['auth/login']);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe(); // Limpiar la suscripción
   }
 
   /**
@@ -53,10 +86,15 @@ export class NavBarComponent implements OnInit {
    */
   manageUser(): void {
     if (!this.isLoggedUser) {
-      this.router.navigateByUrl('/auth/login'); // Redirige a la página de inicio de sesión.
+      this.router.navigateByUrl('/auth/login');
     } else {
-      this.logout.emit(true); // Emite el evento de cierre de sesión.
-      this.router.navigateByUrl('/home'); // Redirige a la página de inicio.
+      const allSessionData = this._localStorageService.getAllSessionData();
+      const sessionDataToLogout: LogOutInterface = {
+        userId: allSessionData?.user.id || '',
+        accessToken: allSessionData?.tokens.accessToken || '',
+        accessSessionId: allSessionData?.session.accessSessionId || ''
+      };
+      this._authService.logout(sessionDataToLogout).subscribe();
     }
   }
 }

@@ -21,16 +21,14 @@
   <nav class="d-none d-md-flex align-items-center gap-4">
     <a
       class="nav-bar-element text-center brand-text-headline-xxs"
-      routerLink="/"
+      routerLink="home"
       role="button"
-      (click)="optionSelected = 'home'"
       [ngClass]="{ active: optionSelected === 'home' }"
       >Inicio</a
     >
     <a
       class="nav-bar-element text-center brand-text-headline-xxs"
       routerLink="/about-us"
-      (click)="optionSelected = 'about-us'"
       [ngClass]="{ active: optionSelected === 'about-us' }"
       role="button"
       >Sobre Nosotros</a
@@ -38,7 +36,6 @@
     <a
       class="nav-bar-element text-center brand-text-headline-xxs"
       role="button"
-      (click)="optionSelected = 'auth'"
       [ngClass]="{ active: optionSelected === 'auth' }"
       (click)="manageUser()"
       >{{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}</a
@@ -55,7 +52,6 @@
         routerLink="/"
         role="button"
         (click)="closeMenu()"
-        (click)="optionSelected = 'home'"
         [ngClass]="{ active: optionSelected === 'home' }"
         >Inicio</a
       >
@@ -63,7 +59,6 @@
         class="mobile-menu-element text-center d-block brand-text-headline-xs p-2"
         routerLink="/about-us"
         role="button-us"
-        (click)="optionSelected = 'about-us'"
         [ngClass]="{ active: optionSelected === 'about-us' }"
         (click)="closeMenu()"
         >Sobre Nosotros</a
@@ -71,7 +66,7 @@
       <a
         class="mobile-menu-element text-center d-block brand-text-headline-xs p-2"
         role="button"
-        (click)="manageUser(); closeMenu(); optionSelected = 'auth'"
+        (click)="manageUser(); closeMenu()"
         [ngClass]="{ active: optionSelected === 'auth' }"
         >{{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}</a
       >
