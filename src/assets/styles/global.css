@@ -52,7 +52,6 @@
   line-height: 1.12rem;
 }
 
-
 .brand-text-body-xxs {
   font-size: 0.62rem;
   line-height: 1.12rem;
@@ -354,4 +353,9 @@
 
 .brand-nav-bar-menu {
   background-color: var(--header-menu-background) !important;
+}
+
+/* Menús */
+::ng-deep .mat-mdc-menu-content {
+  background: var(--header-background);
 }

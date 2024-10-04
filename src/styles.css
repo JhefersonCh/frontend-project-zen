@@ -15,3 +15,10 @@ body {
   font: 400 1rem / 1.5rem var(--font-family);
   height: calc(100vh - var(--heigth-nav-bar));
 }
+
+.mat-mdc-menu-content {
+  background: var(--deep-purple-100);
+}
+.mat-mdc-menu-item-text {
+  color: black;
+}

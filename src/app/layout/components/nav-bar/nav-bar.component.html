@@ -33,13 +33,46 @@
       role="button"
       >Sobre Nosotros</a
     >
-    <a
-      class="nav-bar-element text-center brand-text-headline-xxs"
-      role="button"
-      [ngClass]="{ active: optionSelected === 'auth' }"
-      (click)="manageUser()"
-      >{{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}</a
-    >
+
+    @if (isLoggedUser) {
+      <a
+        class="nav-bar-element text-center brand-text-headline-xxs"
+        type="button"
+        [matMenuTriggerFor]="animals"
+        >Options</a
+      >
+      <mat-menu #animals="matMenu" class="menu mt-2 customize">
+        <button mat-menu-item [matMenuTriggerFor]="vertebrates">
+          Vertebrates
+        </button>
+        <button mat-menu-item [matMenuTriggerFor]="invertebrates">
+          Invertebrates
+        </button>
+        <button mat-menu-item>Cerrar sesión</button>
+      </mat-menu>
+      <mat-menu #vertebrates="matMenu">
+        <button mat-menu-item>Birds</button>
+        <button mat-menu-item>Mammals</button>
+      </mat-menu>
+
+      <mat-menu #invertebrates="matMenu">
+        <button mat-menu-item>Insects</button>
+        <button mat-menu-item>Molluscs</button>
+        <button mat-menu-item>Crustaceans</button>
+        <button mat-menu-item>Corals</button>
+        <button mat-menu-item>Arachnids</button>
+        <button mat-menu-item>Velvet worms</button>
+        <button mat-menu-item>Horseshoe crabs</button>
+      </mat-menu>
+    } @else {
+      <a
+        class="nav-bar-element text-center brand-text-headline-xxs"
+        role="button"
+        [ngClass]="{ active: optionSelected === 'auth' }"
+        (click)="manageUser()"
+        >Iniciar sesión</a
+      >
+    }
   </nav>
 
   @if (isMenuOpen) {

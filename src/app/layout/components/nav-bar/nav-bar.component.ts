@@ -13,11 +13,13 @@ import { filter, Subscription } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth.service';
 import { LocalStorageService } from '../../../shared/services/localStorage.service';
 import { LogOutInterface } from '../../../auth/interfaces/logout.interface';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [RouterLink, NgClass, NgIf],
+  imports: [RouterLink, NgClass, NgIf, MatMenuModule, MatButtonModule],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
