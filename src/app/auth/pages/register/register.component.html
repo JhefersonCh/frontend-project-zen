@@ -11,7 +11,7 @@
       <p class="mb-0">Crea una nueva cuenta</p>
     </div>
 
-    <mat-vertical-stepper [linear]="true" #stepper class="w-100 h-100 bg-white ">
+    <mat-horizontal-stepper [linear]="false" #stepper class="w-100 h-100 bg-white ">
 
       <mat-step [stepControl]="formStep1">
         <form [formGroup]="formStep1">
@@ -20,7 +20,7 @@
           <input type="hidden" formControlName="creationDate" />
 
           <mat-form-field appearance="outline" class="w-100 mt-3">
-            <mat-label class="brand-required">Tipo de Identificación</mat-label>
+            <mat-label>Tipo de Identificación</mat-label>
             <mat-select formControlName="typeID" required>
               <mat-option *ngFor="let tipo of tiposIdentificacion" [value]="tipo">
                 {{ tipo }}
@@ -127,7 +127,7 @@
           </div>
         </form>
       </mat-step>
-    </mat-vertical-stepper>
+    </mat-horizontal-stepper>
     
     <div class="text-center mt-0">
     <span>¿Ya tienes una cuenta? </span>

@@ -60,7 +60,7 @@ export class RegisterComponent {
     });
 
     this.formStep2 = this._fb.group({
-      avatarUrl: ['', [Validators.required]],
+      avatarUrl: ['', ],
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
