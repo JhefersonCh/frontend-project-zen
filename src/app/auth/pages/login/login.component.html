@@ -1,82 +1,46 @@
-<div
-  class="h-100 w-100 row m-2 justify-content-center align-content-center d-flex"
->
+<div class="h-100 w-100 row m-2 justify-content-center align-content-center d-flex">
+  <div class="col-0 col-md-6 d-md-none d-flex align-items-center justify-content-center m-0 p-0">
+    <img src="../../assets/login_and_register/img1.png" alt="Descripción de la imagen" class="img-fluid brand-only-phone" />
+  </div>
   <section class="col-12 col-md-6 justify-content-center text-lg-center">
     <article class="d-flex flex-column">
       <form [formGroup]="form" class="d-flex flex-column text-center">
         <h3 class="fw-bold m-0 p-0">Iniciar sesión</h3>
         <p class="mb-4">Ingresa tus credenciales para acceder:</p>
 
-        <mat-form-field appearance="outline" hideRequiredMarker="true">
+        <mat-form-field appearance="outline" class="mt-2">
           <mat-label>Correo electrónico</mat-label>
-          <input
-            matInput
-            placeholder="Email"
-            formControlName="email"
-            class="m-0 p-0"
-          />
+          <input matInput placeholder="Email" formControlName="email" class="m-0 p-0" />
           <mat-icon matPrefix>email</mat-icon>
-          <mat-error *ngIf="form.get('email')?.hasError('required')"
-            >Email requerido</mat-error
-          >
-          <mat-error *ngIf="form.get('email')?.hasError('email')"
-            >Email inválido</mat-error
-          >
+          <mat-error *ngIf="form.get('email')?.hasError('required')">Email requerido</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">Email inválido</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" hideRequiredMarker="true">
+        <mat-form-field appearance="outline" class="mt-2">
           <mat-label>Contraseña</mat-label>
-          <input
-            [type]="showPassword ? 'password' : 'text'"
-            matInput
-            formControlName="password"
-          />
+          <input [type]="showPassword ? 'password' : 'text'" matInput formControlName="password" />
           <mat-icon matPrefix>lock</mat-icon>
-          <button
-            matSuffix
-            mat-icon-button
-            (click)="showPassword = !showPassword"
-            class="mr-1"
-          >
+          <button matSuffix mat-icon-button (click)="showPassword = !showPassword" class="mr-1">
             <fa-icon [icon]="showPassword ? eyeOpen : eyeClose"></fa-icon>
           </button>
-          <mat-error *ngIf="form.get('password')?.hasError('required')"
-            >Password is required</mat-error
-          >
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Contraseña requerida</mat-error>
         </mat-form-field>
 
-        <button
-          type="button"
-          class="btn btn-dark w-100 mb-4 mt-1"
-          (click)="login()"
-        >
+        <button type="button" class="btn btn-dark w-100 mb-4 mt-1" (click)="login()">
           Iniciar sesión
         </button>
 
         <div>
-          <a routerLink="/auth/recover-password" class="text-decoration-none"
-            >¿Olvidaste tu contraseña?</a
-          >
+          <a routerLink="/auth/recover-password" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
           <br />
           <span>¿No tienes una cuenta? </span>
-          <a
-            routerLink="/auth/register"
-            class="text-decoration-none"
-            tabindex="0"
-            >Regístrate aquí</a
-          >
+          <a routerLink="/auth/register" class="text-decoration-none" tabindex="0">Regístrate aquí</a>
         </div>
       </form>
     </article>
   </section>
 
-  <div
-    class="col-md-6 d-none d-md-flex align-items-center justify-content-center brand-only-phone m-0 p-0"
-  >
-    <img
-      src="../../assets/login_and_register/img1.png"
-      alt="Descripción de la imagen"
-      class="img-fluid"
-    />
+  <div class="col-md-6 col-0 d-flex align-items-center justify-content-center m-0 p-0">
+    <img src="../../assets/login_and_register/img1.png" alt="Descripción de la imagen" class="img-fluid brand-only-desktop" />
   </div>
 </div>

@@ -1,48 +1,73 @@
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-test',
   standalone: true,
-  imports: [ 
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatIcon,
-    FontAwesomeModule,
-    MatButtonModule,
-    CommonModule,
-    RouterModule,
-  ],
+  selector: 'app-test',
   templateUrl: './test.component.html',
-  styleUrl: './test.component.css'
-})
-export class TestComponent {
-  form: FormGroup;
-  eyeOpen = faEye;
-  eyeClose = faEyeSlash;
-  showPassword: boolean = false;
+  imports: [
+    // FormBuilder,
+    // FormGroup,
+    // Validators,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    FormsModule,
 
-  constructor(private _fb: FormBuilder) {
-    this.form = this._fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+  ],
+  styleUrls: ['./test.component.css'] // Ajusta el nombre del archivo según sea necesario
+})
+export class TestComponent implements OnInit {
+  profileForm: FormGroup;
+  isEditing: boolean = false;
+
+  constructor(private fb: FormBuilder) {
+    this.profileForm = this.fb.group({
+      fullName: [{ value: '', disabled: true }, Validators.required],
+      email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
+      phone: [{ value: '', disabled: true }, Validators.required],
+      avatarUrl: [{ value: '', disabled: true }],
+      username: [{ value: '', disabled: true }, Validators.required],
+      password: [{ value: '', disabled: true }, Validators.required],
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
     });
   }
+
+  ngOnInit(): void {
+    this.loadUserProfile();
+  }
+
+  loadUserProfile(): void {
+    // // Simulación de carga de datos del usuario
+    // this.userService.getUserProfile().subscribe(user => {
+    //   this.profileForm.patchValue(user);
+    // });
+  }
+
+  toggleEdit(): void {
+    this.isEditing = !this.isEditing;
+    if (this.isEditing) {
+      this.profileForm.enable(); // Habilita el formulario para editar
+    } else {
+      this.profileForm.disable(); // Deshabilita el formulario
+      this.loadUserProfile(); // Vuelve a cargar los datos originales
+    }
+  }
+
+  saveProfile(): void {
+    // if (this.profileForm.valid) {
+    //   const formValues = this.profileForm.value;
+    //   // Aquí puedes enviar los datos actualizados a tu servicio
+    //   this.userService.updateUserProfile(formValues).subscribe(response => {
+    //     // Maneja la respuesta aquí
+    //     console.log('Perfil actualizado', response);
+    //     this.isEditing = false; // Desactiva la edición
+    //     this.profileForm.disable(); // Deshabilita el formulario
+    //   });
+    // } else {
+    //   console.log('Formulario inválido');
+    // }
+  }
 }
-
-
-

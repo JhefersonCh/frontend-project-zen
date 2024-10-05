@@ -38,24 +38,23 @@
       <a
         class="nav-bar-element text-center brand-text-headline-xxs"
         type="button"
-        [matMenuTriggerFor]="animals"
-        >Options</a
+        [matMenuTriggerFor]="options"
+        >Opciones</a
       >
-      <mat-menu #animals="matMenu" class="menu mt-2 customize">
-        <button mat-menu-item [matMenuTriggerFor]="vertebrates">
-          Vertebrates
+      <mat-menu #options="matMenu" class="menu mt-2 customize">
+        <button mat-menu-item [matMenuTriggerFor]="UserProfile">
+          Tu cuenta
         </button>
-        <button mat-menu-item [matMenuTriggerFor]="invertebrates">
-          Invertebrates
+        <button mat-menu-item [matMenuTriggerFor]="Settings">
+          Configuraciones
         </button>
         <button mat-menu-item>Cerrar sesión</button>
       </mat-menu>
-      <mat-menu #vertebrates="matMenu">
-        <button mat-menu-item>Birds</button>
-        <button mat-menu-item>Mammals</button>
+      <mat-menu #UserProfile="matMenu">
+        <button mat-menu-item routerLink="/user/profile/">Tu perfil</button>
       </mat-menu>
 
-      <mat-menu #invertebrates="matMenu">
+      <mat-menu #Settings="matMenu">
         <button mat-menu-item>Insects</button>
         <button mat-menu-item>Molluscs</button>
         <button mat-menu-item>Crustaceans</button>

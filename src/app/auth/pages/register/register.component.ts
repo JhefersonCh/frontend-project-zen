@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,9 +13,12 @@ import { MatInputModule } from '@angular/material/input';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
+import { RegisterUserInterface } from '../../interfaces/register.interface';
+import  * as uuid  from 'uuid';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -45,6 +48,8 @@ export class RegisterComponent {
   eyeClose = faEyeSlash;
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  private readonly _userService: UserService = inject(UserService);
+  private readonly _router: Router = inject(Router);
 
   tiposIdentificacion: string[] = ['Cédula de ciudadanía', 'Tarjeta de Identidad', 'Pasaporte'];
 
@@ -56,7 +61,7 @@ export class RegisterComponent {
       identification: ['', Validators.required],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      phone: ['', ],
     });
 
     this.formStep2 = this._fb.group({
@@ -85,8 +90,22 @@ export class RegisterComponent {
 
   submitForm() {
     if (this.formStep2.valid && this.formStep1.valid) {
-      // Aquí va la lógica para enviar el formulario
-      console.log('Formulario enviado:', { ...this.formStep1.value, ...this.formStep2.value });
+      const userToRegister: RegisterUserInterface = {
+        id: uuid.v4(),
+        identification: this.formStep1.value.identification,
+        fullName: this.formStep1.value.fullName,
+        email: this.formStep1.value.email,
+        phone: this.formStep1.value.phone,
+        username: this.formStep2.value.username,
+        password: this.formStep2.value.password,
+        passwordConfirmation: this.formStep2.get('confirmPassword')?.value,
+        avatarUrl: this.formStep2.value.avatarUrl,
+      }
+      this._userService.registrer(userToRegister).subscribe({
+        next: () => {
+          this._router.navigate(['/login']);
+        }
+      })
     } else {
       // Muestra errores si uno de los formularios no es válido
     }

@@ -1,48 +1,109 @@
-<div class="h-100 w-100 row align-items-center justify-content-center">
-  <div class="col-md-6 d-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
-    <img src="../../assets/login_and_register/img2.png" alt="Descripción de la imagen"
-      class="col-md-6 d-flex align-items-center justify-content-center brand-only-phone m-0 p-0">
-  </div>
-  <section class="w-50 justify-content-center text-lg-center">
-    <article class="d-flex flex-column">
-      <form [formGroup]="form" class="d-flex flex-column">
+<div class="container">
+  <div class="row">
+    <div class="col-12">
 
-        <h3 class="fw-bold m-0 p-0">Registarse</h3>
-        <p class="mb-4">Crea una nueva cuenta</p>
+      <div class="fw-bold m-0 p-0">
+        <h3>Tu perfil</h3>
+      </div>
+      
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="file-upload">
+        <div class="row mb-5 gx-5">
+          <!-- Contact detail -->
+          <div class="col-xxl-8 mb-5">
+            <div class="bg-secondary-soft px-4 py-5 rounded">
+              <div class="row g-3">
+                <h4 class="fw-bold m-0 p-0">Información</h4>
+                <!-- Nombre Completo -->
+                <div class="col-md-6">
+                  <mat-label class="form-mat-label">Nombre Completo *</mat-label>
+                  <input matInput formControlName="fullName" [readonly]="!isEditing" class="form-control" />
+                </div>
+                <!-- Email -->
+                <div class="col-md-6">
+                  <mat-label class="form-mat-label">Email *</mat-label>
+                  <input matInput formControlName="email" [readonly]="!isEditing" class="form-control" />
+                </div>
+                <!-- Teléfono -->
+                <div class="col-md-6">
+                  <mat-label class="form-mat-label">Teléfono *</mat-label>
+                  <input matInput formControlName="phone" [readonly]="!isEditing" class="form-control" />
+                </div>
+                <!-- URL de Imagen -->
+                <div class="col-md-6">
+                  <mat-label class="form-mat-label">URL de Imagen *</mat-label>
+                  <input matInput formControlName="avatarUrl" [readonly]="!isEditing" class="form-control" />
+                </div>
+                <!-- Nombre de Usuario -->
+                <div class="col-md-6">
+                  <mat-label class="form-mat-label">Nombre de Usuario *</mat-label>
+                  <input matInput formControlName="username" [readonly]="!isEditing" class="form-control" />
+                </div>
+                <!-- Contraseña -->
+                <div class="col-md-6">
+                  <mat-label class="form-mat-label">Contraseña *</mat-label>
+                  <input matInput formControlName="password" [readonly]="!isEditing" type="password" class="form-control" />
+                </div>
+              </div> <!-- Row END -->
+            </div>
+          </div>
+          <!-- Upload profile -->
+          <div class="col-xxl-4">
+            <div class="bg-secondary-soft px-4 py-5 rounded">
+              <div class="row g-3">
+                <h4 class="fw-bold m-0 p-0">Sube tu foto de perfil</h4>
+                <div class="text-center">
+                  <!-- Image upload -->
+                  <img src="../../../../assets/login_and_register/userdefault.png" alt="">
+                  <div class="square position-relative display-2 mb-3">
+                    <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+                  </div>
 
-        <mat-form-field appearance="outline" hideRequiredMarker="true">
-          <mat-label>Nombre completo</mat-label>
-          <input matInput placeholder="Email" formControlName="email" />
-          <mat-icon matPrefix>account_circle</mat-icon>
-          <mat-error *ngIf="form.get('name')?.hasError('required')">Nombre requerido</mat-error>
-        </mat-form-field>
+                  <!-- Button -->
+                  <input type="file" id="customFile" name="file" hidden="">
+                  <mat-label class="btn btn-success-soft btn-block" for="customFile">Subir</mat-label>
+                  <button type="button" class="btn btn-danger-soft">Eliminar</button>
+                  <!-- Content -->
+                  <p class="text-muted mt-3 mb-0"><span class="me-1">Nota:</span> Tamaño mínimo 300px x 300px</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Row END -->
 
-        <mat-form-field appearance="outline" hideRequiredMarker="true">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput placeholder="Email" formControlName="email" />
-          <mat-icon matPrefix>email</mat-icon>
-          <mat-error *ngIf="form.get('email')?.hasError('required')">Email requerido</mat-error>
-          <mat-error *ngIf="form.get('email')?.hasError('email')">Email inválido</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" hideRequiredMarker="true">
-          <mat-label>Contraseña</mat-label>
-          <input [type]="showPassword ? 'password' : 'text'" matInput formControlName="password" />
-          <mat-icon matPrefix>lock</mat-icon>
-          <button matSuffix mat-icon-button (click)="showPassword = !showPassword" class="mr-1">
-            <fa-icon [icon]="showPassword ? eyeOpen : eyeClose"></fa-icon>
-          </button>
-          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
-        </mat-form-field>
-
-        <button type="submit" class="btn btn-dark w-100 mb-4">Registrarse </button>
-
-        <div class="text-center">
-          <span>¿Ya tienes una cuenta? </span>
-          <a routerLink="/auth/login" class="text-decoration-none">Inicia sesión aquí</a>
+        <!-- Cambiar contraseña -->
+        <div class="col-xxl-6">
+          <div class="bg-secondary-soft px-4 py-5 rounded">
+            <div class="row g-3">
+              <h4 class="fw-bold m-0 p-0">Cambiar Contraseña</h4>
+              <!-- Contraseña Antigua -->
+              <div class="col-md-6">
+                <mat-label for="exampleInputPassword1" class="form-mat-label">Contraseña Antigua *</mat-label>
+                <input matInput formControlName="oldPassword" type="password" class="form-control" />
+              </div>
+              <!-- Nueva Contraseña -->
+              <div class="col-md-6">
+                <mat-label for="exampleInputPassword2" class="form-mat-label">Nueva Contraseña *</mat-label>
+                <input matInput formControlName="newPassword" type="password" class="form-control" />
+              </div>
+              <!-- Confirmar Contraseña -->
+              <div class="col-md-12">
+                <mat-label for="exampleInputPassword3" class="form-mat-label">Confirmar Contraseña *</mat-label>
+                <input matInput formControlName="confirmPassword" type="password" class="form-control" />
+              </div>
+            </div>
+          </div>
         </div>
 
-      </form>
-    </article>
-  </section>
+        <!-- Botones -->
+        <div class="gap-3 d-md-flex justify-content-md-end text-center">
+          <button mat-raised-button color="primary" type="submit">
+            {{ isEditing ? 'Guardar' : 'Actualizar perfil' }}
+          </button>
+          <button mat-button type="button" (click)="toggleEdit()">
+            {{ isEditing ? 'Cancelar' : 'Editar' }}
+          </button>
+        </div>
+      </form> <!-- Form END -->
+    </div>
+  </div>
 </div>

@@ -22,3 +22,7 @@ body {
 .mat-mdc-menu-item-text {
   color: black;
 }
+
+app-login {
+  display: flex;
+}

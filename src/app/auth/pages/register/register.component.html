@@ -19,9 +19,10 @@
 
           <input type="hidden" formControlName="creationDate" />
 
-          <mat-form-field appearance="outline" class="w-100 mt-3">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>Tipo de Identificación</mat-label>
             <mat-select formControlName="typeID" required>
+                  <mat-option value="" disabled selected>Seleccione su tipo de documento</mat-option>
               <mat-option *ngFor="let tipo of tiposIdentificacion" [value]="tipo">
                 {{ tipo }}
               </mat-option>
@@ -32,7 +33,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100 mt-3 ">
+          <mat-form-field appearance="outline" class="w-100 mt-2 ">
             <mat-label>Identificación</mat-label>
             <input matInput formControlName="identification" required />
             <mat-icon matPrefix>perm_identity</mat-icon>
@@ -41,7 +42,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100 mt-3">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>Nombre Completo</mat-label>
             <input matInput formControlName="fullName" required />
             <mat-icon matPrefix>account_box</mat-icon>
@@ -50,7 +51,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100 mt-3">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>Correo Electrónico</mat-label>
             <input matInput formControlName="email" required />
             <mat-icon matPrefix>email</mat-icon>
@@ -62,16 +63,13 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100 mt-3">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>Teléfono</mat-label>
-            <input matInput formControlName="phone" required />
+            <input matInput formControlName="phone" />
             <mat-icon matPrefix>phone</mat-icon>
-            <mat-error *ngIf="formStep1.get('phone')?.hasError('required')">
-              Teléfono requerido
-            </mat-error>
           </mat-form-field>
 
-          <div class="d-flex justify-content-end mt-3">
+          <div class="d-flex justify-content-end mt-2">
             <button class="btn btn-dark" type="button" matStepperNext>Siguiente</button>
           </div>
         </form>
@@ -81,13 +79,13 @@
         <form [formGroup]="formStep2">
           <ng-template matStepLabel>Tu cuenta</ng-template>
 
-          <mat-form-field appearance="outline" class="w-100 mt-3">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>URL de Imagen</mat-label>
             <input matInput formControlName="avatarUrl" />
             <mat-icon matPrefix>image</mat-icon>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100 mt-3">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>Nombre de usuario</mat-label>
             <input matInput formControlName="username" required />
             <mat-icon matPrefix>person</mat-icon>
@@ -96,7 +94,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100 mt-3">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>Contraseña</mat-label>
             <input [type]="showPassword ? 'text' : 'password'" matInput formControlName="password" required />
             <mat-icon matPrefix>lock</mat-icon>
@@ -108,7 +106,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100 mt-3">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>Confirmar Contraseña</mat-label>
             <input [type]="showConfirmPassword ? 'text' : 'password'" matInput formControlName="confirmPassword"
               required />
@@ -121,7 +119,17 @@
             </mat-error>
           </mat-form-field>
 
-          <div class="d-flex justify-content-end">
+          <div class="d-flex justify-content-start">
+            <div *ngIf="formStep2.hasError('mismatch') && formStep2.get('confirmPassword')?.touched">
+              <mat-error>Las constraseñas no coinciden</mat-error>
+            </div>
+            
+            <div *ngIf="!formStep2.hasError('mismatch') && formStep2.get('confirmPassword')?.touched">
+              <mat-hint>Las contraseñas coinciden</mat-hint>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-2">
             <button matStepperPrevious class="btn btn-dark mr-3">Anterior</button>
             <button class="btn btn-dark" (click)="submitForm()">Registrarse</button>
           </div>
