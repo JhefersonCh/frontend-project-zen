@@ -1,5 +1,3 @@
-// import { UserService } from '../../../shared/services/user.service'; // Asegúrate de que esta ruta sea correcta
-// //import { ProfileInterface } from '../../interfaces/profile.interfaces';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,8 +20,6 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   isEditing: boolean = false;
 
-  // , private userService: UserService
-
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
       fullName: [''],
@@ -36,40 +32,32 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserProfile(); // Llama al método que usa UserService
+    this.getUserProfile();
   }
 
   getUserProfile(): void {
-    // const userId = 'user-id'; // Reemplaza con el ID de usuario real
-    // this.userService.getUserProfile(userId).subscribe({
-    //   next: (response) => {
-    //     this.profileForm.patchValue(response.data);
-    //   },
-    //   error: (err) => {
-    //     console.error('Error al obtener el perfil del usuario:', err);
-    //   }
-    // });
+
+    if (this.profileForm.valid) {
+
+      // Muestra errores si uno de los formularios no es válido
+    }
+    };
+    saveProfile(): void {
+      // if (this.isEditing) {
+      //   const updatedUser: ProfileInterface = this.profileForm.value;
+      //   this._userService.updateUserProfile(updatedUser).subscribe({
+      //     next: () => {
+      //       this.isEditing = false; // Salir del modo de edición
+      //     },
+      //     error: (err) => {
+      //       console.error('Error al actualizar el perfil:', err);
+      //     }
+      //   });
+      // }
+    }
+    toggleEdit(): void {
+      this.isEditing = false;
+      this.getUserProfile(); // Recarga el formulario con los datos actuales
+    }
   }
 
-  toggleEdit(): void {
-    this.isEditing = !this.isEditing;
-    if (!this.isEditing) {
-      this.saveProfile();
-    }
-  }
-
-  saveProfile(): void {
-    if (this.isEditing) {
-  //     const updatedUser: ProfileInterface = this.profileForm.value; // Asegúrate de que este tipo sea correcto
-  //     this.userService.updateUserProfile(updatedUser).subscribe({
-  //       next: () => {
-  //         this.isEditing = false; // Salir del modo de edición
-  //       },
-  //       error: (err) => {
-  //         console.error('Error al actualizar el perfil:', err);
-  //       }
-  //     });
-  //   }
-    }
-    }
-}
