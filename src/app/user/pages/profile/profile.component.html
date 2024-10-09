@@ -1,45 +1,112 @@
-<div class="profile-container">
-    <h2>Perfil de Usuario</h2>
-    <form [formGroup]="profileForm" (ngSubmit)=" getUserProfile()">
-      <mat-form-field appearance="fill">
-        <mat-label>Nombre Completo</mat-label>
-        <input matInput formControlName="fullName" [readonly]="!isEditing" />
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" [readonly]="!isEditing" />
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Teléfono</mat-label>
-        <input matInput formControlName="phone" [readonly]="!isEditing" />
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>URL de Imagen</mat-label>
-        <input matInput formControlName="avatarUrl" [readonly]="!isEditing" />
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Nombre de Usuario</mat-label>
-        <input matInput formControlName="username" [readonly]="!isEditing" />
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Contraseña</mat-label>
-        <input matInput formControlName="password" [readonly]="!isEditing" type="password" />
-      </mat-form-field>
-
-  
-      <div class="action-buttons">
-        <button mat-raised-button color="primary" type="submit">
-          {{ isEditing ? 'Guardar' : 'Editar Usuario' }}
-        </button>
-        <button mat-button type="button" (click)="toggleEdit()">
-          {{ isEditing ? 'Cancelar' : 'Editar' }}
-        </button>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="text-center">
+        <h3>Tu perfil</h3>
       </div>
-    </form>
+      
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="file-upload">
+        <div class="row mb-5 gx-5">
+          <!-- Contact detail -->
+          <div class="">
+            <div class="px-4 py-5 ">
+              <div class="row g-3 form-container">
+
+                <!-- Nombre Completo -->
+                  
+                  <h4>Información</h4>
+
+                  <div class="col-md-6">
+                    <mat-label>Nombre Completo *</mat-label>
+                    <input matInput formControlName="fullName" [readonly]="!isEditing" class="form-control" />
+                  </div>
+                  <!-- Email -->
+                  <div class="col-md-6">
+                    <mat-label>Email *</mat-label>
+                    <input matInput formControlName="email" [readonly]="!isEditing" class="form-control" />
+                  </div>
+                  <!-- Teléfono -->
+                  <div class="col-md-6">
+                    <mat-label>Teléfono *</mat-label>
+                    <input matInput formControlName="phone" [readonly]="!isEditing" class="form-control" />
+                  </div>
+                  <!-- URL de Imagen -->
+                  <div class="col-md-6">
+                    <mat-label>URL de Imagen *</mat-label>
+                    <input matInput formControlName="avatarUrl" [readonly]="!isEditing" class="form-control" />
+                  </div>
+                  <!-- Nombre de Usuario -->
+                  <div class="col-md-6">
+                    <mat-label>Nombre de Usuario *</mat-label>
+                    <input matInput formControlName="username" [readonly]="!isEditing" class="form-control" />
+                  </div>
+                  <!-- Contraseña -->
+                  <div class="col-md-6">
+                    <mat-label>Contraseña *</mat-label>
+                    <input matInput formControlName="password" [readonly]="!isEditing" type="password" class="form-control" />
+                  </div>
+
+              </div> <!-- Row END -->
+            </div>
+          </div>
+          <!-- Upload profile -->
+          <div class="">
+            <div class="px-4 py-5 rounded">
+              <div class="row g-3 form-container">
+                <h4>Sube tu foto de perfil</h4>
+                <div>
+                  <!-- Image upload -->
+                  <img src="../../../../assets/login_and_register/userdefault.png" alt="" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                  <div class="square position-relative display-2 mb-3">
+                    <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+                  </div>
+
+                  <!-- Button -->
+                  <input type="file" id="customFile" name="file" hidden="">
+                  <label class="btn btn-success btn-block mr-3" for="customFile">Subir</label>
+                  <button type="button" class="btn btn-danger">Eliminar</button>
+                  <!-- Content -->
+                  <p class="text-muted mt-3 mb-0"><span class="me-1">Nota:</span> Tamaño mínimo 300px x 300px</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Row END -->
+
+        <!-- Cambiar contraseña -->
+        <div class="">
+          <div class="px-4 py-5">
+            <div class="row g-3 form-container">
+              <h4>Cambiar Contraseña</h4>
+              <!-- Contraseña Antigua -->
+              <div class="col-md-6">
+                <mat-label for="exampleInputPassword1">Contraseña Antigua *</mat-label>
+                <input matInput formControlName="oldPassword" type="password" class="form-control" />
+              </div>
+              <!-- Nueva Contraseña -->
+              <div class="col-md-6">
+                <mat-label for="exampleInputPassword2">Nueva Contraseña *</mat-label>
+                <input matInput formControlName="newPassword" type="password" class="form-control" />
+              </div>
+              <!-- Confirmar Contraseña -->
+              <div class="col-md-12">
+                <mat-label for="exampleInputPassword3">Confirmar Contraseña *</mat-label>
+                <input matInput formControlName="confirmPassword" type="password" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-dark mr-3" type="submit">
+            {{ isEditing ? 'Guardar' : 'Actualizar perfil' }}
+          </button>
+          <button class="btn btn-dark" type="button" (click)="toggleEdit()">
+            {{ isEditing ? 'Cancelar' : 'Editar' }}
+          </button>
+        </div>
+      </form> <!-- Form END -->
+    </div>
   </div>
-  
+</div>

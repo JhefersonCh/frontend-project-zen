@@ -13,7 +13,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) {}
   private readonly _httpClient: HttpClient = inject(HttpClient);
 
-    getUserProfile(credentials: ProfileInterface): Observable<ApiResponseInterface<ProfileInterface>> {
+    deleteUser(credentials: ProfileInterface): Observable<ApiResponseInterface<ProfileInterface>> {
       
         const params = new HttpParams()
           .set('id', credentials.id)

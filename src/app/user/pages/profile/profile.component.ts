@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-profile',
   standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule
-  ],
+  selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
+  imports: [
+    // FormBuilder,
+    // FormGroup,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    FormsModule,
+
+  ],
+  styleUrls: ['./profile.component.css'] // Ajusta el nombre del archivo según sea necesario
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
@@ -22,42 +24,51 @@ export class ProfileComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      fullName: [''],
-      email: [''],
-      phone: [''],
-      avatarUrl: [''],
-      username: [''],
-      password: [''],
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      avatarUrl: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.getUserProfile();
+    this.loadUserProfile();
   }
 
-  getUserProfile(): void {
+  loadUserProfile(): void {
+    // // Simulación de carga de datos del usuario
+    // this.userService.getUserProfile().subscribe(user => {
+    //   this.profileForm.patchValue(user);
+    // });
+  }
 
-    if (this.profileForm.valid) {
-
-      // Muestra errores si uno de los formularios no es válido
-    }
-    };
-    saveProfile(): void {
-      // if (this.isEditing) {
-      //   const updatedUser: ProfileInterface = this.profileForm.value;
-      //   this._userService.updateUserProfile(updatedUser).subscribe({
-      //     next: () => {
-      //       this.isEditing = false; // Salir del modo de edición
-      //     },
-      //     error: (err) => {
-      //       console.error('Error al actualizar el perfil:', err);
-      //     }
-      //   });
-      // }
-    }
-    toggleEdit(): void {
-      this.isEditing = false;
-      this.getUserProfile(); // Recarga el formulario con los datos actuales
+  toggleEdit(): void {
+    this.isEditing = !this.isEditing;
+    if (this.isEditing) {
+      this.profileForm.enable(); // Habilita el formulario para editar
+    } else {
+      this.profileForm.disable(); // Deshabilita el formulario
+      this.loadUserProfile(); // Vuelve a cargar los datos originales
     }
   }
 
+  saveProfile(): void {
+    // if (this.profileForm.valid) {
+    //   const formValues = this.profileForm.value;
+    //   // Aquí puedes enviar los datos actualizados a tu servicio
+    //   this.userService.updateUserProfile(formValues).subscribe(response => {
+    //     // Maneja la respuesta aquí
+    //     console.log('Perfil actualizado', response);
+    //     this.isEditing = false; // Desactiva la edición
+    //     this.profileForm.disable(); // Deshabilita el formulario
+    //   });
+    // } else {
+    //   console.log('Formulario inválido');
+    // }
+  }
+}

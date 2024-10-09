@@ -1,8 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-
-      <div class="fw-bold m-0 p-0">
+      <div class="text-center">
         <h3>Tu perfil</h3>
       </div>
       
@@ -10,37 +9,37 @@
         <div class="row mb-5 gx-5">
           <!-- Contact detail -->
           <div class="col-xxl-8 mb-5">
-            <div class="bg-secondary-soft px-4 py-5 rounded">
+            <div class="px-4 py-5 rounded">
               <div class="row g-3">
-                <h4 class="fw-bold m-0 p-0">Información</h4>
+                <h4 class="text-center">Información</h4>
                 <!-- Nombre Completo -->
                 <div class="col-md-6">
-                  <mat-label class="form-mat-label">Nombre Completo *</mat-label>
+                  <mat-label>Nombre Completo *</mat-label>
                   <input matInput formControlName="fullName" [readonly]="!isEditing" class="form-control" />
                 </div>
                 <!-- Email -->
                 <div class="col-md-6">
-                  <mat-label class="form-mat-label">Email *</mat-label>
+                  <mat-label>Email *</mat-label>
                   <input matInput formControlName="email" [readonly]="!isEditing" class="form-control" />
                 </div>
                 <!-- Teléfono -->
                 <div class="col-md-6">
-                  <mat-label class="form-mat-label">Teléfono *</mat-label>
+                  <mat-label>Teléfono *</mat-label>
                   <input matInput formControlName="phone" [readonly]="!isEditing" class="form-control" />
                 </div>
                 <!-- URL de Imagen -->
                 <div class="col-md-6">
-                  <mat-label class="form-mat-label">URL de Imagen *</mat-label>
+                  <mat-label>URL de Imagen *</mat-label>
                   <input matInput formControlName="avatarUrl" [readonly]="!isEditing" class="form-control" />
                 </div>
                 <!-- Nombre de Usuario -->
                 <div class="col-md-6">
-                  <mat-label class="form-mat-label">Nombre de Usuario *</mat-label>
+                  <mat-label>Nombre de Usuario *</mat-label>
                   <input matInput formControlName="username" [readonly]="!isEditing" class="form-control" />
                 </div>
                 <!-- Contraseña -->
                 <div class="col-md-6">
-                  <mat-label class="form-mat-label">Contraseña *</mat-label>
+                  <mat-label>Contraseña *</mat-label>
                   <input matInput formControlName="password" [readonly]="!isEditing" type="password" class="form-control" />
                 </div>
               </div> <!-- Row END -->
@@ -48,20 +47,20 @@
           </div>
           <!-- Upload profile -->
           <div class="col-xxl-4">
-            <div class="bg-secondary-soft px-4 py-5 rounded">
+            <div class="px-4 py-5 rounded">
               <div class="row g-3">
-                <h4 class="fw-bold m-0 p-0">Sube tu foto de perfil</h4>
+                <h4 class="text-center">Sube tu foto de perfil</h4>
                 <div class="text-center">
                   <!-- Image upload -->
-                  <img src="../../../../assets/login_and_register/userdefault.png" alt="">
+                  <img src="../../../../assets/login_and_register/userdefault.png" alt="" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
                   <div class="square position-relative display-2 mb-3">
                     <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
                   </div>
 
                   <!-- Button -->
                   <input type="file" id="customFile" name="file" hidden="">
-                  <mat-label class="btn btn-success-soft btn-block" for="customFile">Subir</mat-label>
-                  <button type="button" class="btn btn-danger-soft">Eliminar</button>
+                  <label class="btn btn-success btn-block mr-3" for="customFile">Subir</label>
+                  <button type="button" class="btn btn-danger">Eliminar</button>
                   <!-- Content -->
                   <p class="text-muted mt-3 mb-0"><span class="me-1">Nota:</span> Tamaño mínimo 300px x 300px</p>
                 </div>
@@ -72,22 +71,22 @@
 
         <!-- Cambiar contraseña -->
         <div class="col-xxl-6">
-          <div class="bg-secondary-soft px-4 py-5 rounded">
+          <div class="px-4 py-5">
             <div class="row g-3">
-              <h4 class="fw-bold m-0 p-0">Cambiar Contraseña</h4>
+              <h4 class="text-center">Cambiar Contraseña</h4>
               <!-- Contraseña Antigua -->
               <div class="col-md-6">
-                <mat-label for="exampleInputPassword1" class="form-mat-label">Contraseña Antigua *</mat-label>
+                <mat-label for="exampleInputPassword1">Contraseña Antigua *</mat-label>
                 <input matInput formControlName="oldPassword" type="password" class="form-control" />
               </div>
               <!-- Nueva Contraseña -->
               <div class="col-md-6">
-                <mat-label for="exampleInputPassword2" class="form-mat-label">Nueva Contraseña *</mat-label>
+                <mat-label for="exampleInputPassword2">Nueva Contraseña *</mat-label>
                 <input matInput formControlName="newPassword" type="password" class="form-control" />
               </div>
               <!-- Confirmar Contraseña -->
               <div class="col-md-12">
-                <mat-label for="exampleInputPassword3" class="form-mat-label">Confirmar Contraseña *</mat-label>
+                <mat-label for="exampleInputPassword3">Confirmar Contraseña *</mat-label>
                 <input matInput formControlName="confirmPassword" type="password" class="form-control" />
               </div>
             </div>
@@ -96,10 +95,10 @@
 
         <!-- Botones -->
         <div class="gap-3 d-md-flex justify-content-md-end text-center">
-          <button mat-raised-button color="primary" type="submit">
+          <button class="btn btn-dark" type="submit">
             {{ isEditing ? 'Guardar' : 'Actualizar perfil' }}
           </button>
-          <button mat-button type="button" (click)="toggleEdit()">
+          <button class="btn btn-dark" type="button" (click)="toggleEdit()">
             {{ isEditing ? 'Cancelar' : 'Editar' }}
           </button>
         </div>

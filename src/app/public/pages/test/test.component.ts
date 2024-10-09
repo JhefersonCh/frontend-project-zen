@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   standalone: true,
@@ -9,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   imports: [
     // FormBuilder,
     // FormGroup,
-    // Validators,
+    MatInputModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     FormsModule,
@@ -23,15 +24,15 @@ export class TestComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      fullName: [{ value: '', disabled: true }, Validators.required],
-      email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
-      phone: [{ value: '', disabled: true }, Validators.required],
-      avatarUrl: [{ value: '', disabled: true }],
-      username: [{ value: '', disabled: true }, Validators.required],
-      password: [{ value: '', disabled: true }, Validators.required],
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      avatarUrl: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
       oldPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
   }
 
