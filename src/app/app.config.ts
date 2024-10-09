@@ -22,6 +22,10 @@ import { TransformDateService } from './shared/services/transform-date.service';
 import { PreviousUrlService } from './shared/services/previous-url.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { authInterceptor } from './shared/interceptors/auth.interceptor';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,7 +37,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       MatBottomSheetModule,
       MatDialogModule,
-      PreviousUrlService
+      PreviousUrlService,
+      
     ),
     { provide: MatPaginatorIntl, useValue: getMaterialPaginatorTranslations() },
     {

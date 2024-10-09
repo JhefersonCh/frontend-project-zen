@@ -17,7 +17,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { RegisterUserInterface } from '../../interfaces/register.interface';
-import  * as uuid  from 'uuid';
+import * as uuid from 'uuid';
 import { UserService } from '../../../shared/services/user.service';
 
 @Component({
@@ -33,17 +33,15 @@ import { UserService } from '../../../shared/services/user.service';
     CommonModule,
     RouterModule,
     MatStepperModule,
-    MatSelectModule,
+    MatSelectModule
   ],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  
   formStep1: FormGroup;
   formStep2: FormGroup;
-  currentStep: string = "one"; 
+  currentStep: string = 'one';
   eyeOpen = faEye;
   eyeClose = faEyeSlash;
   showPassword: boolean = false;
@@ -51,27 +49,34 @@ export class RegisterComponent {
   private readonly _userService: UserService = inject(UserService);
   private readonly _router: Router = inject(Router);
 
-  tiposIdentificacion: string[] = ['Cédula de ciudadanía', 'Tarjeta de Identidad', 'Pasaporte'];
+  identificationTypes: { type: string; id: number }[] = [
+    { type: 'Cédula de ciudadanía', id: 1 },
+    { type: 'Tarjeta de Identidad', id: 2 },
+    { type: 'Pasaporte', id: 3 },
+    { type: 'Cédula de extrangería', id: 4 }
+  ];
 
   constructor(private _fb: FormBuilder) {
-
     this.formStep1 = this._fb.group({
       creationDate: [new Date()],
-      typeID: ['', Validators.required],
+      identificationTypeId: ['', Validators.required],
       identification: ['', Validators.required],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', ],
+      phone: ['']
     });
 
-    this.formStep2 = this._fb.group({
-      avatarUrl: ['', ],
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
-    }, {
-      validators: this.passwordMatchValidator 
-    });
+    this.formStep2 = this._fb.group(
+      {
+        avatarUrl: [''],
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required]
+      },
+      {
+        validators: this.passwordMatchValidator
+      }
+    );
   }
 
   passwordMatchValidator(formGroup: AbstractControl) {
@@ -82,7 +87,7 @@ export class RegisterComponent {
 
   nextStep() {
     if (this.formStep1.valid) {
-      this.currentStep = "two"; 
+      this.currentStep = 'two';
     } else {
       // Lógica para mostrar mensajes de error
     }
@@ -100,12 +105,13 @@ export class RegisterComponent {
         password: this.formStep2.value.password,
         passwordConfirmation: this.formStep2.get('confirmPassword')?.value,
         avatarUrl: this.formStep2.value.avatarUrl,
-      }
+        identificationTypeId: 1
+      };
       this._userService.registrer(userToRegister).subscribe({
         next: () => {
           this._router.navigate(['/login']);
         }
-      })
+      });
     } else {
       // Muestra errores si uno de los formularios no es válido
     }
@@ -118,6 +124,4 @@ export class RegisterComponent {
   toggleConfirmPasswordVisibility(): void {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
-
-  
 }

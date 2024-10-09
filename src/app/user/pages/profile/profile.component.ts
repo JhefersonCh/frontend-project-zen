@@ -1,74 +1,59 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
+import { Component, inject, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LocalStorageService } from '../../../shared/services/localStorage.service';
+import { DatePipe } from '@angular/common';
+import { UserInterface } from '../../../shared/interfaces/user.interface';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
-  standalone: true,
   selector: 'app-profile',
   templateUrl: './profile.component.html',
+  standalone: true,
   imports: [
-    // FormBuilder,
-    // FormGroup,
-    MatInputModule,
+    MatIcon,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    FormsModule,
-
+    DatePipe,
   ],
-  styleUrls: ['./profile.component.css'] // Ajusta el nombre del archivo según sea necesario
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  profileForm: FormGroup;
   isEditing: boolean = false;
+  user?: UserInterface;
 
-  constructor(private fb: FormBuilder) {
-    this.profileForm = this.fb.group({
-      fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      avatarUrl: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      oldPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    });
-  }
+  private readonly _profileService: UserService = inject(UserService);
+  private readonly _localStorageService: LocalStorageService =
+    inject(LocalStorageService);
 
   ngOnInit(): void {
     this.loadUserProfile();
   }
 
   loadUserProfile(): void {
-    // // Simulación de carga de datos del usuario
-    // this.userService.getUserProfile().subscribe(user => {
-    //   this.profileForm.patchValue(user);
-    // });
+    const userId: string =
+      this._localStorageService.getAllSessionData()?.user?.id;
+
+    userId &&
+      this._profileService.getUserProfile(userId).subscribe({
+        next: (response) => {
+          this.user = response?.data;
+        },
+        error: (error) => {
+          console.error('Error:', error);
+        }
+      });
   }
 
-  toggleEdit(): void {
+  editProfile(): void {
     this.isEditing = !this.isEditing;
-    if (this.isEditing) {
-      this.profileForm.enable(); // Habilita el formulario para editar
-    } else {
-      this.profileForm.disable(); // Deshabilita el formulario
-      this.loadUserProfile(); // Vuelve a cargar los datos originales
-    }
-  }
-
-  saveProfile(): void {
-    // if (this.profileForm.valid) {
-    //   const formValues = this.profileForm.value;
-    //   // Aquí puedes enviar los datos actualizados a tu servicio
-    //   this.userService.updateUserProfile(formValues).subscribe(response => {
-    //     // Maneja la respuesta aquí
-    //     console.log('Perfil actualizado', response);
-    //     this.isEditing = false; // Desactiva la edición
-    //     this.profileForm.disable(); // Deshabilita el formulario
-    //   });
-    // } else {
-    //   console.log('Formulario inválido');
-    // }
+    console.log(this.isEditing ? 'Editing profile' : 'Editing canceled');
+    // Aquí puedes habilitar o deshabilitar los campos de edición según isEditing
   }
 }

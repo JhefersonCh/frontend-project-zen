@@ -21,14 +21,14 @@
 
           <mat-form-field appearance="outline" class="w-100 mt-2">
             <mat-label>Tipo de Identificación</mat-label>
-            <mat-select formControlName="typeID" required>
+            <mat-select formControlName="identificationTypeId" required>
                   <mat-option value="" disabled selected>Seleccione su tipo de documento</mat-option>
-              <mat-option *ngFor="let tipo of tiposIdentificacion" [value]="tipo">
-                {{ tipo }}
+              <mat-option *ngFor="let type of identificationTypes" [value]="type.id">
+                {{ type.type }}
               </mat-option>
             </mat-select>
             <mat-icon matPrefix>table_chart</mat-icon>
-            <mat-error *ngIf="formStep1.get('typeID')?.hasError('required')">
+            <mat-error *ngIf="formStep1.get('identificationTypeId')?.hasError('required')">
               Tipo de identificación requerido
             </mat-error>
           </mat-form-field>

@@ -8,4 +8,5 @@ export interface RegisterUserInterface {
     email:                string;
     password:             string;
     passwordConfirmation: string;
+    identificationTypeId: number,
 }

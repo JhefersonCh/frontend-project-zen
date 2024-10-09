@@ -367,6 +367,12 @@
   border-radius: 50%;
 }
 
+.user-avatar-profile {
+  width: 15%;
+  height: 15%;
+  border-radius: 50%;
+}
+
 /* Formularios */
 .form-container {
   width: 100%;
@@ -375,4 +381,5 @@
   background-color: #f9f9f9; /* Color de fondo claro */
   border-radius: 8px; /* Bordes redondeados */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
+  margin-bottom: 5px;
 }
