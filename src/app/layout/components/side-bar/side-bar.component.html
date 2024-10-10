@@ -1,0 +1,38 @@
+<aside [ngClass]="{ collapsed: isCollapsed }" class="p-4">
+  <div class="toggle-button-wrapper">
+    <button
+      (click)="toggleSidebar()"
+      mat-icon-button
+      class="toggle-button text-danger"
+    >
+      <mat-icon *ngIf="isCollapsed">keyboard_arrow_right</mat-icon>
+      <mat-icon *ngIf="!isCollapsed">keyboard_arrow_left</mat-icon>
+    </button>
+  </div>
+  <nav>
+    <ul class="nav flex-column mt-5">
+      @for (item of menuWithItems; track $index) {
+        <span class="nav-item brand-text-headline-s">
+          <a class="nav-link">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span *ngIf="!isCollapsed">{{ item.module }}</span>
+          </a>
+        </span>
+        @for (option of item.items; track $index) {
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [ngClass]="{
+                active: currentRoute === option.route
+              }"
+              [routerLink]="option.route"
+            >
+              <mat-icon>{{ option.icon }}</mat-icon>
+              <span *ngIf="!isCollapsed">{{ option.name }}</span>
+            </a>
+          </li>
+        }
+      }
+    </ul>
+  </nav>
+</aside>

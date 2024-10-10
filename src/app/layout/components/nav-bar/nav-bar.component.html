@@ -1,13 +1,26 @@
-<header class="d-flex justify-content-between align-items-center text-white px-4 brand-nav-bar">
-  <a class="text-decoration-none text-white fw-bold brand-cursor-pointer brand-text-headline-m" routerLink="/">
+<header
+  class="d-flex justify-content-between align-items-center text-white px-4 brand-nav-bar"
+>
+  <a
+    class="text-decoration-none text-white fw-bold brand-cursor-pointer brand-text-headline-m"
+    routerLink="/"
+  >
     ProjectZen
-  </a> 
+  </a>
 
   <!-- Botón de navegación para móviles -->
-  <button class="navbar-toggler d-block d-md-none border-0 bg-transparent" type="button" (click)="toggleMenu()">
-    <img *ngIf="isLoggedUser; else loginButton" [src]="userImage || '../../assets/login_and_register/userdefault.png'" 
-         alt="User Image" class="user-avatar" 
-         style="width: 40px; height: 40px; border-radius: 50%;" />
+  <button
+    class="navbar-toggler d-block d-md-none border-0 bg-transparent"
+    type="button"
+    (click)="toggleMenu()"
+  >
+    <img
+      *ngIf="isLoggedUser; else loginButton"
+      [src]="userImage || '../../assets/login_and_register/userdefault.png'"
+      alt="User Image"
+      class="user-avatar"
+      style="width: 40px; height: 40px; border-radius: 50%"
+    />
     <!-- Muestra el botón "Iniciar sesión" si no está logueado -->
     <ng-template #loginButton>
       <span class="text-white">Iniciar sesión</span>
@@ -16,56 +29,95 @@
 
   <!-- Barra de navegación para pantallas grandes -->
   <nav class="d-none d-md-flex align-items-center gap-4">
-    <a class="nav-bar-element text-center brand-text-headline-xxs" routerLink="home" role="button"
-      [ngClass]="{ active: optionSelected === 'home' }">Inicio</a>
-    <a class="nav-bar-element text-center brand-text-headline-xxs" routerLink="/about-us"
-      [ngClass]="{ active: optionSelected === 'about-us' }" role="button">Sobre Nosotros</a>
+    <a
+      class="nav-bar-element text-center brand-text-headline-xxs"
+      routerLink="home"
+      role="button"
+      [ngClass]="{ active: optionSelected === 'home' }"
+      >Inicio</a
+    >
+    <a
+      class="nav-bar-element text-center brand-text-headline-xxs"
+      routerLink="/blog"
+      role="button"
+      [ngClass]="{ active: optionSelected === 'projects' }"
+      >Proyectos
+    </a>
+    <a
+      class="nav-bar-element text-center brand-text-headline-xxs"
+      routerLink="/about-us"
+      [ngClass]="{ active: optionSelected === 'about-us' }"
+      role="button"
+      >Sobre Nosotros</a
+    >
 
-    <!-- Menú desplegable de usuario si está logueado -->
-    <a *ngIf="isLoggedUser; else loginOption" class="nav-bar-element text-center brand-text-headline-xxs" 
-       type="button" [matMenuTriggerFor]="options">
-      <img [src]="userImage || '../../assets/login_and_register/userdefault.png'" alt="User Image" class="user-avatar" />
+    <a
+      *ngIf="isLoggedUser; else loginOption"
+      class="nav-bar-element text-center brand-text-headline-xxs"
+      type="button"
+      [matMenuTriggerFor]="options"
+    >
+      <img
+        [src]="userImage || '../../assets/login_and_register/userdefault.png'"
+        alt="User Image"
+        class="user-avatar"
+      />
     </a>
 
-    <!-- Botón "Iniciar sesión" si no está logueado -->
     <ng-template #loginOption>
-      <a class="nav-bar-element text-center brand-text-headline-xxs" routerLink="/auth/login">Iniciar sesión</a>
+      <a
+        class="nav-bar-element text-center brand-text-headline-xxs"
+        routerLink="/auth/login"
+        >Iniciar sesión</a
+      >
     </ng-template>
 
     <mat-menu #options="matMenu" class="menu mt-2 w-100">
       <a routerLink="/../../user/profile" class="text-decoration-none">
         <button mat-menu-item class="d-flex align-items-center">
-          <img [src]="userImage || '../../assets/login_and_register/userdefault.png'" alt="User Image" class="user-avatar me-2"
-            style="width: 30px; height: 30px; border-radius: 50%;" />
+          <img
+            [src]="
+              userImage || '../../assets/login_and_register/userdefault.png'
+            "
+            alt="User Image"
+            class="user-avatar me-2"
+            style="width: 30px; height: 30px; border-radius: 50%"
+          />
           <span>{{ userName || 'Invitado' }}</span>
         </button>
       </a>
 
-      <button mat-menu-item [matMenuTriggerFor]="Settings">
-        Configuraciones
-      </button>
-    </mat-menu>
-
-    <mat-menu #Settings="matMenu">
-      <button mat-menu-item>Insects</button>
-      <button mat-menu-item>Molluscs</button>
-      <button mat-menu-item>Crustaceans</button>
-      <button mat-menu-item>Corals</button>
-      <button mat-menu-item>Arachnids</button>
-      <button mat-menu-item>Velvet worms</button>
-      <button mat-menu-item>Horseshoe crabs</button>
+      <button mat-menu-item (click)="manageUser()">Cerrar seción</button>
     </mat-menu>
   </nav>
 
   <!-- Menú móvil -->
-  <nav class="d-md-none mobile-menu brand-text-headline-m brand-nav-bar-menu w-100 position-absolute z-3"
-    [ngClass]="{ 'd-block': isMenuOpen, 'd-none': !isMenuOpen }">
-    <a class="mobile-menu-element text-center d-block brand-text-headline-xs p-2" routerLink="/" role="button"
-      (click)="closeMenu()" [ngClass]="{ active: optionSelected === 'home' }">Inicio</a>
-    <a class="mobile-menu-element text-center d-block brand-text-headline-xs p-2" routerLink="/about-us"
-      role="button-us" [ngClass]="{ active: optionSelected === 'about-us' }" (click)="closeMenu()">Sobre Nosotros</a>
-    <a class="mobile-menu-element text-center d-block brand-text-headline-xs p-2" role="button"
-      (click)="manageUser(); closeMenu()" [ngClass]="{ active: optionSelected === 'auth' }">
+  <nav
+    class="d-md-none mobile-menu brand-text-headline-m brand-nav-bar-menu w-100 position-absolute z-3"
+    [ngClass]="{ 'd-block': isMenuOpen, 'd-none': !isMenuOpen }"
+  >
+    <a
+      class="mobile-menu-element text-center d-block brand-text-headline-xs p-2"
+      routerLink="/"
+      role="button"
+      (click)="closeMenu()"
+      [ngClass]="{ active: optionSelected === 'home' }"
+      >Inicio</a
+    >
+    <a
+      class="mobile-menu-element text-center d-block brand-text-headline-xs p-2"
+      routerLink="/about-us"
+      role="button-us"
+      [ngClass]="{ active: optionSelected === 'about-us' }"
+      (click)="closeMenu()"
+      >Sobre Nosotros</a
+    >
+    <a
+      class="mobile-menu-element text-center d-block brand-text-headline-xs p-2"
+      role="button"
+      (click)="manageUser(); closeMenu()"
+      [ngClass]="{ active: optionSelected === 'auth' }"
+    >
       {{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}
     </a>
   </nav>
