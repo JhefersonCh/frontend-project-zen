@@ -38,13 +38,6 @@
     >
     <a
       class="nav-bar-element text-center brand-text-headline-xxs"
-      routerLink="/blog"
-      role="button"
-      [ngClass]="{ active: optionSelected === 'projects' }"
-      >Proyectos
-    </a>
-    <a
-      class="nav-bar-element text-center brand-text-headline-xxs"
       routerLink="/about-us"
       [ngClass]="{ active: optionSelected === 'about-us' }"
       role="button"
@@ -68,6 +61,7 @@
       <a
         class="nav-bar-element text-center brand-text-headline-xxs"
         routerLink="/auth/login"
+        [ngClass]="{ active: optionSelected === 'auth' }"
         >Iniciar sesión</a
       >
     </ng-template>
