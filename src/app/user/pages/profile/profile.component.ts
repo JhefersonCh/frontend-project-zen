@@ -6,10 +6,11 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../../shared/services/localStorage.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { UserService } from '../../../shared/services/user.service';
 import { RouterModule } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-profile',
@@ -23,12 +24,15 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     DatePipe,
     RouterModule,
+    CommonModule,
+    MatFormFieldModule
   ],
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   isEditing: boolean = false;
   user?: UserInterface;
+  isLoading = true;
 
   private readonly _profileService: UserService = inject(UserService);
   private readonly _localStorageService: LocalStorageService =
@@ -48,9 +52,13 @@ export class ProfileComponent implements OnInit {
           this.user = response?.data;
         },
         error: (error) => {
-          console.error('Error:', error);
+          console.error('Error al cargar el usuario', error);
         }
       });
+    /* Tiempo de recarga del profile al llamar al backend */
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 0);
   }
 
   editProfile(): void {
