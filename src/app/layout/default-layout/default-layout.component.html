@@ -1,4 +1,4 @@
-<app-nav-bar class="brand-fixed-top" />
+<app-nav-bar [userName]="userInfo?.email || ''" class="brand-fixed-top" />
 <article class="d-flex">
   @if (isLoggedUser) {
     <app-side-bar

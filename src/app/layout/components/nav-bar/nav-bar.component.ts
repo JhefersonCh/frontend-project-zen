@@ -3,6 +3,7 @@ import { NgClass, NgIf } from '@angular/common';
 import {
   Component,
   inject,
+  Input,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -24,8 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() userName?: string;
   userImage: string | null;
-  userName: string | null;
 
   isLoggedUser: boolean = false;
   router: Router = inject(Router);
@@ -40,10 +41,11 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor() {
     this.userImage = null;
-    this.userName = 'Test';
   }
 
   ngOnInit(): void {
+
+    
     this._subscription.add(
       this._authService._isLoggedSubject.subscribe((isLogged) => {
         this.isLoggedUser = isLogged;

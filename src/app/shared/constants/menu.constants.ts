@@ -30,6 +30,6 @@ export enum UserRole {
 export type RolesType = 'Admin' | 'User';
 
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
-  admin: ['Proyectos', 'Test'],
+  admin: ['Proyectos','Test'],
   user: ['Test']
 };
