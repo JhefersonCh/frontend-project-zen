@@ -9,6 +9,7 @@ import { LocalStorageService } from '../../../shared/services/localStorage.servi
 import { DatePipe } from '@angular/common';
 import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { UserService } from '../../../shared/services/user.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ import { UserService } from '../../../shared/services/user.service';
     MatCardModule,
     ReactiveFormsModule,
     DatePipe,
+    RouterModule,
   ],
   styleUrls: ['./profile.component.css']
 })

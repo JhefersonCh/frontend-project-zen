@@ -1,0 +1,35 @@
+/* Fondo de profile */
+.profile-cover {
+    position: relative;
+    height: 150px;
+    width: 100%;
+    background: linear-gradient(0deg, #f62, #ff9, #ff9);
+  }
+  
+  /* Contenedor de imagen de profile */
+  .profile {
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 5px;
+    box-shadow: 0 2px 5px #0009;
+    background: #fff;
+  }
+  
+  
+/* Formularios */
+.form-container {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+  }
+  
+  

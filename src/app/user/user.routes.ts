@@ -20,7 +20,7 @@ export const userRoutes: Routes = [
       },
 
       {
-        path: ':id/edit',
+        path: 'edit-user',
         loadComponent: () =>
           import('./pages/edit-user/edit-user.component').then(
             (m) => m.EditUserComponent
