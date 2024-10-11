@@ -58,7 +58,7 @@ export class ProfileComponent implements OnInit {
     /* Tiempo de recarga del profile al llamar al backend */
     setTimeout(() => {
       this.isLoading = false;
-    }, 0);
+    }, 2000);
   }
 
   editProfile(): void {
