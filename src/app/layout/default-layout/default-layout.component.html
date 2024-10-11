@@ -1,9 +1,15 @@
 <app-nav-bar class="brand-fixed-top" />
-<div>
-  <main class="brand-router-outlet-container">
-    <div class="h-100 w-100">
+<article class="d-flex">
+  @if (isLoggedUser) {
+    <app-side-bar
+      [userRole]="userInfo?.role?.code || ''"
+      class="brand-side-bar"
+    ></app-side-bar>
+  }
+  <div class="app-container w-100">
+    <main class="brand-router-outlet-container">
       <router-outlet></router-outlet>
-    </div>
-  </main>
-  <app-footer></app-footer>
-</div>
+    </main>
+    <app-footer></app-footer>
+  </div>
+</article>

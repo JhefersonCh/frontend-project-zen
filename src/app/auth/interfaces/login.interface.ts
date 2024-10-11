@@ -21,4 +21,14 @@ export interface Tokens {
 export interface User {
   email: string;
   id: string;
+  rol: Roles;
+}
+
+export interface Roles {
+  id: string;
+  name: string;
+  code: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
 }

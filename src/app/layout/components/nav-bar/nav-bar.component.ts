@@ -19,18 +19,11 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [
-    RouterLink, 
-    NgClass, 
-    NgIf, 
-    MatMenuModule, 
-    MatButtonModule
-  ],
+  imports: [RouterLink, NgClass, NgIf, MatMenuModule, MatButtonModule],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
-
   userImage: string | null;
   userName: string | null;
 
@@ -67,6 +60,7 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(() => {
         this.module = this.router.url.split('/');
         this.optionSelected = this.module[1];
+        this.isLoggedUser = this._authService.isAuthenticated();
       });
   }
 

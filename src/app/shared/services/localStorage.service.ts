@@ -19,10 +19,6 @@ export class LocalStorageService {
   }
 
   getUserData() {
-    if (!this.isLocalStorageAvailable()) {
-      return null;
-    }
-
     const allData = localStorage.getItem('_sessionData');
     if (allData) {
       try {
