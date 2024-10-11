@@ -30,7 +30,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  isEditing: boolean = false;
   user?: UserInterface;
   isLoading = true;
 
@@ -58,12 +57,7 @@ export class ProfileComponent implements OnInit {
     /* Tiempo de recarga del profile al llamar al backend */
     setTimeout(() => {
       this.isLoading = false;
-    }, 0);
+    }, 2000);
   }
 
-  editProfile(): void {
-    this.isEditing = !this.isEditing;
-    console.log(this.isEditing ? 'Editing profile' : 'Editing canceled');
-    // Aquí puedes habilitar o deshabilitar los campos de edición según isEditing
-  }
 }

@@ -15,7 +15,7 @@ export class UserService {
   private readonly _httpClient: HttpClient = inject(HttpClient);
   //private readonly _httpUtilities: HttpUtilitiesService = inject(HttpUtilitiesService);
   
-  registrer(user: RegisterUserInterface): Observable<ApiResponseCreateInterface> {
+  register(user: RegisterUserInterface): Observable<ApiResponseCreateInterface> {
    // const params = this._httpUtilities.httpParamsFromObject(user);    
     return this._httpClient.post<ApiResponseCreateInterface>(`${environment.apiUrl}user/register`, user);
   }
@@ -23,4 +23,5 @@ export class UserService {
   getUserProfile(userId: string): Observable<ApiResponseInterface<UserInterface>> {
     return this._httpClient.get<ApiResponseInterface<UserInterface>>(`${environment.apiUrl}user/${userId}`);
   }
+  
 }
