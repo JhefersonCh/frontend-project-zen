@@ -140,6 +140,24 @@ mat-form-field {
   }
 }
 
+.mat-mdc-form-field {
+  &.brand-success-mat-form-field {
+    --mdc-outlined-text-field-focus-outline-width: 1px;
+
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+        .mdc-text-field--invalid
+      ) {
+      .mdc-notched-outline__trailing {
+        border-color: $brand-success-input-color !important;
+      }
+
+      .mdc-notched-outline__leading {
+        border-color: $brand-success-input-color !important;
+      }
+    }
+  }
+}
+
 /* Remove buttons shadow */
 .mat-mdc-fab {
   box-shadow: none !important;

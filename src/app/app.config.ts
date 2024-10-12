@@ -28,6 +28,10 @@ import { authInterceptor } from './shared/interceptors/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {
+  MAT_NATIVE_DATE_FORMATS,
+  provideNativeDateAdapter
+} from '@angular/material/core';
 
 registerLocaleData(localeEs);
 
@@ -37,6 +41,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     // provideClientHydration(),
     // provideAnimationsAsync(),
+    provideNativeDateAdapter(MAT_NATIVE_DATE_FORMATS),
     provideAnimations(),
     importProvidersFrom(
       MatBottomSheetModule,

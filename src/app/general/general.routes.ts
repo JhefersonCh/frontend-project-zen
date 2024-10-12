@@ -10,6 +10,13 @@ export const generalRoutes: Routes = [
           import('./pages/projects/projects.component').then(
             (m) => m.ProjectsComponent
           )
+      },
+      {
+        path: 'create-project',
+        loadComponent: () =>
+          import('./pages/create-project/create-project.component').then(
+            (m) => m.CreateProjectComponent
+          )
       }
     ]
   }
