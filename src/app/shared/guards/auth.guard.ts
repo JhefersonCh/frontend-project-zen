@@ -3,7 +3,7 @@ import { AuthService } from '../../auth/services/auth.service';
 import { inject } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { LocalStorageService } from '../services/localStorage.service';
-import { ROLE_PERMISSIONS } from '../constants/menu.constants';
+import { ROLE_PERMISSIONS, ROUTE_MAP } from '../constants/menu.constants';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const authGuard: CanActivateFn = (route, state) => {
@@ -17,6 +17,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         router.navigate(['/auth/login']);
         return false;
       }
+
       const userRole = localStorageService
         .getUserData()
         ?.role?.code?.toLowerCase();
@@ -30,7 +31,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       if (
         allowedRoutes &&
         allowedRoutes.some((allowedRoute) =>
-          currentRoute.includes(allowedRoute)
+          currentRoute.includes(ROUTE_MAP[allowedRoute] || allowedRoute)
         )
       ) {
         return true;

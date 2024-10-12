@@ -392,3 +392,11 @@
 .form-container-medium {
   width: 50%;
 }
+
+.brand-border-button-text-container {
+  border-bottom: 2px solid $brand-border-button-color;
+}
+
+.brand-cursor-move {
+  cursor: move;
+}

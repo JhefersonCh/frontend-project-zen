@@ -1,0 +1,13 @@
+<div class="">
+  <div class="text-end">
+    <span [matTooltip]="'Fecha de finalización: ' + endDate">
+      <strong>El proyecto finaliza en </strong>
+      <span class="brand-text-body-m fw-medium text-black-50"
+        >{{ daysRemaining }}
+        {{ daysRemaining > 1 || daysRemaining === 0 ? 'días' : 'día.' }}</span
+      >
+    </span>
+  </div>
+  <mat-progress-bar mode="determinate" [value]="progress" color="primary">
+  </mat-progress-bar>
+</div>

@@ -8,7 +8,11 @@
       @if (projects?.length) {
         <div class="projects-grid">
           @for (project of projects; track $index) {
-            <app-base-card>
+            <app-base-card
+              [routerLink]="project.id ? [project.id] : []"
+              class="brand-cursor-pointer"
+              [ripple]="true"
+            >
               <div header>
                 {{ project.title }}
               </div>
@@ -28,22 +32,26 @@
                 </div>
               </div>
               <div actions>
-                <button
-                  mat-icon-button
-                  extended="true"
-                  color="primary"
-                  (click)="openDeleteProjectDialog(project)"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  extended="true"
-                  color="primary"
-                  (click)="openEditProjectDialog(project)"
-                >
-                  <mat-icon>edit</mat-icon>
-                </button>
+                @if (userLoggedIsLeader(project)) {
+                  <button
+                    [disabled]="!userLoggedIsLeader(project)"
+                    mat-icon-button
+                    extended="true"
+                    color="primary"
+                    (click)="openDeleteProjectDialog(project, $event)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button
+                    [disabled]="!userLoggedIsLeader(project)"
+                    mat-icon-button
+                    extended="true"
+                    color="primary"
+                    (click)="openEditProjectDialog(project, $event)"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                }
               </div>
             </app-base-card>
           }
@@ -57,8 +65,8 @@
   </section>
   <div actions class="d-flex gap-1">
     @if (!pageLoading) {
-      <button mat-raised-button color="primary" routerLink="../create-project">
-        Agregar
+      <button mat-stroked-button color="primary" routerLink="./create">
+        Crear proyecto
       </button>
     }
   </div>

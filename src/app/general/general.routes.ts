@@ -12,17 +12,29 @@ export const generalRoutes: Routes = [
       },
       {
         path: 'projects',
-        loadComponent: () =>
-          import('./pages/projects/projects.component').then(
-            (m) => m.ProjectsComponent
-          )
-      },
-      {
-        path: 'create-project',
-        loadComponent: () =>
-          import('./pages/create-project/create-project.component').then(
-            (m) => m.CreateProjectComponent
-          )
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/projects/projects.component').then(
+                (m) => m.ProjectsComponent
+              )
+          },
+          {
+            path: 'create',
+            loadComponent: () =>
+              import('./pages/create-project/create-project.component').then(
+                (m) => m.CreateProjectComponent
+              )
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('./pages/project-detail/project-detail.component').then(
+                (m) => m.ProjectDetailComponent
+              )
+          }
+        ]
       }
     ]
   }

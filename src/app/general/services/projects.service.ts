@@ -44,4 +44,12 @@ export class ProjectsService {
   deleteProject(id: number): Observable<void> {
     return this._httpClient.delete<void>(`${environment.apiUrl}projects/${id}`);
   }
+
+  getProjectById(
+    id: number
+  ): Observable<ApiResponseInterface<ProjectInterface>> {
+    return this._httpClient.get<ApiResponseInterface<ProjectInterface>>(
+      `${environment.apiUrl}projects/${id}`
+    );
+  }
 }

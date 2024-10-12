@@ -1,3 +1,5 @@
+import { UserInterface } from '../../shared/interfaces/user.interface';
+
 export interface ProjectCategory {
   id: number;
   projectId: number;
@@ -17,6 +19,7 @@ export interface ProjectInterface {
   updatedAt?: Date;
   deletedAt?: Date;
   projectCategories?: ProjectCategory[];
+  members?: Members[];
 }
 
 export interface ProjectRelatedData {
@@ -38,4 +41,16 @@ export interface CreateProjectInterface {
   description: string;
   finishDate?: Date;
   categoryIds: number[];
+}
+
+export interface Members {
+  id: number;
+  userId: string;
+  projectId: number;
+  projectRoleId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: null;
+  user: UserInterface;
+  projectRole: ProjectRoles;
 }

@@ -54,3 +54,9 @@ export const MENU_CONST: MenuInterface[] = [
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
   user: ['Test', 'user', 'Proyectos']
 };
+
+export const ROUTE_MAP: Record<string, string> = {
+  Proyectos: '/general/projects',
+  Test: '/test',
+  user: '/user'
+};

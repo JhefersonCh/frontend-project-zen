@@ -11,6 +11,7 @@ import { HttpUtilitiesService } from '../../shared/utilities/http-utilities.serv
 import { ApiResponseInterface } from '../../shared/interfaces/api-response.interface';
 import { LogOutInterface } from '../interfaces/logout.interface';
 import { Router } from '@angular/router';
+import { UserInterface } from '../../shared/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -125,5 +126,9 @@ export class AuthService {
     this._isLoggedEmit();
 
     this._router.navigate([`auth/login`]);
+  }
+
+  getUserLoggedIn(): UserInterface {
+    return this._localStorageService.getUserData();
   }
 }

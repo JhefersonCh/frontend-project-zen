@@ -1,0 +1,157 @@
+<app-base-page [title]="project?.title || ''" [subtitle]="project?.description">
+  <div content>
+    @if (!loadingPage) {
+      @if (project?.finishDate) {
+        <app-progress-time-bar
+          [endDate]="project?.finishDate || currentDate"
+          [startDate]="project?.createdAt || currentDate"
+        ></app-progress-time-bar>
+      }
+      <div class="mx-0 mt-3 px-0 w-100">
+        <div class="row">
+          <div class="col-12 col-md-3">
+            <div class="text-center p-3 brand-border-button-text-container">
+              <span class="brand-text-headline-s">No iniciado</span>
+            </div>
+
+            <div
+              cdkDropList
+              #todoList="cdkDropList"
+              [cdkDropListData]="todo"
+              [cdkDropListConnectedTo]="[doneList, revisionList, revisedList]"
+              (cdkDropListDropped)="drop($event)"
+              class="d-flex flex-column gap-2 mt-3"
+            >
+              @for (item of todo; track item) {
+                <app-base-card
+                  cdkDrag
+                  class="brand-cursor-move"
+                  [ripple]="true"
+                  [cdkDragDisabled]="isMobile"
+                >
+                  <div header>
+                    {{ item }}
+                  </div>
+                </app-base-card>
+              }
+            </div>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <div class="text-center p-3 brand-border-button-text-container">
+              <span class="brand-text-headline-s">En proceso</span>
+            </div>
+
+            <div
+              cdkDropList
+              #doneList="cdkDropList"
+              [cdkDropListData]="done"
+              [cdkDropListConnectedTo]="[todoList, revisionList, revisedList]"
+              (cdkDropListDropped)="drop($event)"
+              class="d-flex flex-column gap-2 mt-3"
+            >
+              @for (item of done; track item) {
+                <app-base-card
+                  cdkDrag
+                  class="brand-cursor-move"
+                  [ripple]="true"
+                  [cdkDragDisabled]="isMobile"
+                >
+                  <div header>
+                    {{ item }}
+                  </div>
+                </app-base-card>
+              }
+            </div>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <div class="text-center p-3 brand-border-button-text-container">
+              <span class="brand-text-headline-s">Terminado</span>
+            </div>
+
+            <div
+              cdkDropList
+              #revisionList="cdkDropList"
+              [cdkDropListData]="revision"
+              [cdkDropListConnectedTo]="[todoList, doneList, revisedList]"
+              (cdkDropListDropped)="drop($event)"
+              class="d-flex flex-column gap-2 mt-3"
+            >
+              @for (item of revision; track item) {
+                <app-base-card
+                  cdkDrag
+                  [ripple]="true"
+                  class="brand-cursor-move"
+                  [cdkDragDisabled]="isMobile"
+                >
+                  <div header>
+                    {{ item }}
+                  </div>
+                </app-base-card>
+              }
+            </div>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <div class="text-center p-3 brand-border-button-text-container">
+              <span class="brand-text-headline-s">Revisado</span>
+            </div>
+
+            <div
+              cdkDropList
+              #revisedList="cdkDropList"
+              [cdkDropListData]="revised"
+              [cdkDropListConnectedTo]="[todoList, doneList, revisionList]"
+              (cdkDropListDropped)="drop($event)"
+              class="d-flex flex-column gap-2 mt-3"
+            >
+              @for (item of revised; track item) {
+                <app-base-card
+                  cdkDrag
+                  [ripple]="true"
+                  [cdkDragDisabled]="isMobile"
+                  class="brand-cursor-move"
+                >
+                  <div header>
+                    {{ item }}
+                  </div>
+                </app-base-card>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <app-loader></app-loader>
+    }
+  </div>
+
+  <div actions>
+    @if (userLoggedIsLeader()) {
+      <section class="d-flex row gap-md-0 gap-1">
+        <div class="col-12 col-md-6 px-1">
+          <button
+            mat-fab
+            extended="true"
+            color="primary"
+            class="w-100"
+            [disabled]="!userLoggedIsLeader()"
+          >
+            Agregar miembros
+          </button>
+        </div>
+        <div class="col-12 col-md-6 px-1">
+          <button
+            mat-stroked-button
+            color="primary"
+            class="w-100"
+            [disabled]="!userLoggedIsLeader()"
+          >
+            Asignar tareas
+          </button>
+        </div>
+      </section>
+    }
+  </div>
+</app-base-page>

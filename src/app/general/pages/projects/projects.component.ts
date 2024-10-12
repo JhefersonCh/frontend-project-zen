@@ -17,6 +17,8 @@ import { EditProjectDialogComponent } from '../../components/edit-project-dialog
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { EmptyPanelComponent } from '../../../shared/components/empty-panel/empty-panel.component';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { AuthService } from '../../../auth/services/auth.service';
+import { UserInterface } from '../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-projects',
@@ -38,12 +40,15 @@ import { LoaderComponent } from '../../../shared/components/loader/loader.compon
 export class ProjectsComponent implements OnInit {
   pageLoading: boolean = true;
   private readonly _projectsService: ProjectsService = inject(ProjectsService);
+  private readonly _authService: AuthService = inject(AuthService);
+  userLogged!: UserInterface;
   projects?: ProjectInterface[];
   categories: ProjectInterface[] = [];
   roles: ProjectRoles[] = [];
   ngOnInit(): void {
     this._getProjects();
     this._getRelatedData();
+    this._getUserLoggedin();
   }
 
   constructor(public dialog: MatDialog) {}
@@ -63,7 +68,9 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
-  openEditProjectDialog(project: ProjectInterface): void {
+  openEditProjectDialog(project: ProjectInterface, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
     if (project) {
       const dialogRef = this.dialog.open(EditProjectDialogComponent, {
         data: {
@@ -101,7 +108,9 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
-  openDeleteProjectDialog(project: ProjectInterface): void {
+  openDeleteProjectDialog(project: ProjectInterface, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
     if (project) {
       const dialogRef = this.dialog.open(YesNoDialogComponent, {});
       dialogRef.afterClosed().subscribe((confirm) => {
@@ -121,5 +130,17 @@ export class ProjectsComponent implements OnInit {
         error: (error) => console.error(error)
       });
     }
+  }
+
+  private _getUserLoggedin(): void {
+    this.userLogged = this._authService.getUserLoggedIn();
+  }
+
+  userLoggedIsLeader(project: ProjectInterface): boolean {
+    const members = project?.members;
+    return (
+      members?.find((mem) => mem.userId === this.userLogged?.id)?.projectRole
+        .roleName === 'Líder'
+    );
   }
 }
