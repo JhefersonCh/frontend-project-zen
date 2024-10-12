@@ -2,27 +2,37 @@
   [title]="'Proyectos'"
   [subtitle]="'Aquí encontrarás tus proyectos'"
 >
-  <div>
+  <div class="projects-grid">
     @for (project of projects; track $index) {
-      <div class="card mb-3">
-        <div class="row no-gutters">
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{ project.title }}</h5>
-              <p class="card-text">{{ project.description }}</p>
-              <a href="#" class="btn btn-primary">Ver más</a>
-            </div>
+      <app-base-card>
+        <div header>
+          {{ project.title }}
+        </div>
+        <div content>
+          <p class="brand-text-body-m text-black-50 fw-medium">
+            {{ project.description }}
+          </p>
+          <div>
+            <strong>Categorías: </strong>
+            @for (tag of project.projectCategories; track $index) {
+              <span>{{
+                tag.category.title
+                  | arrayInlineFormater
+                    : $index + 1 === project.projectCategories?.length
+              }}</span>
+            }
           </div>
         </div>
-      </div>
+        <div actions>
+          <button mat-icon-button extended="true" color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </app-base-card>
     }
-    <button mat-raised-button color="primary">Primary Button</button>
-    <button mat-raised-button color="accent">Accent Button</button>
-    <button mat-raised-button color="warn">Warn Button</button>
   </div>
 
   <div actions class="d-flex gap-1">
-    <button mat-raised-button color="secondary">Acción 1</button>
-    <button mat-button>Acción 2</button>
+    <button mat-raised-button color="primary">Agregar</button>
   </div>
 </app-base-page>

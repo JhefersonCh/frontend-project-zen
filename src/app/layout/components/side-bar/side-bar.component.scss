@@ -110,3 +110,7 @@ aside {
 .sub-menu.open {
   max-height: 500px;
 }
+
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}

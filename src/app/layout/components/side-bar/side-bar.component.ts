@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   ItemInterface,
@@ -21,6 +21,8 @@ import {
   transition,
   trigger
 } from '@angular/animations';
+import { filter } from 'rxjs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-side-bar',
@@ -33,7 +35,8 @@ import {
     FontAwesomeModule,
     RouterLink,
     MatMenuModule,
-    NgFor
+    NgFor,
+    MatTooltipModule
   ],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss',
@@ -64,10 +67,18 @@ export class SideBarComponent implements OnInit {
   menuWithItems: MenuInterface[] = [];
   itemSelected: string | null = null;
   moduleSelected: string | null = null;
+  private readonly _router: Router = inject(Router);
 
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
   ngOnInit(): void {
+    this.currentRoute = this._router.url;
+
+    this._router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.currentRoute = this._router.url;
+      });
     this.filterMenuByRole();
   }
 

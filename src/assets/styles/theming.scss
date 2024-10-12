@@ -132,7 +132,6 @@ mat-form-field {
       font-size: $brand-mobile-icon-size;
     }
   }
-
   .mat-mdc-icon-button.mat-mdc-button-base:not(.brand-icon-button-outlined) {
     mat-icon {
       top: 6px;
@@ -226,7 +225,7 @@ mat-form-field {
 }
 
 .mdc-button:hover {
-  background-color: $primary-light; // Color de fondo del botón al pasar el mouse
+  background-color: $primary-light !important; // Color de fondo del botón al pasar el mouse
   color: $black-color-base !important;
 
   &.mat-mdc-outlined-button:not(:disabled) {

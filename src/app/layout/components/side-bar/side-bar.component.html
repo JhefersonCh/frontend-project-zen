@@ -21,6 +21,7 @@
         <ng-container *ngFor="let item of module.items; let j = index">
           <li class="nav-item">
             <a
+              [matTooltip]="item.name"
               class="nav-link brand-cursor-pointer"
               [ngClass]="{ active: currentRoute === item.route }"
               [routerLink]="

@@ -3,11 +3,20 @@ import { BasePageComponent } from '../../../shared/components/base-page/base-pag
 import { ProjectInterface } from '../../interfaces/projects.interface';
 import { ProjectsService } from './../../services/projects.service';
 import { Component, inject, OnInit } from '@angular/core';
+import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ArrayInlineFormaterPipe } from '../../../shared/pipes/array-inline-formater.pipe';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [BasePageComponent, MatButtonModule],
+  imports: [
+    BasePageComponent,
+    MatButtonModule,
+    BaseCardComponent,
+    MatIconModule,
+    ArrayInlineFormaterPipe
+  ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })

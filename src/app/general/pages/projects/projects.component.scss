@@ -1,0 +1,16 @@
+@import 'breackpoints';
+@import 'variables';
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+@include media-phone {
+  @media (max-width: $max-width-phone) {
+    .projects-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+}
