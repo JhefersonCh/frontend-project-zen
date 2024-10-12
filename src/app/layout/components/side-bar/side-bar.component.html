@@ -10,29 +10,59 @@
     </button>
   </div>
   <nav>
-    <ul class="nav flex-column mt-5">
-      @for (item of menuWithItems; track $index) {
-        <span class="nav-item brand-text-headline-s">
+    <ul class="nav flex-column mt-4">
+      <ng-container *ngFor="let module of menuWithItems; let i = index">
+        <span class="nav-item brand-text-headline-xs fw-bold">
           <a class="nav-link">
-            <mat-icon>{{ item.icon }}</mat-icon>
-            <span *ngIf="!isCollapsed">{{ item.module }}</span>
+            <mat-icon class="text-info">{{ module.icon }}</mat-icon>
+            <span *ngIf="!isCollapsed">{{ module.module }}</span>
           </a>
         </span>
-        @for (option of item.items; track $index) {
+        <ng-container *ngFor="let item of module.items; let j = index">
           <li class="nav-item">
             <a
-              class="nav-link"
-              [ngClass]="{
-                active: currentRoute === option.route
-              }"
-              [routerLink]="option.route"
+              class="nav-link brand-cursor-pointer"
+              [ngClass]="{ active: currentRoute === item.route }"
+              [routerLink]="
+                !item?.subItems?.length && item.route ? item?.route : null
+              "
+              (click)="!isCollapsed ? toggleSubMenu(item) : null"
+              [matMenuTriggerFor]="
+                isCollapsed && item?.subItems?.length ? submenu : null
+              "
+              #menuTrigger="matMenuTrigger"
             >
-              <mat-icon>{{ option.icon }}</mat-icon>
-              <span *ngIf="!isCollapsed">{{ option.name }}</span>
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <span *ngIf="!isCollapsed">{{ item.name }}</span>
             </a>
+
+            <mat-menu #submenu="matMenu" yPosition="above">
+              <ng-container *ngFor="let subItem of item.subItems">
+                <button mat-menu-item [routerLink]="subItem.route">
+                  {{ subItem.name }}
+                </button>
+              </ng-container>
+            </mat-menu>
+
+            <div
+              class="sub-menu"
+              [@submenuState]="openSubMenu[item.name] ? 'open' : 'closed'"
+              *ngIf="item.subItems?.length"
+            >
+              <ul>
+                <li
+                  *ngFor="let subItem of item.subItems"
+                  class="d-flex justify-content-center"
+                >
+                  <a class="my-1" [routerLink]="subItem.route">{{
+                    subItem.name
+                  }}</a>
+                </li>
+              </ul>
+            </div>
           </li>
-        }
-      }
+        </ng-container>
+      </ng-container>
     </ul>
   </nav>
 </aside>

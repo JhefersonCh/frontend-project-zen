@@ -3,8 +3,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { TestService } from '../services/test.service';
-import { UserInterface } from '../interfaces/test.interface';
+import { TestService } from '../../services/test.service';
+import { UserInterface } from '../../interfaces/test.interface';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../../shared/services/localStorage.service';
@@ -20,9 +20,9 @@ import { DatePipe } from '@angular/common';
     MatButtonModule,
     MatCardModule,
     ReactiveFormsModule,
-    DatePipe,
+    DatePipe
   ],
-  styleUrls: ['./test.component.css']
+  styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
   isEditing: boolean = false;

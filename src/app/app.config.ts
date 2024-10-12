@@ -20,10 +20,14 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { TransformDateService } from './shared/services/transform-date.service';
 import { PreviousUrlService } from './shared/services/previous-url.service';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  provideAnimations
+} from '@angular/platform-browser/animations';
 import { authInterceptor } from './shared/interceptors/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 registerLocaleData(localeEs);
 
@@ -38,7 +42,7 @@ export const appConfig: ApplicationConfig = {
       MatBottomSheetModule,
       MatDialogModule,
       PreviousUrlService,
-      
+      BrowserAnimationsModule
     ),
     { provide: MatPaginatorIntl, useValue: getMaterialPaginatorTranslations() },
     {
@@ -48,6 +52,7 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'es' },
     provideHttpClient(withInterceptors([authInterceptor])),
     DatePipe,
-    TransformDateService
+    TransformDateService,
+    provideAnimationsAsync()
   ]
 };

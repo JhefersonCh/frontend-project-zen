@@ -29,7 +29,7 @@ import { AuthService } from '../../services/auth.service';
     RouterModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   form: FormGroup;

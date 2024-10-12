@@ -1,0 +1,15 @@
+<div class="base-page-container w-100 m-0 m-auto p-4">
+  <header class="w-100 d-flex base-page-header justify-content-between">
+    <section class="d-flex flex-column">
+      <span class="brand-text-headline-l fw-medium">{{ title }}</span>
+      <span class="brand-text-body-m text-black-50 fw-semibold">{{
+        subtitle
+      }}</span>
+    </section>
+    <ng-content select="[actions]"></ng-content>
+  </header>
+
+  <main class="base-page-content">
+    <ng-content></ng-content>
+  </main>
+</div>

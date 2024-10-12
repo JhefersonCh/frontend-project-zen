@@ -1,6 +1,6 @@
 /* Importar el archivo de variables */
-@import url('variables.css');
-@import url('animations.css');
+@import 'variables.scss';
+@import url('animations.scss');
 
 /* Estilos globales */
 * {
@@ -101,34 +101,34 @@
 
 /* Colores de texto */
 .brand-text-primary {
-  color: var(--primary-color);
+  color: $primary-color;
 }
 .brand-text-secondary {
-  color: var(--secondary-color);
+  color: $secondary-color;
 }
 .brand-text-accent {
-  color: var(--accent-color);
+  color: $accent-color;
 }
 .brand-text-success {
-  color: var(--success-color);
+  color: $success-color;
 }
 .brand-text-warning {
-  color: var(--warning-color);
+  color: $warning-color;
 }
 .brand-text-error {
-  color: var(--error-color);
+  color: $error-color;
 }
 .brand-text-info {
-  color: var(--info-color);
+  color: $info-color;
 }
 .brand-text-gray {
-  color: var(--gray-color);
+  color: $gray-color;
 }
 .brand-text-black {
-  color: var(--black-color-base);
+  color: $black-color-base;
 }
 .brand-text-white {
-  color: var(--white-color-base);
+  color: $white-color-base;
 }
 
 /* 
@@ -189,28 +189,22 @@
 
 /* Animación de entrada */
 .brand-router-outlet-container {
-  animation: fadeIn var(--brand-default-animations-duration) ease;
-  min-height: var(--brand-height-router-outlet-container);
-  position: relative;
-
-  /*margin-top: var(--heigth-nav-bar);*/
+  animation: fadeIn $brand-default-animations-duration ease;
+  min-height: $brand-height-router-outlet-container;
   margin-bottom: 0;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  padding-inline: 2rem;
 }
 
 /* Bordes */
 .brand-border-radius {
-  border-radius: var(--border-radius);
+  border-radius: $border-radius;
 }
 
 .brand-border {
-  border: var(--global-border);
+  border: $global-border;
 }
 
 .brand-card-border-color {
-  border-color: var(--border-color);
+  border-color: $border-color;
 }
 
 .brand-icon {
@@ -224,7 +218,7 @@
   padding: 32px;
   gap: 24px;
   border-radius: 6px;
-  background-color: var(--white-color-base);
+  background-color: $white-color-base;
 }
 
 @media (max-width: 768px) {
@@ -248,7 +242,7 @@
 .brand-required:after {
   content: '*';
   margin-left: 3px;
-  color: var(--brand-primary-color);
+  color: $primary-color;
   font-weight: 600;
 }
 
@@ -262,7 +256,7 @@
 }
 
 .brand-box-shadow {
-  box-shadow: var(--box-shadow);
+  box-shadow: $box-shadow;
 }
 
 .disabled-div {
@@ -344,23 +338,23 @@
 }
 
 .brand-nav-bar {
-  height: var(--heigth-nav-bar);
-  background-color: var(--header-background);
+  height: $heigth-nav-bar;
+  background-color: $header-background;
 }
 
 .brand-footer {
-  min-height: var(--heigth-footer);
-  margin-top: var(--margin-top-footer);
-  background-color: var(--footer-background);
+  min-height: $heigth-footer;
+  // margin-top: $margin-top-footer;
+  background-color: $footer-background;
 }
 
 .brand-nav-bar-menu {
-  background-color: var(--header-menu-background) !important;
+  background-color: $header-menu-background !important;
 }
 
 /* Menús */
 ::ng-deep .mat-mdc-menu-content {
-  background: var(--header-background);
+  background: $header-background;
 }
 
 /* Avatar de usuario para opciones */
@@ -371,17 +365,17 @@
 }
 
 .app-container {
-  margin-top: var(--heigth-nav-bar);
-  height: calc((100vh - var(--heigth-nav-bar)));
+  margin-top: $heigth-nav-bar;
+  height: calc((100vh - $heigth-nav-bar));
   overflow: auto;
 }
 
 .brand-side-bar {
-  margin-top: var(--heigth-nav-bar);
+  margin-top: $heigth-nav-bar;
   background: linear-gradient(
     to bottom,
-    var(--header-background),
-    var(--footer-background)
+    $header-background,
+    $footer-background
   );
 }
 
@@ -393,5 +387,4 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 5px;
 }

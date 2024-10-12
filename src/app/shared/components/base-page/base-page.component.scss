@@ -1,0 +1,17 @@
+@import 'variables.scss';
+
+.base-page-container {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: $background-light;
+}
+
+.base-page-header {
+  border-bottom: 2px solid #007bff;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.base-page-content {
+  margin-bottom: 20px;
+}

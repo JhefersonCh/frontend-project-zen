@@ -22,9 +22,9 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     ReactiveFormsModule,
     DatePipe,
-    RouterModule,
+    RouterModule
   ],
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   isEditing: boolean = false;

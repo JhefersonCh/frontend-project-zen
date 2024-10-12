@@ -1,14 +1,26 @@
-import { NgClass, NgIf } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MenuInterface } from '../../../shared/interfaces/menu.interface';
+import {
+  ItemInterface,
+  MenuInterface
+} from '../../../shared/interfaces/menu.interface';
 import {
   MENU_CONST,
   ROLE_PERMISSIONS
 } from '../../../shared/constants/menu.constants';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 
 @Component({
   selector: 'app-side-bar',
@@ -19,10 +31,31 @@ import {
     MatButtonModule,
     MatIconModule,
     FontAwesomeModule,
-    RouterLink
+    RouterLink,
+    MatMenuModule,
+    NgFor
   ],
   templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.css'
+  styleUrl: './side-bar.component.scss',
+  animations: [
+    trigger('submenuState', [
+      state(
+        'closed',
+        style({
+          maxHeight: '0px',
+          opacity: 0
+        })
+      ),
+      state(
+        'open',
+        style({
+          maxHeight: '500px',
+          opacity: 1
+        })
+      ),
+      transition('closed <=> open', [animate('0.3s ease-in-out')])
+    ])
+  ]
 })
 export class SideBarComponent implements OnInit {
   @Input() userRole!: string;
@@ -32,18 +65,24 @@ export class SideBarComponent implements OnInit {
   itemSelected: string | null = null;
   moduleSelected: string | null = null;
 
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+
   ngOnInit(): void {
     this.filterMenuByRole();
   }
 
   private filterMenuByRole(): void {
     if (this.userRole) {
-      this.menuWithItems = MENU_CONST.map((module) => ({
-        ...module,
-        items: module.items.filter((item) =>
-          ROLE_PERMISSIONS[this.userRole]?.includes(item.name)
-        )
-      })).filter((module) => module.items.length > 0);
+      if (this.userRole === 'admin') {
+        this.menuWithItems = MENU_CONST;
+      } else {
+        this.menuWithItems = MENU_CONST.map((module) => ({
+          ...module,
+          items: module.items.filter((item) =>
+            ROLE_PERMISSIONS[this.userRole]?.includes(item.name)
+          )
+        })).filter((module) => module.items.length > 0);
+      }
     } else {
       this.menuWithItems = [];
     }
@@ -51,5 +90,26 @@ export class SideBarComponent implements OnInit {
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
+    if (this.isCollapsed) {
+      this.closeAllSubMenus();
+    }
+  }
+
+  openSubMenu: Record<string, boolean> = {};
+
+  closeAllSubMenus() {
+    this.openSubMenu = {};
+  }
+
+  toggleSubMenu(item: ItemInterface) {
+    if (!this.isCollapsed) {
+      this.openSubMenu[item.name] = !this.openSubMenu[item.name];
+    }
+  }
+
+  closeMenu() {
+    if (this.menuTrigger) {
+      this.menuTrigger.closeMenu();
+    }
   }
 }

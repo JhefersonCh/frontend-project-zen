@@ -1,19 +1,53 @@
+@import 'variables.scss';
+
 aside {
-  transition: width 0.3s ease;
+  transition:
+    width 0.3s ease,
+    left 0.3s ease;
   width: 250px;
   position: relative;
   overflow: hidden;
 }
+
 .collapsed {
   width: 60px;
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  aside {
+    left: 0;
+    height: 100%;
+    z-index: 1000;
+    transition:
+      width 0.3s ease,
+      left 0.3s ease;
+    background: linear-gradient(
+      to bottom,
+      $header-background,
+      $footer-background
+    );
+  }
+
+  .collapsed {
+    width: 60px;
+    left: 0;
+  }
+
+  aside:not(.collapsed) {
+    position: fixed;
+    width: 250px;
+    left: 0;
+  }
+}
+
 .toggle-button-wrapper {
   position: absolute;
   top: 10px;
   right: 10px;
   transition: right 0.3s ease;
+  z-index: 999;
 }
 
 .nav-link {
@@ -21,31 +55,32 @@ aside {
   transition: padding 0.3s ease;
   display: flex;
   align-items: center;
-  padding: 10px 15px;
+  padding: 10px 10px;
 }
 
 .collapsed .nav-link {
   justify-content: center;
 }
+
 .nav-link span {
   transition: opacity 0.2s ease;
   opacity: 1;
 }
+
 .collapsed .nav-link span {
   opacity: 0;
 }
-.initial {
-  opacity: 1;
-  font-weight: bold;
-  transition: opacity 0.3s ease;
-}
+
 .nav-item mat-icon {
   color: white;
   margin-right: 15px;
+  position: relative;
 }
+
 .collapsed .nav-item mat-icon {
   margin-right: 0;
 }
+
 .nav-item a {
   display: flex;
   color: white;
@@ -56,4 +91,22 @@ aside {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.sub-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+}
+
+.sub-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sub-menu.open {
+  max-height: 500px;
 }

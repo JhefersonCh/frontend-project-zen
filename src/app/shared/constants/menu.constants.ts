@@ -8,7 +8,7 @@ export const MENU_CONST: MenuInterface[] = [
     items: [
       {
         name: 'Proyectos',
-        route: '/projects',
+        route: '/general/projects',
         icon: 'assignment',
         order: 1
       },
@@ -19,17 +19,38 @@ export const MENU_CONST: MenuInterface[] = [
         order: 2
       }
     ]
+  },
+  {
+    module: 'Organizacional',
+    icon: 'work',
+    order: 2,
+    items: [
+      {
+        name: 'Usuarios',
+        //route: '/organizacional/users',
+        icon: 'person',
+        order: 1,
+        subItems: [
+          {
+            name: 'Crear usuario',
+            route: '/organizacional/users/create'
+          },
+          {
+            name: 'Ver usuarios',
+            route: '/organizacional/users/list'
+          }
+        ]
+      },
+      {
+        name: 'Roles',
+        route: '/organizacional/roles',
+        icon: 'security',
+        order: 2
+      }
+    ]
   }
 ];
 
-export enum UserRole {
-  Admin = 'Admin',
-  User = 'User'
-}
-
-export type RolesType = 'Admin' | 'User';
-
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
-  admin: ['Proyectos','Test'],
-  user: ['Test']
+  user: ['Test', 'user', 'Proyectos']
 };

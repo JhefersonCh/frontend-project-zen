@@ -1,7 +1,7 @@
-@import url('../../../../assets/styles/variables.css');
+@import 'variables.scss';
 
 .mobile-menu {
-  top: var(--heigth-nav-bar);
+  top: $heigth-nav-bar;
   right: 0;
   background-color: #343a40;
 }
@@ -20,24 +20,24 @@
 }
 
 .nav-bar-element:hover {
-  color: var(--primary-hover-color);
+  color: $primary-hover-color;
 }
 
 .mobile-menu-element:hover {
-  color: var(--secondary-hover-color);
+  color: $secondary-hover-color;
   font-weight: 600;
 }
 
 .nav-bar-element.active {
   font-weight: bold;
   font-size: 18px;
-  color: var(--deep-purple-200);
+  color: $deep-purple-200;
 }
 
 .mobile-menu-element.active {
   font-weight: bold;
   font-size: 24px;
-  color: var(--black-color-base);
+  color: $black-color-base;
 }
 .menu {
   z-index: 4 !important;

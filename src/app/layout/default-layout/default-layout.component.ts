@@ -5,7 +5,7 @@ import { NavBarComponent } from '../components/nav-bar/nav-bar.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SideBarComponent } from '../components/side-bar/side-bar.component';
 import { NgClass } from '@angular/common';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { AuthService } from '../../auth/services/auth.service';
 import { UserInterface } from '../../shared/interfaces/user.interface';
 import { LocalStorageService } from '../../shared/services/localStorage.service';
@@ -21,7 +21,7 @@ import { LocalStorageService } from '../../shared/services/localStorage.service'
     NgClass
   ],
   templateUrl: './default-layout.component.html',
-  styleUrl: './default-layout.component.css'
+  styleUrl: './default-layout.component.scss'
 })
 export class DefaultLayoutComponent implements OnInit {
   isLoggedUser: boolean = false;
@@ -30,13 +30,21 @@ export class DefaultLayoutComponent implements OnInit {
   private readonly _authService: AuthService = inject(AuthService);
   private readonly _localStorage: LocalStorageService =
     inject(LocalStorageService);
+  private _subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
+    this._subscription.add(
+      this._authService._isLoggedSubject.subscribe((isLogged) => {
+        this.isLoggedUser = isLogged;
+        this.userInfo = this._localStorage.getUserData();
+      })
+    );
     this.isLoggedUser = this._authService.isAuthenticated();
     this._router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.isLoggedUser = this._authService.isAuthenticated();
+        this.userInfo = this._localStorage.getUserData();
       });
 
     this.userInfo = this._localStorage.getUserData();

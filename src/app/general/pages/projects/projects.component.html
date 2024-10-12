@@ -1,0 +1,28 @@
+<app-base-page
+  [title]="'Proyectos'"
+  [subtitle]="'Aquí encontrarás tus proyectos'"
+>
+  <div>
+    @for (project of projects; track $index) {
+      <div class="card mb-3">
+        <div class="row no-gutters">
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ project.title }}</h5>
+              <p class="card-text">{{ project.description }}</p>
+              <a href="#" class="btn btn-primary">Ver más</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <button mat-raised-button color="primary">Primary Button</button>
+    <button mat-raised-button color="accent">Accent Button</button>
+    <button mat-raised-button color="warn">Warn Button</button>
+  </div>
+
+  <div actions class="d-flex gap-1">
+    <button mat-raised-button color="secondary">Acción 1</button>
+    <button mat-button>Acción 2</button>
+  </div>
+</app-base-page>
