@@ -119,25 +119,25 @@ mat-form-field {
     height: $brand-mobile-height !important;
   }
 
-  .mat-mdc-icon-button.mat-mdc-button-base {
-    height: $brand-mobile-icon-button-size;
-    width: $brand-mobile-icon-button-size;
+  //.mat-mdc-icon-button.mat-mdc-button-base {
+  // height: $brand-mobile-icon-button-size;
+  // width: $brand-mobile-icon-button-size;
 
-    mat-icon {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      height: $brand-mobile-icon-size;
-      width: $brand-mobile-icon-size;
-      font-size: $brand-mobile-icon-size;
-    }
-  }
-  .mat-mdc-icon-button.mat-mdc-button-base:not(.brand-icon-button-outlined) {
-    mat-icon {
-      top: 6px;
-      right: 6px;
-    }
-  }
+  // mat-icon {
+  //   position: absolute;
+  //   top: 5px;
+  //   right: 5px;
+  //   height: $brand-mobile-icon-size;
+  //   width: $brand-mobile-icon-size;
+  //   font-size: $brand-mobile-icon-size;
+  // }
+  // }
+  // .mat-mdc-icon-button.mat-mdc-button-base:not(.brand-icon-button-outlined) {
+  //   mat-icon {
+  //     top: 6px;
+  //     right: 6px;
+  //   }
+  // }
 }
 
 .mat-mdc-form-field {

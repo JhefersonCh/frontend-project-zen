@@ -3,7 +3,13 @@ import { Routes } from '@angular/router';
 export const generalRoutes: Routes = [
   {
     path: '',
+
     children: [
+      {
+        path: '',
+        redirectTo: 'projects',
+        pathMatch: 'full'
+      },
       {
         path: 'projects',
         loadComponent: () =>

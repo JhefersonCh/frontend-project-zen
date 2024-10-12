@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './base-dialog.component.html',
   styleUrl: './base-dialog.component.scss'
 })
-export class BaseDialogComponent {
-
-}
+export class BaseDialogComponent {}

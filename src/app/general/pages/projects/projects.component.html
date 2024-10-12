@@ -1,38 +1,65 @@
 <app-base-page
   [title]="'Proyectos'"
   [subtitle]="'Aquí encontrarás tus proyectos'"
+  previusUrl="/home"
 >
-  <div class="projects-grid">
-    @for (project of projects; track $index) {
-      <app-base-card>
-        <div header>
-          {{ project.title }}
+  <section content>
+    @if (!pageLoading) {
+      @if (projects?.length) {
+        <div class="projects-grid">
+          @for (project of projects; track $index) {
+            <app-base-card>
+              <div header>
+                {{ project.title }}
+              </div>
+              <div content>
+                <p class="brand-text-body-m text-black-50 fw-medium">
+                  {{ project.description }}
+                </p>
+                <div>
+                  <strong>Categorías: </strong>
+                  @for (tag of project.projectCategories; track $index) {
+                    <span>{{
+                      tag.category.title
+                        | arrayInlineFormater
+                          : $index + 1 === project.projectCategories?.length
+                    }}</span>
+                  }
+                </div>
+              </div>
+              <div actions>
+                <button
+                  mat-icon-button
+                  extended="true"
+                  color="primary"
+                  (click)="openDeleteProjectDialog(project)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  extended="true"
+                  color="primary"
+                  (click)="openEditProjectDialog(project)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+            </app-base-card>
+          }
         </div>
-        <div content>
-          <p class="brand-text-body-m text-black-50 fw-medium">
-            {{ project.description }}
-          </p>
-          <div>
-            <strong>Categorías: </strong>
-            @for (tag of project.projectCategories; track $index) {
-              <span>{{
-                tag.category.title
-                  | arrayInlineFormater
-                    : $index + 1 === project.projectCategories?.length
-              }}</span>
-            }
-          </div>
-        </div>
-        <div actions>
-          <button mat-icon-button extended="true" color="primary">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </div>
-      </app-base-card>
+      } @else {
+        <app-empty-panel></app-empty-panel>
+      }
+    } @else {
+      <app-loader></app-loader>
     }
-  </div>
-
+  </section>
   <div actions class="d-flex gap-1">
-    <button mat-raised-button color="primary">Agregar</button>
+    @if (!pageLoading) {
+      <button mat-raised-button color="primary" routerLink="../create-project">
+        Agregar
+      </button>
+    }
   </div>
 </app-base-page>

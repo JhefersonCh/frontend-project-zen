@@ -1,0 +1,64 @@
+<app-base-dialog>
+  <div header>
+    <span>Editar proyecto</span>
+  </div>
+  <div subtitle>
+    <span>¡Intenta editar las configuraciones de tu proyecto!</span>
+  </div>
+  <div content>
+    <form [formGroup]="projectForm" class="d-flex flex-column">
+      <mat-form-field appearance="outline" class="mt-3">
+        <mat-label>Nombre del Proyecto</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="mt-3">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="mt-3">
+        <mat-label>Fecha de Finalización</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="finishDate" />
+        <mat-hint>MM/DD/AAAA</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="mt-3">
+        <mat-label>Categorías</mat-label>
+        <mat-select formControlName="categoryIds" multiple="true">
+          @for (category of data.categories; track $index) {
+            <mat-option [value]="category.id">{{ category.title }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+  <div actions>
+    <div class="d-flex flex-row gap-2">
+      <button
+        mat-fab
+        extended="true"
+        color="warn"
+        type="button"
+        (click)="closeDialog()"
+      >
+        Cancelar
+      </button>
+      <button
+        mat-fab
+        extended="true"
+        color="primary"
+        type="button"
+        (click)="saveProject()"
+        [disabled]="isLoading"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</app-base-dialog>
