@@ -1,1 +1,33 @@
-<h1>hola</h1>
+<app-base-page title="Editar usuario" subtitle="Aquí puedes editar tu información personal" previusUrl="/user/profile">
+    <section content class="row">
+        <div class="col-12 col-md-6">
+            <form [formGroup]="form">
+                <div class="row ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre de usuario</mat-label>
+                        <input type="text" matInput formControlName="username" placeholder="Name">
+                    </mat-form-field>
+                </div>
+                <div class="row ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre completo</mat-label>
+                        <input type="text" matInput formControlName="fullName" placeholder="Name">
+                    </mat-form-field>
+                </div>
+                <div class="row ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Celular</mat-label>
+                        <input type="text" matInput formControlName="phone" placeholder="Name">
+                    </mat-form-field>
+                </div>
+                <div class="row ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Url de imagen</mat-label>
+                        <input matInput formControlName="avatarUrl" placeholder="Name">
+                    </mat-form-field>
+                </div>
+            </form>
+            <button mat-fab extended="true" type="button" color="primary" (click)="saveInfo()">Guardar</button>
+        </div>
+    </section>
+</app-base-page>

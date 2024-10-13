@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center align-items-center" style="height: 75vh;" *ngIf="isLoading; else content">
+<div class="d-flex justify-content-center align-items-center" style="height: 75vh;" *ngIf="false; else content">
   <button class="btn btn-primary w-25" type="button" disabled>
     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     <span class="sr-only">Cargando...</span>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="position-absolute top-0 end-0 mt-3 mr-3">
-        <a class="btn btn-primary" routerLink="/user/edit-user">Editar Perfil</a>
+        <a class="btn btn-primary" [routerLink]="'../'+userId+'/edit'">Editar Perfil</a>
       </div>
 
       <div class="text-center mt-5">

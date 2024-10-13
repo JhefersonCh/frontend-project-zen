@@ -32,6 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class ProfileComponent implements OnInit {
   user?: UserInterface;
   isLoading = true;
+  userId: string = '';
 
   private readonly _profileService: UserService = inject(UserService);
   private readonly _localStorageService: LocalStorageService =
@@ -42,11 +43,11 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserProfile(): void {
-    const userId: string =
+    this.userId =
       this._localStorageService.getAllSessionData()?.user?.id;
 
-    userId &&
-      this._profileService.getUserProfile(userId).subscribe({
+    this.userId &&
+      this._profileService.getUserProfile(this.userId).subscribe({
         next: (response) => {
           this.user = response?.data;
         },
@@ -54,10 +55,8 @@ export class ProfileComponent implements OnInit {
           console.error('Error al cargar el usuario', error);
         }
       });
-    /* Tiempo de recarga del profile al llamar al backend */
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
   }
 
+
+  
 }
