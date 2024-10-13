@@ -36,7 +36,7 @@ import { UserService } from '../../../shared/services/user.service';
     MatSelectModule
   ],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
   formStep1: FormGroup;
@@ -109,7 +109,7 @@ export class RegisterComponent {
       };
       this._userService.register(userToRegister).subscribe({
         next: () => {
-          this._router.navigate(['/login']);
+          this._router.navigate(['/auth/login']);
         }
       });
     } else {

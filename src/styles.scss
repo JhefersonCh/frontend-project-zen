@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables.scss';
+@import url('./assets/styles/animations.scss');
+@import url('./assets/styles/global.scss');
+@import url('./assets/styles/breackpoints.scss');
+@import url('./assets/styles/theming.scss');
+@import url('./assets/styles/config-theme.scss');
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+.mat-typography {
+  font: 400 1rem / 1.5rem $font-family;
+  height: calc(100vh - $heigth-nav-bar);
+}
+
+.mat-mdc-menu-content {
+  background: $deep-purple-100;
+}
+.mat-mdc-menu-item-text {
+  color: black;
+}
+
+app-login {
+  display: flex;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

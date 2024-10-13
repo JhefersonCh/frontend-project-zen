@@ -1,0 +1,145 @@
+// Colores base
+$white-color-base: #ffffff;
+$black-color-base: #000000;
+$black-color-base-10: #ffffff;
+$brand-red-color: #d61a44;
+$brand-red-color-10: #a90429;
+
+// Paleta de colores base
+$deep-purple-50: #ede7f6;
+$deep-purple-100: #d1c4e9;
+$deep-purple-200: #b39ddb;
+$deep-purple-300: #9575cd;
+$deep-purple-400: #7e57c2;
+$deep-purple-500: #673ab7;
+$deep-purple-600: #5e35b1;
+$deep-purple-700: #512da8;
+$deep-purple-800: #4527a0;
+$deep-purple-900: #311b92;
+$deep-purple-A100: #b388ff;
+$deep-purple-A200: #7c4dff;
+$deep-purple-A400: #651fff;
+$deep-purple-A700: #6200ea;
+$deep-purple-dark: #21004e;
+
+// Colores semánticos principales
+$brand-light-blue-color: #aebfd5;
+$primary-color: $deep-purple-500;
+$secondary-color: $deep-purple-A200;
+$accent-color: $deep-purple-A400;
+$background-color: $deep-purple-50;
+$surface-color: $white-color-base; // Corregido
+$error-color: #b00020;
+$gray-color: #797979;
+
+// Colores de texto
+$text-primary: $deep-purple-900;
+$text-secondary: $deep-purple-600;
+$text-disabled: $deep-purple-100;
+$text-on-primary: $white-color-base; // Corregido
+$text-on-secondary: $white-color-base; // Corregido
+
+// Variaciones de los colores principales
+$primary-light: $deep-purple-300;
+$primary-dark: $deep-purple-700;
+
+// Colores funcionales adicionales
+$success-color: #4caf50;
+$warning-color: #ebe70e;
+$info-color: #2196f3;
+
+// UI Components
+$brand-mobile-font-size: 1rem;
+$brand-web-font-size: 1rem;
+$brand-mobile-icon-button-size: 32px;
+$brand-mobile-icon-size: 20px;
+$brand-mobile-height: 42px;
+$brand-tablet-height: 48px;
+$brand-web-height: 55px;
+
+// Tipografía
+$font-size-small: 14px;
+$font-size-medium: 16px;
+$font-size-large: 18px;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+// Espaciado
+$spacing-small: 8px;
+$spacing-medium: 16px;
+$spacing-large: 24px;
+
+// Bordes
+$border-radius: 4px;
+$border-width: 1px;
+$border-color: $deep-purple-400;
+$global-border: $border-width solid $border-color;
+
+// Transiciones
+$transition-fast: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Sombras
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+$heigth-nav-bar: 70px;
+$heigth-footer: 56px;
+
+// Medidas globales
+$brand-height-router-outlet-container: calc(
+  100vh - ($heigth-nav-bar + $heigth-footer)
+);
+$brand-default-animations-duration: $transition-fast; // Corregido
+
+// Para tamaños de pantalla
+$max-width-layout: 1440px;
+$max-width-tablet: 899.98px;
+$max-width-phone: 575.98px;
+$min-width-desktop: 576px;
+
+$font-family:
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  Oxygen,
+  Ubuntu,
+  Cantarell,
+  'Open Sans',
+  'Helvetica Neue',
+  sans-serif;
+
+// Layout
+$header-background: $deep-purple-900;
+$header-menu-background: $gray-color;
+$footer-background: $deep-purple-dark;
+
+// Hover
+$primary-hover-color: $deep-purple-300;
+$secondary-hover-color: $deep-purple-800;
+
+// Backgrounds
+$background-page: $surface-color;
+$background-light: $background-color;
+$background-dark: $deep-purple-dark;
+
+// Components color
+/*Colores para componentes*/
+$brand-error-color: $brand-red-color;
+$brand-light-blue-color: #3b82f6; // Ejemplo de color para reemplazar, asegúrate de definirlo
+$brand-gray-color: $gray-color; // Definido como variable existente
+$brand-border-radius: 24px;
+$brand-border-radius-sm: 16px;
+$brand-border-radius-manage-users-cards: 6px;
+$brand-blue-color: #007bff; // Ejemplo de color para reemplazar, asegúrate de definirlo
+$brand-radio-checked-color: $brand-blue-color; // Corregido
+$brand-outlined-rounded-inputs-color: $brand-gray-color; // Corregido
+$brand-outlined-inputs-color: $brand-light-blue-color;
+$brand-icons-color: $brand-light-blue-color;
+$brand-blue-button-color: $brand-blue-color; // Corregido
+$brand-form-field-focus-color: $brand-blue-color; // Corregido
+$brand-success-input-color: #13867a;
+$brand-global-height-button: $brand-tablet-height;
+
+$brand-border-button-color: $deep-purple-200;

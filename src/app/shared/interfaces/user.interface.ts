@@ -1,13 +1,17 @@
 import { Roles } from '../../auth/interfaces/login.interface';
 
 export interface UserInterface {
+  id?: string;
   fullName: string;
   identification: string;
   username: string;
   email: string;
-  createdAt: Date;
   phone: string;
   avatarUrl: string;
   role?: Roles;
+  roleId?: number;
   identificationTypeId: number;
+  createdAt: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }

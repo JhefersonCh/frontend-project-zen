@@ -20,6 +20,13 @@ export const publicRoutes: Routes = [
         path: 'test',
         loadComponent: () =>
           import('./pages/test/test.component').then((m) => m.TestComponent)
+      },
+      {
+        path: 'access-denied',
+        loadComponent: () =>
+          import('./pages/access-denied/access-denied.component').then(
+            (m) => m.AccessDeniedComponent
+          )
       }
     ]
   }

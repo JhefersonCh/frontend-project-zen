@@ -1,0 +1,73 @@
+<app-base-page
+  [title]="'Proyectos'"
+  [subtitle]="'Aquí encontrarás tus proyectos'"
+  previusUrl="/home"
+>
+  <section content>
+    @if (!pageLoading) {
+      @if (projects?.length) {
+        <div class="projects-grid">
+          @for (project of projects; track $index) {
+            <app-base-card
+              [routerLink]="project.id ? [project.id] : []"
+              class="brand-cursor-pointer"
+              [ripple]="true"
+            >
+              <div header>
+                {{ project.title }}
+              </div>
+              <div content>
+                <p class="brand-text-body-m text-black-50 fw-medium">
+                  {{ project.description }}
+                </p>
+                <div>
+                  <strong>Categorías: </strong>
+                  @for (tag of project.projectCategories; track $index) {
+                    <span>{{
+                      tag.category.title
+                        | arrayInlineFormater
+                          : $index + 1 === project.projectCategories?.length
+                    }}</span>
+                  }
+                </div>
+              </div>
+              <div actions>
+                @if (userLoggedIsLeader(project)) {
+                  <button
+                    [disabled]="!userLoggedIsLeader(project)"
+                    mat-icon-button
+                    extended="true"
+                    color="primary"
+                    (click)="openDeleteProjectDialog(project, $event)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button
+                    [disabled]="!userLoggedIsLeader(project)"
+                    mat-icon-button
+                    extended="true"
+                    color="primary"
+                    (click)="openEditProjectDialog(project, $event)"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                }
+              </div>
+            </app-base-card>
+          }
+        </div>
+      } @else {
+        <app-empty-panel></app-empty-panel>
+      }
+    } @else {
+      <app-loader></app-loader>
+    }
+  </section>
+  <div actions class="d-flex gap-1">
+    @if (!pageLoading) {
+      <button mat-stroked-button color="primary" routerLink="./create">
+        Crear proyecto
+      </button>
+    }
+  </div>
+</app-base-page>

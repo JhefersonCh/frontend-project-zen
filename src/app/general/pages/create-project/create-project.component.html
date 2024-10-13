@@ -1,0 +1,75 @@
+<app-base-page
+  title="Crear proyectos"
+  subtitle="Aquí podrás crear tus propios proyectos"
+>
+  <div content>
+    <section class="row">
+      <form
+        [formGroup]="projectForm"
+        class="col-12 col-md-6 d-flex flex-column"
+      >
+        <mat-form-field appearance="outline" class="mt-3">
+          <mat-label>Nombre del Proyecto</mat-label>
+          <input matInput formControlName="title" />
+          <mat-error *ngIf="projectForm.get('title')?.hasError('required')">
+            El nombre es requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mt-3">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+          <mat-error
+            *ngIf="projectForm.get('description')?.hasError('required')"
+          >
+            La descripción requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mt-3">
+          <mat-label>Fecha de Finalización</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="finishDate"
+          />
+          <mat-hint>MM/DD/AAAA</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="projectForm.get('finishDate')?.hasError('required')"
+          >
+            La fecha de finalización es requerida
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mt-3">
+          <mat-label>Categorías</mat-label>
+          <mat-select formControlName="categoryIds" multiple="true">
+            @for (category of categories; track $index) {
+              <mat-option [value]="category.id">{{
+                category.title
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="justify-content-end d-flex">
+          <button
+            mat-fab
+            extended="true"
+            color="primary"
+            type="button"
+            (click)="create()"
+            [disabled]="isCreating"
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</app-base-page>

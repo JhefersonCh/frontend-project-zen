@@ -1,7 +1,6 @@
-/* Importar el archivo de variables si es necesario */
-@import url('variables.css');
+@import 'variables';
 
-/* fadeIn keyframe */
+/*fadeIn*/
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -11,19 +10,16 @@
   }
 }
 
-/* Animación de fadeIn */
 .brand-animation-fadeIn {
-  animation: fadeIn var(--brand-default-animations-duration) ease;
+  animation: fadeIn $brand-default-animations-duration ease;
 }
 
-/* Animación progressive con desenfoque */
 .brand-animation-progressive {
   filter: blur(10px);
   transition: filter 0.1s ease-out;
   animation: blurAnimation 0.1s ease-out forwards;
 }
 
-/* Keyframe para la animación de desenfoque */
 @keyframes blurAnimation {
   from {
     filter: blur(10px);

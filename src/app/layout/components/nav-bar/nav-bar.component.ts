@@ -22,7 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [RouterLink, NgClass, NgIf, MatMenuModule, MatButtonModule],
   templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+  styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() userName?: string;
@@ -44,8 +44,6 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    
     this._subscription.add(
       this._authService._isLoggedSubject.subscribe((isLogged) => {
         this.isLoggedUser = isLogged;

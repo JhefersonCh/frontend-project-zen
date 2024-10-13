@@ -1,0 +1,18 @@
+<app-base-dialog>
+  <div header>
+    <span>Confirmar</span>
+  </div>
+  <div content>
+    <span>¿Está seguro de realizar está acción?</span>
+  </div>
+  <div actions>
+    <section class="d-flex flex-row gap-2">
+      <button mat-fab extended="true" color="warn" (click)="confirmAction()">
+        Confirmar
+      </button>
+      <button mat-fab extended="true" color="primary" (click)="cancelAction()">
+        Cancelar
+      </button>
+    </section>
+  </div>
+</app-base-dialog>

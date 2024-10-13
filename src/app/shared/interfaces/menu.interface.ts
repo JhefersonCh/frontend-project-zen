@@ -7,10 +7,11 @@ export interface MenuInterface {
 
 export interface ItemInterface {
   name: string;
-  route: string;
+  route?: string;
   icon: string;
   order: number;
   subItems?: SubItemInterface[];
+  isOpen?: boolean;
 }
 
 export interface SubItemInterface {

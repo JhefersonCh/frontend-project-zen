@@ -27,7 +27,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     CommonModule,
     MatFormFieldModule
   ],
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   user?: UserInterface;
