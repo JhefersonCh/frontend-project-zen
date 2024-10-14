@@ -19,15 +19,6 @@
   padding: 5px;
 }
 
-/* Quitar margenes y padding a los hs con clases de bootstrap */
-h1,
-h3,
-h5,
-h6 {
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
 
 /*  Contenedor de información personal */
 .user-info-card {
@@ -72,11 +63,4 @@ h6 {
 .card-text {
   font-size: 1rem;
   color: #444;
-}
-
-h4,
-h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #007bff;
 }

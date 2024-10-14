@@ -1,82 +1,73 @@
-<div class="d-flex justify-content-center align-items-center" style="height: 75vh;" *ngIf="false; else content">
-  <button class="btn btn-primary w-25" type="button" disabled>
-    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    <span class="sr-only">Cargando...</span>
-  </button>
-</div>
+<app-base-page title="Perfil de usuario" subtitle="Aquí puedes encontrar tu información y estadísticas de tus tareas"
+  previusUrl="/">
 
-<ng-template #content>
-  <mat-card class="mt-4 position-relative">
-    <div class="col-12 mb-3">
-      <div class="profile-cover brand-border-radius">
-        <div class="profile">
-          <img src="../../../../assets/login_and_register/userdefault.png" class="rounded-circle w-100 h-100"
-            alt="Profile picture" />
-        </div>
-      </div>
+  <section content class="row justify-content-center">
+    <div class="col-12 col-md-10">
 
-      <div class="position-absolute top-0 end-0 mt-3 mr-3">
-        <a class="btn btn-primary" [routerLink]="'../'+userId+'/edit'">Editar Perfil</a>
-      </div>
-
-      <div class="text-center mt-5">
-        <h2>{{ user?.fullName }}</h2>
-        <h4>{{'@' + user?.username }}</h4>
-      </div>
-    </div>
-
-    <!-- Información Personal -->
-    <mat-card-content>
-      <div class="col-12 mt-4">
-        <mat-card class="user-info-card">
-          <mat-card-header class="user-info-header mb-2">
-            <h4>Información Personal</h4>
-          </mat-card-header>
-          <mat-card-content class="user-info-content">
-            <p class="card-text">Tipo de identificación: {{ user?.identificationTypeId }}</p>
-            <p class="card-text">Identificación: {{ user?.identification }}</p>
-            <p class="card-text">Correo electrónico: {{ user?.email }}</p>
-            <p class="card-text">Teléfono: {{ user?.phone }}</p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-
-      <!-- Estadísticas del Usuario -->
-      <div class="col-12 mt-4">
-        <mat-card class="user-info-card">
-          <mat-card-header class="user-info-header mb-2">
-            <h4>Estadísticas</h4>
-          </mat-card-header>
-          <mat-card-content class="user-info-content">
-            <div class="row text-center">
-              <div class="col">
-                <h3>1</h3>
-                <p class="text-muted">Seguidores</p>
-              </div>
-              <div class="col">
-                <h3>2</h3>
-                <p class="text-muted">Siguiendo</p>
-              </div>
-              <div class="col">
-                <h3>3</h3>
-                <p class="text-muted">Publicaciones</p>
+      <section content>
+        <app-base-card>
+          <div content>
+            <div class="profile-cover brand-border-radius">
+              <div class="profile">
+                <img src="../../../../assets/login_and_register/userdefault.png" class="rounded-circle w-100 h-100"
+                  alt="Foto de usuario" />
               </div>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
 
-      <!-- Identificación del Usuario -->
-      <div class="col-12 mt-4">
-        <mat-card class="user-info-card">
-          <mat-card-header class="user-info-header mb-2">
-            <h4>Otros</h4>
-          </mat-card-header>
-          <mat-card-content class="user-infor-content">
-            <p class="card-text">Miembro desde: {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}</p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</ng-template>
+            <div class="text-center mt-5">
+              <h1>{{ user?.fullName }}</h1>
+              <h4>{{'@' + user?.username }}</h4>
+            </div>
+          </div>
+        </app-base-card>
+        <br>
+        <app-base-card>
+          <div header>
+            <p>Información Personal</p>
+          </div>
+          <div content>
+            <p>Tipo de identificación: {{ user?.identificationTypeId }}</p>
+            <p>Identificación: {{ user?.identification }}</p>
+            <p>Correo electrónico: {{ user?.email }}</p>
+            <p>Teléfono: {{ user?.phone }}</p>
+          </div>
+        </app-base-card>
+        <br>
+        <app-base-card>
+          <div header>
+            <p>Estadísticas</p>
+          </div>
+          <div content>
+            <div>
+              <H1>contenido 1</H1>
+            </div>
+            <div>
+              <H1>contenido 2</H1>
+            </div>
+            <div>
+              <H1>contenido 3</H1>
+            </div>
+            <div>
+              <H1>contenido 4</H1>
+            </div>
+          </div>
+        </app-base-card>
+        <br>
+        <app-base-card>
+          <div header>
+            <p>Otra información</p>
+          </div>
+          <div content>
+            <p>Miembro desde: {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}</p>
+          </div>
+        </app-base-card>
+
+      </section>
+    </div>
+
+  </section>
+
+  <div actions class="d-flex gap-1">
+    <button mat-stroked-button type="button" color="primary" [routerLink]="'../'+userId+'/edit'">Editar perfil</button>
+  </div>
+</app-base-page>

@@ -11,6 +11,8 @@ import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { UserService } from '../../../shared/services/user.service';
 import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { BasePageComponent } from "../../../shared/components/base-page/base-page.component";
+import { BaseCardComponent } from "../../../shared/components/base-card/base-card.component";
 
 @Component({
   selector: 'app-profile',
@@ -25,8 +27,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     DatePipe,
     RouterModule,
     CommonModule,
-    MatFormFieldModule
-  ],
+    MatFormFieldModule,
+    BasePageComponent,
+    BaseCardComponent,
+],
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
