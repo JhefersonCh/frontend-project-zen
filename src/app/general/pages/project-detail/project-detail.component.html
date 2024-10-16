@@ -20,12 +20,12 @@
               [cdkDropListData]="todo"
               [cdkDropListConnectedTo]="[doneList, revisionList, revisedList]"
               (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3"
+              class="d-flex flex-column gap-2 mt-3 h-100"
             >
               @for (item of todo; track item) {
                 <app-base-card
                   cdkDrag
-                  class="brand-cursor-move"
+                  class="brand-cursor-move brand-box"
                   [ripple]="true"
                   [cdkDragDisabled]="isMobile"
                 >
@@ -48,7 +48,7 @@
               [cdkDropListData]="done"
               [cdkDropListConnectedTo]="[todoList, revisionList, revisedList]"
               (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3"
+              class="d-flex flex-column gap-2 mt-3 h-100"
             >
               @for (item of done; track item) {
                 <app-base-card
@@ -76,7 +76,7 @@
               [cdkDropListData]="revision"
               [cdkDropListConnectedTo]="[todoList, doneList, revisedList]"
               (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3"
+              class="d-flex flex-column gap-2 mt-3 h-100"
             >
               @for (item of revision; track item) {
                 <app-base-card
@@ -104,7 +104,7 @@
               [cdkDropListData]="revised"
               [cdkDropListConnectedTo]="[todoList, doneList, revisionList]"
               (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3"
+              class="d-flex flex-column gap-2 mt-3 h-100"
             >
               @for (item of revised; track item) {
                 <app-base-card

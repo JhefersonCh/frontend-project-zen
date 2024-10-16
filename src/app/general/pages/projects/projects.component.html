@@ -1,6 +1,6 @@
 <app-base-page
   [title]="'Proyectos'"
-  [subtitle]="'Aquí encontrarás tus proyectos'"
+  [subtitle]="'Aquí encontrarás los proyectos a los que perteneces'"
   previusUrl="/home"
 >
   <section content>
@@ -63,11 +63,21 @@
       <app-loader></app-loader>
     }
   </section>
-  <div actions class="d-flex gap-1">
+  <div
+    actions
+    class="w-100 d-flex justify-content-center justify-content-md-end"
+  >
     @if (!pageLoading) {
-      <button mat-stroked-button color="primary" routerLink="./create">
-        Crear proyecto
-      </button>
+      <div class="col-12 col-md-2">
+        <button
+          mat-stroked-button
+          color="primary"
+          routerLink="./create"
+          class="w-100"
+        >
+          Crear proyecto
+        </button>
+      </div>
     }
   </div>
 </app-base-page>
