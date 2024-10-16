@@ -15,12 +15,13 @@ import {
 } from 'rxjs';
 import { ApiResponseInterface } from '../interfaces/api-response.interface';
 import { LoginSuccessInterface } from '../../auth/interfaces/login.interface';
+import { NotificationsService } from '../services/notifications.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService: AuthService = inject(AuthService);
   const injector = inject(Injector);
-  // const notificationsService: NotificationsService =
-  //   inject(NotificationsService);
+  const notificationsService: NotificationsService =
+    inject(NotificationsService);
   const tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   const authRequest: HttpRequest<unknown> = addTokenToRequest(req);
@@ -30,13 +31,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       const refreshToken = authService.getRefreshToken();
       switch (err.status) {
         case 401:
-          /**
-           * Para renovar el token y no permitir doble peticion de renovacion
-           */
           if (refreshToken && !authService.getRefreshingToken) {
-            /**
-             * Resetea para las siguiente llamadas
-             */
             tokenSubject.next('');
 
             return authService.refreshToken(refreshToken).pipe(
@@ -57,10 +52,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
               })
             );
           }
-
-          /**
-           * Para reintentar las peticiones que ocurran mientras se renueva el token
-           */
           if (
             refreshToken &&
             authService.getRefreshingToken &&
@@ -78,25 +69,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
               })
             );
           }
-
-          /**
-           * Para hacer logout si ocurre algun error mientras se renueva
-           */
-          if (err?.error?.message !== 'Unauthorized') {
-            // notificationsService.showNotification(
-            //   'error',
-            //   err?.error?.message || 'Algo anda mal',
-            //   'Error de autenticación'
-            // );
-          }
-          //authService.cleanStorageAndRedirectToLogin();
+          authService.cleanStorageAndRedirectToLogin();
           return throwError(err);
         case 403:
-          // notificationsService.showNotification(
-          //   'error',
-          //   err?.error?.message || 'Algo anda mal',
-          //   'No estás autorizado'
-          // );
+          notificationsService.showNotification(
+            'error',
+            err?.error?.message || 'Algo anda mal',
+            'No estás autorizado'
+          );
           return throwError(err);
         default:
           return throwError(err);

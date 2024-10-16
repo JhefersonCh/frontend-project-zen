@@ -1,3 +1,4 @@
+import { notificationsInterceptorInterceptor as notificationsInterceptor } from './shared/interceptors/notifications.interceptor.interceptor';
 import {
   ApplicationConfig,
   importProvidersFrom,
@@ -32,22 +33,22 @@ import {
   MAT_NATIVE_DATE_FORMATS,
   provideNativeDateAdapter
 } from '@angular/material/core';
-
+import { ToastrModule } from 'ngx-toastr';
 registerLocaleData(localeEs);
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    //provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    // provideClientHydration(),
-    // provideAnimationsAsync(),
     provideNativeDateAdapter(MAT_NATIVE_DATE_FORMATS),
     provideAnimations(),
     importProvidersFrom(
       MatBottomSheetModule,
       MatDialogModule,
       PreviousUrlService,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      ToastrModule.forRoot({
+        preventDuplicates: true
+      })
     ),
     { provide: MatPaginatorIntl, useValue: getMaterialPaginatorTranslations() },
     {
@@ -55,7 +56,9 @@ export const appConfig: ApplicationConfig = {
       useValue: { maxWidth: '700px', width: '95vw', padding: '40px' }
     },
     { provide: LOCALE_ID, useValue: 'es' },
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withInterceptors([authInterceptor, notificationsInterceptor])
+    ),
     DatePipe,
     TransformDateService,
     provideAnimationsAsync()

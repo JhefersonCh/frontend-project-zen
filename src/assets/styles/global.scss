@@ -400,3 +400,95 @@
 .brand-cursor-move {
   cursor: move;
 }
+
+/* Toast clases */
+.toast-container {
+  margin-top: $heigth-nav-bar;
+  overflow: hidden;
+
+  &.ngx-toastr {
+    pointer-events: auto;
+    position: fixed;
+    z-index: 9999;
+    width: auto;
+    max-width: 400px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+    animation: slideInRight 0.2s ease-in forwards;
+
+    .toast-icon {
+      font-size: 1.5rem;
+      margin-right: 10px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    .toast-body {
+      display: flex;
+      flex-direction: column;
+
+      .toast-title {
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+      }
+
+      .toast-message {
+        font-size: 0.95rem;
+      }
+    }
+
+    .toast-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 5px;
+      width: 100%;
+      background-color: transparent;
+    }
+
+    &.brand-toast-success {
+      border: 1px solid $toast-success-border;
+      color: $toast-success-color;
+
+      .toast-progress {
+        background-color: $toast-success-border;
+      }
+    }
+
+    &.brand-toast-warning {
+      border: 1px solid $toast-warning-border;
+      color: $toast-warning-color;
+
+      .toast-progress {
+        background-color: $toast-warning-border;
+      }
+    }
+
+    &.brand-toast-error {
+      border: 1px solid $toast-error-border;
+      color: $toast-error-color;
+
+      .toast-progress {
+        background-color: $toast-error-border;
+      }
+    }
+
+    &.brand-toast-info {
+      border: 1px solid $toast-info-border;
+      color: $toast-info-color;
+
+      .toast-progress {
+        background-color: $toast-info-border;
+      }
+    }
+  }
+}

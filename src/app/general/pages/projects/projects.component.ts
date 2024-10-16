@@ -101,6 +101,9 @@ export class ProjectsComponent implements OnInit {
   ): void {
     this._projectsService.updateProject(project).subscribe({
       next: () => {
+        if (dialogRef) {
+          dialogRef.close();
+        }
         this._getProjects(dialogRef);
         dialogRef.componentInstance.isLoading = false;
       },

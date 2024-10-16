@@ -143,3 +143,24 @@ $brand-success-input-color: #13867a;
 $brand-global-height-button: $brand-tablet-height;
 
 $brand-border-button-color: $deep-purple-200;
+
+/* toast variables */
+$toast-success-border: #64da4c;
+$toast-warning-border: #ffeeba;
+$toast-error-border: #e42b2b;
+$toast-info-border: #b8daff;
+
+$toast-success-color: #2b753c;
+$toast-warning-color: #856404;
+$toast-error-color: #7a1b25;
+$toast-info-color: #004085;
+
+$toast-success-bg: #d4edda;
+$toast-warning-bg: #fff3cd;
+$toast-error-bg: #f8d7da;
+$toast-info-bg: #d1ecf1;
+
+$toast-success-icon: '\f058';
+$toast-warning-icon: '\f071';
+$toast-error-icon: '\f06a';
+$toast-info-icon: '\f05a';
