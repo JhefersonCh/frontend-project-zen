@@ -17,7 +17,7 @@ export class UserService {
   private readonly _httpClient: HttpClient = inject(HttpClient);
   //private readonly _httpUtilities: HttpUtilitiesService = inject(HttpUtilitiesService);
 
-  registrer(
+  register(
     user: RegisterUserInterface
   ): Observable<ApiResponseCreateInterface> {
     // const params = this._httpUtilities.httpParamsFromObject(user);
@@ -32,6 +32,15 @@ export class UserService {
   ): Observable<ApiResponseInterface<UserInterface>> {
     return this._httpClient.get<ApiResponseInterface<UserInterface>>(
       `${environment.apiUrl}user/${userId}`
+    );
+  }
+
+  updateUserProfile(
+    userId: string,
+    body: unknown
+  ): Observable<void> {
+    return this._httpClient.patch<void>(
+      `${environment.apiUrl}user/${userId}`, body
     );
   }
 }

@@ -107,7 +107,7 @@ export class RegisterComponent {
         avatarUrl: this.formStep2.value.avatarUrl,
         identificationTypeId: 1
       };
-      this._userService.registrer(userToRegister).subscribe({
+      this._userService.register(userToRegister).subscribe({
         next: () => {
           this._router.navigate(['/auth/login']);
         }

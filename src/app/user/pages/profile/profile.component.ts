@@ -11,6 +11,10 @@ import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { UserService } from '../../../shared/services/user.service';
 import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { BasePageComponent } from "../../../shared/components/base-page/base-page.component";
+import { BaseCardComponent } from "../../../shared/components/base-card/base-card.component";
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-profile',
@@ -25,14 +29,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     DatePipe,
     RouterModule,
     CommonModule,
-    MatFormFieldModule
-  ],
+    MatFormFieldModule,
+    BasePageComponent,
+    BaseCardComponent,
+    LoaderComponent,
+    MatMenuModule
+],
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  isEditing: boolean = false;
+  pageLoading: boolean = true;
   user?: UserInterface;
   isLoading = true;
+  userId: string = '';
 
   private readonly _profileService: UserService = inject(UserService);
   private readonly _localStorageService: LocalStorageService =
@@ -43,27 +52,21 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserProfile(): void {
-    const userId: string =
+    this.userId =
       this._localStorageService.getAllSessionData()?.user?.id;
 
-    userId &&
-      this._profileService.getUserProfile(userId).subscribe({
+    this.userId &&
+      this._profileService.getUserProfile(this.userId).subscribe({
         next: (response) => {
+          this.pageLoading = false;
           this.user = response?.data;
         },
         error: (error) => {
           console.error('Error al cargar el usuario', error);
         }
       });
-    /* Tiempo de recarga del profile al llamar al backend */
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
   }
 
-  editProfile(): void {
-    this.isEditing = !this.isEditing;
-    console.log(this.isEditing ? 'Editing profile' : 'Editing canceled');
-    // Aquí puedes habilitar o deshabilitar los campos de edición según isEditing
-  }
+
+  
 }

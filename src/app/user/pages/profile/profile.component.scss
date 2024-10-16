@@ -3,7 +3,7 @@
   position: relative;
   height: 150px;
   width: 100%;
-  background: linear-gradient(0deg, #f62, #ff9, #ff9);
+  background: linear-gradient(0deg, rgb(101, 81, 174), rgb(63, 59, 151), rgb(31, 110, 128));
   margin-bottom: 90px;
 }
 
@@ -18,65 +18,11 @@
   transform: translate(-50%, -50%);
   padding: 5px;
 }
-
-/* Quitar margenes y padding a los hs con clases de bootstrap */
-h1,
-h3,
-h5,
-h6 {
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
-
-/*  Contenedor de información personal */
-.user-info-card {
-  border: 1px solid #000000;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  background-color: #ffffff;
-  transition: box-shadow 0.3s ease;
-}
-
-/* Hover effect */
-.user-info-card:hover {
-  box-shadow: 0 4px 20px rgba(26, 55, 200, 0.996);
-}
-
-/* Contenedor de informacion del usuario, hijo de informacion personal */
-.user-info-header {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #2962dc;
-  padding-bottom: 10px;
-}
-
-.user-info-content {
-  font-size: 1rem;
-  color: #1d1919;
-  line-height: 1.6;
-}
-
-.user-info-content p {
-  margin: 0;
-  padding: 10px 0;
-  border-bottom: 1px solid #433e3e;
-}
-
-.user-info-content p:last-child {
-  border-bottom: none;
-}
-
-.card-text {
-  font-size: 1rem;
-  color: #444;
-}
-
-h4,
-h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #007bff;
+/* Cargando de perfil */
+.loader-container{
+  height: 500px;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
