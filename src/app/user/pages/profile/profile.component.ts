@@ -13,6 +13,8 @@ import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BasePageComponent } from "../../../shared/components/base-page/base-page.component";
 import { BaseCardComponent } from "../../../shared/components/base-card/base-card.component";
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-profile',
@@ -30,10 +32,13 @@ import { BaseCardComponent } from "../../../shared/components/base-card/base-car
     MatFormFieldModule,
     BasePageComponent,
     BaseCardComponent,
+    LoaderComponent,
+    MatMenuModule
 ],
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  pageLoading: boolean = true;
   user?: UserInterface;
   isLoading = true;
   userId: string = '';
@@ -53,6 +58,7 @@ export class ProfileComponent implements OnInit {
     this.userId &&
       this._profileService.getUserProfile(this.userId).subscribe({
         next: (response) => {
+          this.pageLoading = false;
           this.user = response?.data;
         },
         error: (error) => {

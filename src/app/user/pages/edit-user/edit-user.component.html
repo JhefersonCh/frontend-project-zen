@@ -4,26 +4,30 @@
             <form [formGroup]="form">
                 <div class="row ">
                     <mat-form-field appearance="outline">
-                        <mat-label>Nombre de usuario</mat-label>
-                        <input type="text" matInput formControlName="username">
+                        <mat-label>Nombre completo</mat-label>
+                        <input type="text" matInput formControlName="fullName">
+                        <mat-icon matPrefix>account_box</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="row ">
                     <mat-form-field appearance="outline">
-                        <mat-label>Nombre completo</mat-label>
-                        <input type="text" matInput formControlName="fullName">
+                        <mat-label>Nombre de usuario</mat-label>
+                        <input type="text" matInput formControlName="username">
+                        <mat-icon matPrefix>person</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="row ">
                     <mat-form-field appearance="outline">
                         <mat-label>Teléfono</mat-label>
                         <input type="text" matInput formControlName="phone">
+                        <mat-icon matPrefix>phone</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="row ">
                     <mat-form-field appearance="outline">
                         <mat-label>Url de imagen</mat-label>
                         <input matInput formControlName="avatarUrl">
+                        <mat-icon matPrefix> insert_link</mat-icon>
                     </mat-form-field>
                 </div>
             </form>

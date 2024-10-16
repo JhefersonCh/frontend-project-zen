@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-edit-user',
@@ -17,6 +18,7 @@ import { BasePageComponent } from '../../../shared/components/base-page/base-pag
     MatInputModule,
     MatButtonModule,
     BasePageComponent,
+    MatIcon,
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss'

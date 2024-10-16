@@ -1,16 +1,21 @@
+@if (!pageLoading) {
 <app-base-page title="Perfil de usuario" subtitle="Aquí puedes encontrar tu información y estadísticas de tus tareas"
   previusUrl="/">
 
+
+
   <section content class="row justify-content-center">
     <div class="col-12 col-md-10">
+
+
 
       <section content>
         <app-base-card>
           <div content>
             <div class="profile-cover brand-border-radius">
               <div class="profile">
-                <img src="../../../../assets/login_and_register/userdefault.png" class="rounded-circle w-100 h-100"
-                  alt="Foto de usuario" />
+                <img [src]="user?.avatarUrl || '../../../../assets/login_and_register/userdefault.png'"
+                  class="rounded-circle w-100 h-100" alt="Foto de usuario" />
               </div>
             </div>
 
@@ -68,6 +73,20 @@
   </section>
 
   <div actions class="d-flex gap-1">
-    <button mat-stroked-button type="button" color="primary" [routerLink]="'../'+userId+'/edit'">Editar perfil</button>
+   
+    <div>
+      <button mat-stroked-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        Configuración
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item type="button" color="primary" [routerLink]="'../'+userId+'/edit'">Editar perfil</button>
+      </mat-menu>
+    </div>
   </div>
+
 </app-base-page>
+} @else {
+<div class="loader-container">
+  <app-loader></app-loader>
+</div>
+}
