@@ -10,7 +10,7 @@
 
 
       <section content>
-        <app-base-card>
+        <app-base-card [withHeader]="false" [withActions]="false" [isProfileCard]="true" [ripple]="true">
           <div content>
             <div class="profile-cover brand-border-radius">
               <div class="profile">
@@ -24,11 +24,11 @@
               <h4>{{'@' + user?.username }}</h4>
             </div>
           </div>
-        </app-base-card>
+        </app-base-card >
         <br>
-        <app-base-card>
+        <app-base-card [withActions]="false" [ripple]="true">
           <div header>
-            <p>Información Personal</p>
+            <span>Información Personal</span>
           </div>
           <div content>
             <p>Tipo de identificación: {{ user?.identificationTypeId }}</p>
@@ -38,9 +38,9 @@
           </div>
         </app-base-card>
         <br>
-        <app-base-card>
+        <app-base-card [withActions]="false" [ripple]="true">
           <div header>
-            <p>Estadísticas</p>
+            <span>Estadísticas</span>
           </div>
           <div content>
             <div>
@@ -58,9 +58,9 @@
           </div>
         </app-base-card>
         <br>
-        <app-base-card>
+        <app-base-card [withActions]="false" [ripple]="true">
           <div header>
-            <p>Otra información</p>
+            <span>Otra información</span>
           </div>
           <div content>
             <p>Miembro desde: {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}</p>
@@ -72,14 +72,16 @@
 
   </section>
 
-  <div actions class="d-flex gap-1">
-   
-    <div>
-      <button mat-stroked-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        Configuración
-      </button>
+  <div actions class="w-100 align-content-center">
+    <div class="row justify-content-center justify-content-md-end">
+      <div class="col-12 col-md-4">
+        <button mat-stroked-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="w-100">
+          Configuración
+        </button>
+      </div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item type="button" color="primary" [routerLink]="'../'+userId+'/edit'">Editar perfil</button>
+        <button mat-menu-item type="button" color="primary" [routerLink]="'home'">Recuperar contraseña</button>
       </mat-menu>
     </div>
   </div>

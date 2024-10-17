@@ -1,17 +1,16 @@
-<mat-card
-  class="base-info-card h-100 w-100"
-  matRipple
-  [matRippleDisabled]="!ripple"
->
-  <mat-card-header
-    class="base-info-header mb-2 brand-text-headline-s fw-semibold pt-0 pb-3 title"
-  >
+<mat-card [ngClass]="{'p-0': isProfileCard}" class="base-info-card h-100 w-100" matRipple [matRippleDisabled]="!ripple">
+  @if (withHeader) { 
+    <mat-card-header class=" mb-2 brand-text-headline-s fw-semibold pt-0 pb-3 title"
+    [ngClass]="{'base-info-header': withHeader}">
+
     <ng-content select="[header]"></ng-content>
-  </mat-card-header>
-  <mat-card-content class="brand-text-body-m mt-2">
+  </mat-card-header>}
+  <mat-card-content [ngClass]="{'mt-0 p-0': isProfileCard, 'mt-2': !isProfileCard}" class="brand-text-body-m">
     <ng-content select="[content]"></ng-content>
   </mat-card-content>
+  @if(withActions){
   <hr class="mb-0" />
+  }
   <mat-card-actions class="d-flex justify-content-end">
     <ng-content select="[actions]"></ng-content>
   </mat-card-actions>

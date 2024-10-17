@@ -1,1 +1,34 @@
-<p>about-us works!</p>
+<app-base-page 
+title="Preguntas frecuentes"   
+[subtitle]="'Aquí puedes hacer tur preguntas'"
+previusUrl="/home">
+  
+    <div content class="accordion" id="faqAccordion">
+      <div class="accordion-item" *ngFor="let faq of preguntasFrecuentes">
+        <h2 class="accordion-header" [id]="'heading' + generarId(faq.pregunta)">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#collapse' + generarId(faq.pregunta)"
+            [attr.aria-expanded]="faq.pregunta === preguntasFrecuentes[0].pregunta"
+            [attr.aria-controls]="'collapse' + generarId(faq.pregunta)"
+          >
+            {{ faq.pregunta }}
+          </button>
+        </h2>
+        <div
+          [id]="'collapse' + generarId(faq.pregunta)"
+          class="accordion-collapse collapse"
+          [class.show]="faq.pregunta === preguntasFrecuentes[0].pregunta"
+          [attr.aria-labelledby]="'heading' + generarId(faq.pregunta)"
+          data-bs-parent="#faqAccordion"
+        >
+          <div class="accordion-body">
+            {{ faq.respuesta }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-base-page>
+  
