@@ -127,28 +127,30 @@
     }
   </div>
 
-  <div actions>
+  <div actions class="w-100">
     @if (userLoggedIsLeader()) {
-      <section class="d-flex row gap-md-0 gap-1">
-        <div class="col-12 col-md-6 px-1">
+      <section class="d-flex row gap-md-0 gap-1 justify-content-end">
+        <div class="col-12 col-md-5 col-lg-3 px-1">
           <button
             mat-fab
             extended="true"
             color="primary"
             class="w-100"
             [disabled]="!userLoggedIsLeader()"
+            [routerLink]="['members']"
+            [queryParams]="{ title: project?.title }"
           >
-            Agregar miembros
+            Miembros
           </button>
         </div>
-        <div class="col-12 col-md-6 px-1">
+        <div class="col-12 col-md-5 col-lg-3 px-1">
           <button
             mat-stroked-button
             color="primary"
             class="w-100"
             [disabled]="!userLoggedIsLeader()"
           >
-            Asignar tareas
+            Asignar tarea
           </button>
         </div>
       </section>

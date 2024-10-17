@@ -1,20 +1,6 @@
 @import 'variables.scss';
 
-.mobile-menu {
-  top: $heigth-nav-bar;
-  right: 0;
-  background-color: #343a40;
-}
-
-.mobile-menu a {
-  padding: 16px;
-  display: block;
-  text-align: center;
-  border-bottom: 1px solid #555;
-}
-
-.nav-bar-element,
-.mobile-menu-element {
+.nav-bar-element {
   color: white;
   text-decoration: none;
 }
@@ -23,22 +9,8 @@
   color: $primary-hover-color;
 }
 
-.mobile-menu-element:hover {
-  color: $secondary-hover-color;
-  font-weight: 600;
-}
-
 .nav-bar-element.active {
   font-weight: bold;
   font-size: 18px;
   color: $deep-purple-200;
-}
-
-.mobile-menu-element.active {
-  font-weight: bold;
-  font-size: 24px;
-  color: $black-color-base;
-}
-.menu {
-  z-index: 4 !important;
 }

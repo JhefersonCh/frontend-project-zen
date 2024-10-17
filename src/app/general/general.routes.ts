@@ -29,10 +29,22 @@ export const generalRoutes: Routes = [
           },
           {
             path: ':id',
-            loadComponent: () =>
-              import('./pages/project-detail/project-detail.component').then(
-                (m) => m.ProjectDetailComponent
-              )
+            children: [
+              {
+                path: '',
+                loadComponent: () =>
+                  import(
+                    './pages/project-detail/project-detail.component'
+                  ).then((m) => m.ProjectDetailComponent)
+              },
+              {
+                path: 'members',
+                loadComponent: () =>
+                  import(
+                    './pages/project-members/project-members.component'
+                  ).then((m) => m.ProjectMembersComponent)
+              }
+            ]
           }
         ]
       }

@@ -118,26 +118,6 @@ mat-form-field {
     font-size: $brand-mobile-font-size !important;
     height: $brand-mobile-height !important;
   }
-
-  //.mat-mdc-icon-button.mat-mdc-button-base {
-  // height: $brand-mobile-icon-button-size;
-  // width: $brand-mobile-icon-button-size;
-
-  // mat-icon {
-  //   position: absolute;
-  //   top: 5px;
-  //   right: 5px;
-  //   height: $brand-mobile-icon-size;
-  //   width: $brand-mobile-icon-size;
-  //   font-size: $brand-mobile-icon-size;
-  // }
-  // }
-  // .mat-mdc-icon-button.mat-mdc-button-base:not(.brand-icon-button-outlined) {
-  //   mat-icon {
-  //     top: 6px;
-  //     right: 6px;
-  //   }
-  // }
 }
 
 .mat-mdc-form-field {
@@ -161,9 +141,14 @@ mat-form-field {
 /* Remove buttons shadow */
 .mat-mdc-fab {
   box-shadow: none !important;
+  background-color: $deep-purple-600 !important;
   /* Blue brand button */
   &.brand-mat-fab-blue {
     background-color: $primary-color !important; // Color del botón azul
+  }
+
+  &.mat-warn {
+    background-color: $warning-color !important;
   }
 }
 
@@ -243,17 +228,26 @@ mat-form-field {
 }
 
 .mdc-button:hover {
-  background-color: $primary-light !important; // Color de fondo del botón al pasar el mouse
+  background-color: $primary-light !important;
   color: $black-color-base !important;
 
   &.mat-mdc-outlined-button:not(:disabled) {
     border-color: transparent !important;
   }
+
+  &.mat-mdc-raised-button.mat-primary {
+    background-color: $deep-purple-900 !important;
+    color: $white-color-base !important;
+  }
 }
 
 .mdc-fab:hover {
-  background-color: $primary-light; // Color de fondo del FAB al pasar el mouse
-  color: $black-color-base !important;
+  background-color: $deep-purple-900 !important;
+  color: $white-color-base !important;
+
+  &.mat-warn {
+    background-color: $warning-hover-color !important;
+  }
 }
 
 .mat-mdc-fab[disabled] {
@@ -266,4 +260,44 @@ mat-form-field {
   --brand-primary-color-rgba: #{color.adjust($primary-color, $alpha: -0.6)};
   border-color: var(--brand-primary-color-rgba) !important;
   color: var(--brand-primary-color-rgba) !important;
+}
+
+/*mat-menu*/
+.mat-mdc-menu-panel {
+  background-color: $surface-color !important;
+  border-radius: $brand-border-radius-sm !important;
+  box-shadow: $box-shadow !important;
+}
+
+.mat-mdc-menu-item {
+  font-size: $font-size-medium !important;
+  padding: $spacing-medium !important;
+  color: $text-primary !important;
+  transition: background-color $transition-fast !important;
+  border-bottom: $global-border !important;
+
+  &:hover {
+    background-color: $primary-hover-color !important;
+    color: $text-on-primary !important;
+  }
+
+  &:disabled {
+    color: $text-disabled !important;
+  }
+
+  .mat-mdc-menu-item-icon {
+    font-size: $brand-mat-menu-item-size !important;
+    margin-right: $spacing-small !important;
+  }
+
+  &:last-child {
+    border-bottom: none !important;
+  }
+
+  &.active {
+    .mat-mdc-menu-item-text {
+      font-size: $brand-mat-menu-active-item-size !important;
+      font-weight: 600 !important;
+    }
+  }
 }

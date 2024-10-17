@@ -16,28 +16,35 @@ import { LocalStorageService } from '../../../shared/services/localStorage.servi
 import { LogOutInterface } from '../../../auth/interfaces/logout.interface';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [RouterLink, NgClass, NgIf, MatMenuModule, MatButtonModule],
+  imports: [
+    RouterLink,
+    NgClass,
+    NgIf,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() userName?: string;
   userImage: string | null;
-
   isLoggedUser: boolean = false;
   router: Router = inject(Router);
   private _authService: AuthService = inject(AuthService);
   private _localStorageService: LocalStorageService =
     inject(LocalStorageService);
   private _subscription: Subscription = new Subscription();
-  isMenuOpen = false;
+  isMenuOpen: boolean = false;
   optionSelected: string = '';
   module: string[] = [];
-  isLoading: boolean = true;
+  isMobile: boolean = false;
 
   constructor() {
     this.userImage = null;
@@ -47,11 +54,9 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
     this._subscription.add(
       this._authService._isLoggedSubject.subscribe((isLogged) => {
         this.isLoggedUser = isLogged;
-        this.isLoading = false;
       })
     );
     this.isLoggedUser = this._authService.isAuthenticated();
-    this.isLoading = false;
     this.module = this.router.url.split('/');
     this.optionSelected = this.module[1];
 
@@ -71,7 +76,7 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._subscription.unsubscribe(); // Limpiar la suscripción
+    this._subscription.unsubscribe();
   }
 
   /**
@@ -95,7 +100,7 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
    * Si el usuario no está logueado, lo redirige a la página de inicio de sesión.
    * Si el usuario está logueado, emite un evento de cierre de sesión y lo redirige a la página de inicio.
    */
-  manageUser(): void {
+  manageAuthButton(): void {
     if (!this.isLoggedUser) {
       this.router.navigateByUrl('/auth/login');
     } else {

@@ -1,19 +1,5 @@
 @use '@angular/material' as mat;
-
-$deep-purple-50: #ede7f6;
-$deep-purple-100: #d1c4e9;
-$deep-purple-200: #b39ddb;
-$deep-purple-300: #9575cd;
-$deep-purple-400: #7e57c2;
-$deep-purple-500: #673ab7;
-$deep-purple-600: #5e35b1;
-$deep-purple-700: #512da8;
-$deep-purple-800: #4527a0;
-$deep-purple-900: #311b92;
-$deep-purple-A100: #b388ff;
-$deep-purple-A200: #7c4dff;
-$deep-purple-A400: #651fff;
-$deep-purple-A700: #6200ea;
+@import 'variables';
 
 $error-red: #eb2f28;
 
@@ -70,12 +56,3 @@ $custom-theme: mat.m2-define-light-theme(
 
 // Aplicar los estilos de componentes globalmente
 @include mat.all-component-themes($custom-theme);
-
-mat-button {
-  background-color: mat.m2-get-color-from-palette($brand-primary);
-  color: mat.m2-get-color-from-palette($brand-accent, default-contrast);
-
-  &:hover {
-    background-color: mat.m2-get-color-from-palette($brand-primary, 200);
-  }
-}

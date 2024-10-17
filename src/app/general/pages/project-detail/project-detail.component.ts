@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, inject, OnInit } from '@angular/core';
 import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProjectsService } from '../../services/projects.service';
 import { ProjectInterface } from '../../interfaces/projects.interface';
 import { ProgressTimeBarComponent } from '../../components/progress-time-bar/progress-time-bar.component';
@@ -17,7 +17,6 @@ import {
   moveItemInArray,
   transferArrayItem
 } from '@angular/cdk/drag-drop';
-import { NgFor, NgIf } from '@angular/common';
 import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
 
 @Component({
@@ -29,9 +28,8 @@ import { BaseCardComponent } from '../../../shared/components/base-card/base-car
     MatButtonModule,
     LoaderComponent,
     DragDropModule,
-    NgFor,
     BaseCardComponent,
-    NgIf
+    RouterLink
   ],
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']

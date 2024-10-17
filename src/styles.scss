@@ -19,22 +19,6 @@ body {
   height: calc(100vh - $heigth-nav-bar);
 }
 
-.mat-mdc-menu-content {
-  background: $deep-purple-100;
-}
-.mat-mdc-menu-item-text {
-  color: black;
-}
-
 app-login {
   display: flex;
-}
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
