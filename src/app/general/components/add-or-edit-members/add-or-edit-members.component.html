@@ -8,12 +8,21 @@
       <div class="row">
         <mat-form-field appearance="outline" class="col-12 mt-2">
           <mat-label>Usuario</mat-label>
-          <mat-select formControlName="userId" placeholder="Usuario">
+
+          <input
+            type="text"
+            placeholder="Buscar usuario..."
+            matInput
+            formControlName="user"
+            [matAutocomplete]="user"
+          />
+          <mat-autocomplete #user="matAutocomplete" [displayWith]="fullName">
             @for (user of users; track $index) {
-              <mat-option [value]="user.id">{{ user.username }}</mat-option>
+              <mat-option [value]="user">{{ user?.fullName }}</mat-option>
             }
-          </mat-select>
-          @if (form.get('userId')?.hasError('required')) {
+          </mat-autocomplete>
+
+          @if (form.get('user')?.hasError('required')) {
             <mat-error>El usuario es requerido</mat-error>
           }
         </mat-form-field>

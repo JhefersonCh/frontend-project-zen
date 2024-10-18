@@ -26,6 +26,10 @@ export class ProjectMembersComponent implements OnInit {
   }
 
   openAddOrEditMemberDialog(): void {
-    this._matDialog.open(AddOrEditMembersComponent, {});
+    this._matDialog.open(AddOrEditMembersComponent, {
+      data: {
+        projectId: this.projectId
+      }
+    });
   }
 }

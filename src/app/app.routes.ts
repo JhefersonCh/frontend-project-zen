@@ -28,7 +28,7 @@ export const routes: Routes = [
         path: 'user',
         canActivate: [authGuard],
         loadChildren: () =>
-          import('./user/user.routes').then((m) => m.userRoutes)
+          import('./profile/profile.routes').then((m) => m.profileRoutes)
       },
       {
         path: 'general',

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-export const userRoutes: Routes = [
+export const profileRoutes: Routes = [
   {
     path: '',
     children: [

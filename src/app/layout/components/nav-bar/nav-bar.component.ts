@@ -110,7 +110,14 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
         accessToken: allSessionData?.tokens.accessToken || '',
         accessSessionId: allSessionData?.session.accessSessionId || ''
       };
-      this._authService.logout(sessionDataToLogout).subscribe();
+      this._authService.logout(sessionDataToLogout).subscribe({
+        next: () => {
+          this._authService.cleanStorageAndRedirectToLogin();
+        },
+        error: () => {
+          this._authService.cleanStorageAndRedirectToLogin();
+        }
+      });
     }
   }
 }
