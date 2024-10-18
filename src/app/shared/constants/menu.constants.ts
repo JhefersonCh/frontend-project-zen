@@ -33,11 +33,11 @@ export const MENU_CONST: MenuInterface[] = [
         subItems: [
           {
             name: 'Crear usuario',
-            route: '/organizacional/users/create'
+            route: '/organizational/users/create'
           },
           {
             name: 'Ver usuarios',
-            route: '/organizacional/users/list'
+            route: '/organizational/users/list'
           }
         ]
       },
@@ -52,10 +52,12 @@ export const MENU_CONST: MenuInterface[] = [
 ];
 
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
-  user: ['user', 'Proyectos']
+  user: [
+    'profile',
+     'Proyectos']
 };
 
 export const ROUTE_MAP: Record<string, string> = {
   Proyectos: '/general/projects',
-  user: '/user'
+  profile: '/profile'
 };

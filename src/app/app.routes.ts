@@ -25,7 +25,7 @@ export const routes: Routes = [
           import('./auth/auth.routes').then((m) => m.authRoutes)
       },
       {
-        path: 'user',
+        path: 'profile',
         canActivate: [authGuard],
         loadChildren: () =>
           import('./user/user.routes').then((m) => m.userRoutes)
@@ -35,6 +35,11 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadChildren: () =>
           import('./general/general.routes').then((m) => m.generalRoutes)
+      },
+      {
+        path: 'organizational',
+        canActivate: [authGuard],
+        loadChildren: () => import('./organizational/organizational.routes').then(m => m.organizationalRoutes)
       }
     ]
   },

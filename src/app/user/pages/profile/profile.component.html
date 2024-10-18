@@ -2,12 +2,8 @@
 <app-base-page title="Perfil de usuario" subtitle="Aquí puedes encontrar tu información y estadísticas de tus tareas"
   previusUrl="/">
 
-
-
   <section content class="row justify-content-center">
     <div class="col-12 col-md-10">
-
-
 
       <section content>
         <app-base-card [withHeader]="false" [withActions]="false" [isProfileCard]="true" [ripple]="true">
@@ -76,12 +72,12 @@
     <div class="row justify-content-center justify-content-md-end">
       <div class="col-12 col-md-4">
         <button mat-stroked-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="w-100">
-          Configuración
+          Opciones
         </button>
       </div>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item type="button" color="primary" [routerLink]="'../'+userId+'/edit'">Editar perfil</button>
-        <button mat-menu-item type="button" color="primary" [routerLink]="'home'">Recuperar contraseña</button>
+        <button mat-menu-item type="button" color="primary" [routerLink]="[userId+'/edit']">Editar perfil</button>
+        <button mat-menu-item type="button" color="primary" [routerLink]="[userId+'/settings']">Configuración</button>
       </mat-menu>
     </div>
   </div>

@@ -5,14 +5,14 @@ export const userRoutes: Routes = [
     path: '',
     children: [
       {
-        path: 'profile',
+        path: '',
         loadComponent: () =>
           import('./pages/profile/profile.component').then(
             (m) => m.ProfileComponent
           )
       },
       {
-        path: 'settings',
+        path: ':id/settings',
         loadComponent: () =>
           import('./pages/settings/settings.component').then(
             (m) => m.SettingsComponent

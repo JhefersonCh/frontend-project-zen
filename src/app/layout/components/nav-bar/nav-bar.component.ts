@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NgClass, NgIf } from '@angular/common';
 import {
@@ -17,6 +18,9 @@ import { LogOutInterface } from '../../../auth/interfaces/logout.interface';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { UserService } from '../../../shared/services/user.service';
+import { UserInterface } from '../../../shared/interfaces/user.interface';
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -27,7 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
     NgIf,
     MatMenuModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    LoaderComponent
   ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
@@ -37,6 +42,12 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
   userImage: string | null;
   isLoggedUser: boolean = false;
   router: Router = inject(Router);
+  pageLoading: boolean = true;
+  user?: UserInterface;
+  isLoading = true;
+  userId: string = '';
+
+  private readonly _profileService: UserService = inject(UserService);
   private _authService: AuthService = inject(AuthService);
   private _localStorageService: LocalStorageService =
     inject(LocalStorageService);
@@ -51,6 +62,7 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadUserProfile();
     this._subscription.add(
       this._authService._isLoggedSubject.subscribe((isLogged) => {
         this.isLoggedUser = isLogged;
@@ -66,6 +78,22 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
         this.module = this.router.url.split('/');
         this.optionSelected = this.module[1];
         this.isLoggedUser = this._authService.isAuthenticated();
+      });
+  }
+
+  loadUserProfile(): void {
+    this.userId =
+      this._localStorageService.getAllSessionData()?.user?.id;
+
+    this.userId &&
+      this._profileService.getUserProfile(this.userId).subscribe({
+        next: (response) => {
+          this.user = response?.data;
+          this.pageLoading = false;
+        },
+        error: (error) => {
+          console.error('Error al cargar el usuario', error);
+        }
       });
   }
 

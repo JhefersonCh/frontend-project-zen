@@ -1,114 +1,69 @@
-<header
-  class="d-flex justify-content-between align-items-center text-white px-4 brand-nav-bar"
->
-  <a
-    class="text-decoration-none text-white fw-bold brand-cursor-pointer brand-text-headline-m"
-    routerLink="/"
-  >
+<header class="d-flex justify-content-between align-items-center text-white px-4 brand-nav-bar">
+  <a class="text-decoration-none text-white fw-bold brand-cursor-pointer brand-text-headline-m" routerLink="/">
     ProjectZen
   </a>
 
-  <button
-    class="navbar-toggler d-block d-md-none border-0 bg-transparent"
-    type="button"
-    mat-icon-button
-    [matMenuTriggerFor]="options2"
-  >
+  <button class="navbar-toggler d-block d-md-none border-0 bg-transparent" type="button" mat-icon-button
+    [matMenuTriggerFor]="options2">
     <mat-icon>menu</mat-icon>
     <mat-menu #options2="matMenu">
       @if (isLoggedUser) {
-        <button
-          routerLink="/../../user/profile"
-          mat-menu-item
-          class="d-flex align-items-center"
-          [ngClass]="{ active: optionSelected === 'user' }"
-        >
-          <img
-            [src]="
-              userImage || '../../assets/login_and_register/userdefault.png'
-            "
-            alt="User Image"
-            class="user-avatar me-2"
-            style="width: 30px; height: 30px; border-radius: 50%"
-          />
-          <span>{{ userName || 'Invitado' }}</span>
-        </button>
+      @if (!pageLoading) { 
+        <button routerLink="/profile" mat-menu-item class="d-flex align-items-center"
+        [ngClass]="{ active: optionSelected === 'user' }">
+        <img [src]="
+      user?.avatarUrl || '../../assets/login_and_register/userdefault.png'
+    " alt="User Image" class="user-avatar me-" style="width: 30px; height: 30px; border-radius: 50%" />
+        <span>{{ userName || 'Invitado' }}</span>
+      </button>} @else {
+      <div class="loader-container">
+        <app-loader></app-loader>
+      </div>
       }
-      <button
-        mat-menu-item
-        [ngClass]="{ active: optionSelected === 'home' }"
-        routerLink="/home"
-      >
+      }
+      <button mat-menu-item [ngClass]="{ active: optionSelected === 'home' }" routerLink="/home">
         Inicio
       </button>
-      <button
-        mat-menu-item
-        routerLink="/about-us"
-        [ngClass]="{ active: optionSelected === 'about-us' }"
-      >
-      ¿Necesitas ayuda?
+      <button mat-menu-item routerLink="/about-us" [ngClass]="{ active: optionSelected === 'about-us' }">
+        ¿Necesitas ayuda?
       </button>
-      <button
-        mat-menu-item
-        [ngClass]="{ active: optionSelected === 'auth' }"
-        (click)="manageAuthButton()"
-      >
+      <button mat-menu-item [ngClass]="{ active: optionSelected === 'auth' }" (click)="manageAuthButton()">
         {{ isLoggedUser ? 'Cerrar sesión' : 'Iniciar sesión' }}
       </button>
     </mat-menu>
   </button>
 
   <nav class="d-none d-md-flex align-items-center gap-4">
-    <a
-      class="nav-bar-element text-center brand-text-headline-xxs"
-      routerLink="home"
-      role="button"
-      [ngClass]="{ active: optionSelected === 'home' }"
-      >Inicio</a
-    >
-    <a
-      class="nav-bar-element text-center brand-text-headline-xxs"
-      routerLink="/about-us"
-      [ngClass]="{ active: optionSelected === 'about-us' }"
-      role="button"
-      >¿Necesitas ayuda?</a
-    >
+    <a class="nav-bar-element text-center brand-text-headline-xxs" routerLink="home" role="button"
+      [ngClass]="{ active: optionSelected === 'home' }">Inicio</a>
+    <a class="nav-bar-element text-center brand-text-headline-xxs" routerLink="/about-us"
+      [ngClass]="{ active: optionSelected === 'about-us' }" role="button">¿Necesitas ayuda?</a>
 
-    <a
-      *ngIf="isLoggedUser; else loginOption"
-      class="nav-bar-element text-center brand-text-headline-xxs"
-      type="button"
-      [matMenuTriggerFor]="options"
-    >
-      <img
-        [src]="userImage || '../../assets/login_and_register/userdefault.png'"
-        alt="User Image"
-        class="user-avatar"
-      />
+    <a *ngIf="isLoggedUser; else loginOption" class="nav-bar-element text-center brand-text-headline-xxs" type="button"
+      [matMenuTriggerFor]="options">
+      @if (!pageLoading) {
+        <img [src]="user?.avatarUrl || '../../assets/login_and_register/userdefault.png'"
+        alt="User Image" class="user-avatar" />}@else {
+      <div class="loader-container w-50 h-50">
+        <app-loader></app-loader>
+      </div>
+      }
     </a>
 
     <ng-template #loginOption>
-      <a
-        class="nav-bar-element text-center brand-text-headline-xxs"
-        routerLink="/auth/login"
-        [ngClass]="{ active: optionSelected === 'auth' }"
-        >Iniciar sesión</a
-      >
+      <a class="nav-bar-element text-center brand-text-headline-xxs" routerLink="/auth/login"
+        [ngClass]="{ active: optionSelected === 'auth' }">Iniciar sesión</a>
     </ng-template>
 
     <mat-menu #options="matMenu" class="mt-2">
-      <button
-        mat-menu-item
-        class="d-flex align-items-center"
-        routerLink="/../../user/profile"
-        [ngClass]="{ active: optionSelected === 'user' }"
-      >
-        <img
-          [src]="userImage || '../../assets/login_and_register/userdefault.png'"
-          alt="User Image"
-          class="user-avatar me-2"
-          style="width: 30px; height: 30px; border-radius: 50%"
-        />
+      <button mat-menu-item class="d-flex align-items-center" routerLink="/profile"
+        [ngClass]="{ active: optionSelected === 'user' }">
+        @if (!pageLoading) {<img [src]="user?.avatarUrl || '../../assets/login_and_register/userdefault.png'"
+          alt="User Image" class="user-avatar mr-2" style="width: 30px; height: 30px; border-radius: 50%" />}@else {
+        <div class="loader-container">
+          <app-loader></app-loader>
+        </div>
+        }
         <span>{{ userName || 'Invitado' }}</span>
       </button>
 
