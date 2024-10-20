@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiResponseInterface } from '../../shared/interfaces/api-response.interface';
+import { ApiResponseCreateInterface, ApiResponseInterface } from '../../shared/interfaces/api-response.interface';
 import { HttpUtilitiesService } from '../../shared/utilities/http-utilities.service';
 import { environment } from '../../../environments/environment';
 import { UsersInterface } from '../interfaces/users.interface';
@@ -19,6 +19,15 @@ export class UsersService {
     return this._httpClient.get<ApiResponseInterface<UsersInterface[]>>(
       `${environment.apiUrl}user/paginated-list`,
       { params }
+    );
+  }
+  registerUserRole(
+    user: UsersService
+  ): Observable<ApiResponseCreateInterface> {
+    // const params = this._httpUtilities.httpParamsFromObject(user);
+    return this._httpClient.post<ApiResponseCreateInterface>(
+      `${environment.apiUrl}organizational/manager-users`,
+      user
     );
   }
 }
