@@ -1,10 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiResponseCreateInterface, ApiResponseInterface } from '../../shared/interfaces/api-response.interface';
+import {
+  ApiResponseCreateInterface,
+  ApiResponseInterface
+} from '../../shared/interfaces/api-response.interface';
 import { HttpUtilitiesService } from '../../shared/utilities/http-utilities.service';
 import { environment } from '../../../environments/environment';
 import { UsersInterface } from '../interfaces/users.interface';
+import { UserInterface } from '../../shared/interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
@@ -22,7 +26,7 @@ export class UsersService {
     );
   }
   registerUserRole(
-    user: UsersService
+    user: UserInterface
   ): Observable<ApiResponseCreateInterface> {
     // const params = this._httpUtilities.httpParamsFromObject(user);
     return this._httpClient.post<ApiResponseCreateInterface>(

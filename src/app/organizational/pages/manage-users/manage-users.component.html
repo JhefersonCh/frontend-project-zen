@@ -1,81 +1,101 @@
-<app-base-page title="Crea tus usuarios" subtitle="Aquí puedes gestionar usuarios con sus respectivos roles"
-    previousUrl="/home">
+<app-base-page
+  title="Crea tus usuarios"
+  subtitle="Aquí puedes gestionar usuarios con sus respectivos roles"
+  previousUrl="/home"
+>
+  <div header>Crear usuario</div>
 
-    <div header>
-        Crear usuario
-    </div>
+  <div content>
+    <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6" [appearance]="'outline'">
+          <mat-label>Nombre Completo</mat-label>
+          <input matInput formControlName="fullName" placeholder="John Doe" />
+        </mat-form-field>
+      </div>
 
-    <div content>
-        <!-- Formulario para crear un nuevo usuario -->
-        <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-            <mat-form-field class="full-width">
-                <mat-label>Nombre Completo</mat-label>
-                <input matInput formControlName="fullName" placeholder="John Doe">
-            </mat-form-field>
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6" [appearance]="'outline'">
+          <mat-label>Usuario</mat-label>
+          <input matInput formControlName="username" placeholder="@john.doe" />
+        </mat-form-field>
+      </div>
 
-            <mat-form-field class="full-width">
-                <mat-label>Usuario</mat-label>
-                <input matInput formControlName="username" placeholder="@john.doe">
-            </mat-form-field>
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6" [appearance]="'outline'">
+          <mat-label>Correo Electrónico</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="john.doe@gmail.com"
+            type="email"
+          />
+        </mat-form-field>
+      </div>
 
-            <mat-form-field class="full-width">
-                <mat-label>Correo Electrónico</mat-label>
-                <input matInput formControlName="email" placeholder="john.doe@gmail.com" type="email">
-            </mat-form-field>
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6" [appearance]="'outline'">
+          <mat-label>Teléfono</mat-label>
+          <input
+            matInput
+            formControlName="phone"
+            placeholder="912345678"
+            type="tel"
+          />
+        </mat-form-field>
+      </div>
 
-            <mat-form-field class="full-width">
-                <mat-label>Teléfono</mat-label>
-                <input matInput formControlName="phone" placeholder="912345678" type="tel">
-            </mat-form-field>
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6" [appearance]="'outline'">
+          <mat-label>Tipo de Identificación</mat-label>
+          <mat-select formControlName="identificationTypeId">
+            @for (type of identificationTypes; track $index) {
+              <mat-option [value]="type.id">
+                {{ type.type }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-            <mat-form-field class="full-width">
-                <mat-label>Identificación</mat-label>
-                <input matInput formControlName="identification" placeholder="12345678-5">
-            </mat-form-field>
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6" [appearance]="'outline'">
+          <mat-label>Identificación</mat-label>
+          <input
+            matInput
+            formControlName="identification"
+            placeholder="12345678-5"
+          />
+        </mat-form-field>
+      </div>
 
-            <mat-form-field class="full-width">
-                <mat-label>Tipo de Identificación</mat-label>
-                <mat-select formControlName="identificationTypeId">
-                    <mat-option
-                    *ngFor="let type of identificationTypes"
-                    [value]="type.id"
-                  >
-                    {{ type.type }}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6" [appearance]="'outline'">
+          <mat-label>Avatar URL</mat-label>
+          <input
+            matInput
+            formControlName="avatarUrl"
+            placeholder="https://www.example.com/avatar.jpg"
+          />
+        </mat-form-field>
+      </div>
 
-            <mat-form-field class="full-width">
-                <mat-label>Avatar URL</mat-label>
-                <input matInput formControlName="avatarUrl" placeholder="https://www.example.com/avatar.jpg">
-            </mat-form-field>
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6" [appearance]="'outline'">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="roleId">
+            @for (rol of roles; track $index) {
+              <mat-option [value]="rol?.id">{{ rol?.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
 
-            <mat-form-field class="full-width">
-                <mat-label>Contraseña</mat-label>
-                <input matInput formControlName="password" placeholder="********" type="password">
-            </mat-form-field>
-
-            <mat-form-field class="full-width">
-                <mat-label>Confirmar Contraseña</mat-label>
-                <input matInput formControlName="passwordConfirmation" placeholder="********" type="password">
-            </mat-form-field>
-
-            <mat-form-field class="full-width">
-                <mat-label>Rol</mat-label>
-                <mat-select formControlName="roleId">
-                    <mat-option *ngFor="let id of rol" [value]="rol">{{ rol }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </form>
-    </div>
-
-    <div actions>
-        <button mat-flat-button color="primary" [disabled]="!userForm.valid">
-            Guardar
-        </button>
-        <!-- <button mat-flat-button (click)="onCancel()">
-            Cancelar
-        </button> -->
-    </div>
-
+  <div actions>
+    <button mat-flat-button color="primary" [disabled]="!userForm.valid">
+      Guardar
+    </button>
+  </div>
 </app-base-page>

@@ -11,7 +11,8 @@ export interface UserInterface {
   role?: Roles;
   roleId?: number;
   identificationTypeId: number;
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+  password?: string;
 }
