@@ -1,11 +1,13 @@
-export interface UserInterface {
-    fullName:                 string;
-    identification:       string;
-    username:             string;
-    email:                string;
-    createdAt:            Date;
-    phone:                string;
-    avatarUrl:            string;
-    roleId:               number;
-    identificationTypeId: number;
+export interface InterfaceUserRole {
+  id?:                   string;
+  identification:       string;
+  identificationTypeId: number;
+  fullName:             string;
+  avatarUrl:            string;
+  username:             string;
+  phone:                string;
+  email:                string;
+  password:             string;
+  passwordConfirmation: string;
+  roleId:               number;
 }

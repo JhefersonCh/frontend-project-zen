@@ -1,71 +1,144 @@
-<div class="container mt-5">
-  <mat-card>
-    <div class="text-center p-3">
+<app-base-page title="Crear usuarios" subtitle="Aquí puedes crear usuarios con roles" previusUrl="/home">
 
-      <div class="mx-auto d-flex align-items-center justify-content-center">
-        <img src="../../../../assets/login_and_register/userdefault.png" class="rounded-circle user-avatar-profile" alt="Profile picture" />
-      </div>
-      <h2 class="mt-3">{{ user?.fullName }}</h2>
-      <p class="text-muted">{{ user?.username }}</p>
-      <div class="mt-3">
-        <button mat-raised-button color="primary" (click)="editProfile()">{{ isEditing ? 'Guardar Cambios' : 'Editar Perfil' }}</button>
-      </div>
+  <section content class="row">
+    <div content>
+      <form [formGroup]="formRolUser" class="col-12 col-md-6 d-flex flex-column">
 
-    </div>
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Identificación</mat-label>
+          <input matInput formControlName="identification" required />
+          <mat-icon matPrefix>credit_card</mat-icon>
+          <mat-error *ngIf="formRolUser.get('identification')?.hasError('required')">
+            Número de identificación requerido
+          </mat-error>
+        </mat-form-field>
 
-    <mat-card-content>
-      <div class="row mt-4">
-        <div class="col-12 mb-3">
-          <mat-card>
-            <mat-card-header class="mb-2">
-              <mat-card-title >Información Personal</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p class="card-text">Tipo de identificación: {{ user?.identificationTypeId }}</p>
-              <p class="card-text">Identificación: {{ user?.identification }}</p>
-              <p class="card-text">Correo electrónico: {{ user?.email }}</p>
-              <p class="card-text">Teléfono: {{ user?.phone }}</p>
-            </mat-card-content>
-          </mat-card>
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Tipo de Identificación</mat-label>
+          <mat-select formControlName="identificationTypeId" required>
+            <mat-option value="" disabled selected>Seleccione su tipo de documento</mat-option>
+            <mat-option *ngFor="let type of identificationTypes" [value]="type.id">
+              {{ type.type }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>table_chart</mat-icon>
+          <mat-error *ngIf="
+                formRolUser.get('identificationTypeId')?.hasError('required')
+              ">
+            Tipo de identificación requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Nombre Completo</mat-label>
+          <input matInput formControlName="fullName" required />
+          <mat-icon matPrefix>account_box</mat-icon>
+          <mat-error *ngIf="formRolUser.get('fullName')?.hasError('required')">
+            Nombre completo requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>URL de Imagen</mat-label>
+          <input matInput formControlName="avatarUrl" />
+          <mat-icon matPrefix>image</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Nombre de usuario</mat-label>
+          <input matInput formControlName="username" required />
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="formRolUser.get('username')?.hasError('required')">
+            Nombre de usuario requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="phone" />
+          <mat-icon matPrefix>phone</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput formControlName="email" required />
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="formRolUser.get('email')?.hasError('required')">
+            Email requerido
+          </mat-error>
+          <mat-error *ngIf="formRolUser.get('email')?.hasError('email')">
+            Email inválido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Contraseña</mat-label>
+          <input [type]="showPassword ? 'text' : 'password'" matInput formControlName="password" required />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button matSuffix mat-icon-button (click)="showPassword = !showPassword">
+            <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="formRolUser.get('password')?.hasError('required')">
+            Contraseña requerida
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input [type]="showConfirmPassword ? 'text' : 'password'" matInput formControlName="confirmPassword"
+            required />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button matSuffix mat-icon-button (click)="showConfirmPassword = !showConfirmPassword">
+            <mat-icon>{{ showConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="formRolUser.get('confirmPassword')?.hasError('required')">
+            Confirmar contraseña requerido
+          </mat-error>
+        </mat-form-field>
+
+        <div class="d-flex justify-content-start">
+          <div *ngIf="
+                formRolUser.hasError('mismatch') &&
+                formRolUser.get('confirmPassword')?.touched
+              ">
+            <mat-error>Las constraseñas no coinciden</mat-error>
+          </div>
+
+          <div *ngIf="
+                !formRolUser.hasError('mismatch') &&
+                formRolUser.get('confirmPassword')?.touched
+              ">
+            <mat-hint>Las contraseñas coinciden</mat-hint>
+          </div>
         </div>
 
-        <div class="col-12 mb-3">
-          <mat-card>
-            <mat-card-header class="mb-2">
-              <mat-card-title>Estadísticas</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="row text-center">
-                <div class="col">
-                  <h3>1</h3>
-                  <p class="text-muted">Seguidores</p>
-                </div>
-                <div class="col">
-                  <h3>2</h3>
-                  <p class="text-muted">Siguiendo</p>
-                </div>
-                <div class="col">
-                  <h3>3</h3>
-                  <p class="text-muted">Publicaciones</p>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="identificationTypeId" required>
+            <mat-option value="" disabled selected>Seleccione el rol</mat-option>
+            <mat-option *ngFor="let type of role" [value]="type.id">
+              {{ type.type }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>table_chart</mat-icon>
+          <mat-error *ngIf="
+              formRolUser.get('identificationTypeId')?.hasError('required')
+            ">
+            Tipo de rol requerido
+          </mat-error>
+        </mat-form-field>
 
-        <div class="col-12 mb-3">
-          <mat-card>
-            <mat-card-header class="mb-2">
-              <mat-card-title>Identificación</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p class="card-text">ID: {{ user?.identification }}</p>
-              <p class="card-text">Miembro desde: {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}</p>
-              <p class="card-text">Tipo de Identificación: {{ user?.identificationTypeId }}</p>
-            </mat-card-content>
-          </mat-card>
+        <div actions class="w-100 align-content-center">
+          <section class="d-flex row gap-md-0 gap-1 justify-content-end">
+            <div class="col-12 col-md-5 col-lg-3 px-1">
+              <button mat-fab extended="true" class="w-100" (click)="onSubmit()">
+                Crear usuario
+              </button>
+            </div>
+          </section>
         </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+      </form>
+
+    </div> 
+  </section>
+</app-base-page>
