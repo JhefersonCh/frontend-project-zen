@@ -18,9 +18,8 @@ import { BasePageComponent } from '../../../shared/components/base-page/base-pag
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { UserService } from '../../../shared/services/user.service';
 import { MatSelectModule } from '@angular/material/select';
-import * as uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatInputModule } from '@angular/material/input';
 import { TestService } from '../../services/test.service';
@@ -55,7 +54,7 @@ export class TestComponent {
   eyeClose = faEyeSlash;
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
-  private readonly _userService: UserService = inject(UserService);
+  private readonly _userRoleService: TestService = inject(TestService);
   private readonly _router: Router = inject(Router);
 
   identificationTypes: { type: string; id: number }[] = [
@@ -110,7 +109,7 @@ export class TestComponent {
   onSubmit() {
     if (this.formRolUser.valid) {
       const userToRegister: TestService = {
-        id: uuid.v4(),
+        id: uuidv4(),
         identification: this.formRolUser.value.identification,
         identificationTypeId: 1,
         fullName: this.formRolUser.value.fullName,
@@ -120,11 +119,11 @@ export class TestComponent {
         email: this.formRolUser.value.email,
         password: this.formRolUser.value.password,
         passwordConfirmation: this.formRolUser.get('confirmPassword')?.value,
-        role: 1,
+        roleId: 1
       };
-      this._userService.getUserWithPagination(userToRegister).subscribe({
+      this._userRoleService.rolUser(userToRegister).subscribe({
         next: () => {
-          this._router.navigate(['/auth/login']);
+          this._router.navigate(['/home']);
         }
       });
     } else {

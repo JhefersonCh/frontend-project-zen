@@ -8,7 +8,8 @@ import {
 } from '../interfaces/api-response.interface';
 import { RegisterUserInterface } from '../../auth/interfaces/register.interface';
 import { environment } from '../../../environments/environment.development';
-import { UserInterface } from '../../public/interfaces/test.interface';
+import { UserInterface } from '../interfaces/user.interface';
+
 
 @Injectable({
   providedIn: 'root'
