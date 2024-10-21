@@ -301,3 +301,9 @@ mat-form-field {
     }
   }
 }
+
+.mat-mdc-row {
+  &:hover {
+    background-color: rgb(248, 248, 248) !important;
+  }
+}

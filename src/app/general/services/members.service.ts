@@ -7,6 +7,7 @@ import {
   ApiResponseInterface
 } from '../../shared/interfaces/api-response.interface';
 import { MembersRelatedDataInterface } from '../interfaces/members.interface';
+import { Members } from '../interfaces/projects.interface';
 
 @Injectable({ providedIn: 'root' })
 export class MembersService {
@@ -28,6 +29,32 @@ export class MembersService {
     return this._httpClient.post<ApiResponseCreateInterface>(
       `${environment.apiUrl}members/add-member`,
       body
+    );
+  }
+
+  getMembersByProjectId(
+    projectId: number
+  ): Observable<ApiResponseInterface<Members[]>> {
+    return this._httpClient.get<ApiResponseInterface<Members[]>>(
+      `${environment.apiUrl}members/by-project/${projectId}`
+    );
+  }
+
+  updateMember(body: {
+    projectId: number;
+    userId: string;
+    projectRoleId: number;
+    id: number;
+  }): Observable<void> {
+    return this._httpClient.patch<void>(
+      `${environment.apiUrl}members/update-member`,
+      body
+    );
+  }
+
+  deleteMember(id: number, projectId: number): Observable<void> {
+    return this._httpClient.delete<void>(
+      `${environment.apiUrl}members/remove-member/${id}/${projectId}`
     );
   }
 }

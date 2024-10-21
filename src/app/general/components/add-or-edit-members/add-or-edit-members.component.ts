@@ -111,13 +111,29 @@ export class AddOrEditMembersComponent implements OnInit {
       userId: this.form.value?.user?.id
     };
 
-    this._membersService.createMember(member).subscribe({
-      next: () => {
-        this._dialogRef.close();
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    if (!this.data.member?.id) {
+      this._membersService.createMember(member).subscribe({
+        next: () => {
+          this._dialogRef.close(true);
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    } else {
+      const updatedMember = {
+        ...member,
+        id: this.data.member.id
+      };
+
+      this._membersService.updateMember(updatedMember).subscribe({
+        next: () => {
+          this._dialogRef.close(true);
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
   }
 }
