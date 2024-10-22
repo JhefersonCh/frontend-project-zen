@@ -10,6 +10,8 @@ export interface UsersInterface {
   username: string;
   phone: string;
   email: string;
+  password: string;
+  passwordConfirmation: string;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;

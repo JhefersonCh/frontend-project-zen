@@ -17,6 +17,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RegisterUserInterface } from '../../../../auth/interfaces/register.interface';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-manage-users',
@@ -31,14 +33,17 @@ import { RegisterUserInterface } from '../../../../auth/interfaces/register.inte
     MatSelectModule,
     MatInputModule,
     NgFor,
-    MatButtonModule
+    MatButtonModule,
+    FontAwesomeModule,
+    MatIcon
   ],
   templateUrl: './manage-users.component.html',
   styleUrl: './manage-users.component.scss'
 })
 export class ManageUserComponent {
   userForm: FormGroup;
-
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   private readonly _usersService: UsersService = inject(UsersService);
   // private readonly _router: Router = inject(Router);
 
@@ -49,18 +54,19 @@ export class ManageUserComponent {
     { type: 'Cédula de extrangería', id: 4 }
   ];
 
-  roles = [
-    { id: 1, name: 'Administrador' },
-    { id: 2, name: 'Subadmin' },
-    { id: 3, name: 'Usuario Normal' }
+  role: { type: string; id: number }[] = [
+    { type: 'Admin', id: 1 },
+    { type: 'Subadmin', id: 2 },
+    { type: 'Usuario', id: 3 },
+    { type: 'Visitante', id: 4 }
   ];
 
   constructor(private _fb: FormBuilder) {
     this.userForm = this._fb.group({
       fullName: ['', Validators.required],
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
+      phone: [''],
       identification: ['', Validators.required],
       identificationTypeId: ['', Validators.required],
       avatarUrl: [''],
@@ -69,35 +75,52 @@ export class ManageUserComponent {
         '',
         [Validators.required, Validators.minLength(6)]
       ],
-      roleId: [1, Validators.required]
+      roleId: ['', Validators.required]
     });
   }
 
-  submitForm() {
-    if (this.userForm) {
-      const userToRegisterRol: RegisterUserInterface = {
+  setPassword() {
+    const identificationValue = this.userForm.get('identification')?.value;
+    if (identificationValue) {
+      this.userForm.patchValue({
+        password: identificationValue,
+        passwordConfirmation: identificationValue
+      });
+    }
+  }
+
+  save() {
+    if (this.userForm.valid) {
+      const userToRegister: RegisterUserInterface = {
         id: uuid.v4(),
-        identificationTypeId: this.userForm.value.identificationTypeId,
-        roleId: this.userForm.value.roleId,
         identification: this.userForm.value.identification,
+        identificationTypeId: this.userForm.value.identificationTypeId,
         fullName: this.userForm.value.fullName,
-        email: this.userForm.value.email,
-        phone: this.userForm.value.phone,
+        avatarUrl: this.userForm.value.avatarUrl || '',
         username: this.userForm.value.username,
+        phone: this.userForm.value.phone,
+        email: this.userForm.value.email,
         password: this.userForm.value.identification,
-        avatarUrl: this.userForm.value.avatarUrl
+        passwordConfirmation: this.userForm.value.identification,
+        roleId: this.userForm.value.roleId
       };
-      this._usersService.createUser(userToRegisterRol).subscribe({
+
+      this._usersService.createUser(userToRegister).subscribe({
         next: () => {
           // Redirecciona al dashboard de usuarios
           // this._router.navigate(['/dashboard/users']);
         },
-        error: () => {
-          // Muestra los errores en caso de que el registro falle
+        error: (err) => {
+          // Manejo de errores más específico
+          if (err.error && err.error.message) {
+            console.error('Error al registrar usuario:', err.error.message);
+          } else {
+            console.error('Error desconocido:', err);
+          }
         }
       });
     } else {
-      // Muestra errores si uno de los formularios no es válido
+      console.error('Formulario no válido', this.userForm.errors);
     }
-  } // Maneja la acción de guardar
+  }
 }

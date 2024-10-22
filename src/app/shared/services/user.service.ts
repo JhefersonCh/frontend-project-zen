@@ -10,7 +10,6 @@ import { RegisterUserInterface } from '../../auth/interfaces/register.interface'
 import { environment } from '../../../environments/environment.development';
 import { UserInterface } from '../interfaces/user.interface';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -36,12 +35,10 @@ export class UserService {
     );
   }
 
-  updateUserProfile(
-    userId: string,
-    body: unknown
-  ): Observable<void> {
+  updateUserProfile(userId: string, body: unknown): Observable<void> {
     return this._httpClient.patch<void>(
-      `${environment.apiUrl}user/${userId}`, body
+      `${environment.apiUrl}user/${userId}`,
+      body
     );
   }
 }

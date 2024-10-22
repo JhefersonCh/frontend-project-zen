@@ -13,6 +13,13 @@ export const organizationalRoutes: Routes = [
               import('./users/pages/manage-users/manage-users.component').then(
                 (m) => m.ManageUserComponent
               )
+          },
+          {
+            path: 'list',
+            loadComponent: () =>
+              import('./users/pages/see-users/see-users.component').then(
+                (m) => m.SeeUsersComponent
+              )
           }
         ]
       }

@@ -93,7 +93,7 @@ export class RegisterComponent {
     }
   }
 
-  submitForm() {
+  save() {
     if (this.formStep2.valid && this.formStep1.valid) {
       const userToRegister: RegisterUserInterface = {
         id: uuid.v4(),
