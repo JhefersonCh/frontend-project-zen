@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
-import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
+import { BasePageComponent } from '../../../../shared/components/base-page/base-page.component';
+import { BaseCardComponent } from '../../../../shared/components/base-card/base-card.component';
 import { CommonModule, NgFor } from '@angular/common';
 import {
   FormBuilder,
@@ -11,12 +11,12 @@ import {
 } from '@angular/forms';
 // import { Router } from 'express';
 import * as uuid from 'uuid';
-import { UsersService } from '../../../users/services/users.service';
+import { UsersService } from '../../services/users.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { RegisterUserInterface } from '../../../../auth/interfaces/register.interface';
 
 @Component({
   selector: 'app-manage-users',
@@ -62,7 +62,7 @@ export class ManageUserComponent {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
       identification: ['', Validators.required],
-      identificationTypeId: [1, Validators.required],
+      identificationTypeId: ['', Validators.required],
       avatarUrl: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
       passwordConfirmation: [
@@ -75,19 +75,27 @@ export class ManageUserComponent {
 
   submitForm() {
     if (this.userForm) {
-      const userToRegisterRol: UserInterface = {
+      const userToRegisterRol: RegisterUserInterface = {
         id: uuid.v4(),
-        identificationTypeId: 1,
+        identificationTypeId: this.userForm.value.identificationTypeId,
         roleId: this.userForm.value.roleId,
         identification: this.userForm.value.identification,
         fullName: this.userForm.value.fullName,
         email: this.userForm.value.email,
         phone: this.userForm.value.phone,
         username: this.userForm.value.username,
-        password: this.userForm.value.identi,
-        avatarUrl: this.userForm.value.identification
+        password: this.userForm.value.identification,
+        avatarUrl: this.userForm.value.avatarUrl
       };
-      this._usersService.registerUserRole(userToRegisterRol).subscribe({});
+      this._usersService.createUser(userToRegisterRol).subscribe({
+        next: () => {
+          // Redirecciona al dashboard de usuarios
+          // this._router.navigate(['/dashboard/users']);
+        },
+        error: () => {
+          // Muestra los errores en caso de que el registro falle
+        }
+      });
     } else {
       // Muestra errores si uno de los formularios no es válido
     }

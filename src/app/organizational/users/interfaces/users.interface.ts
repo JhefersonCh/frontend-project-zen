@@ -1,4 +1,4 @@
-import { Roles } from '../../auth/interfaces/login.interface';
+import { Roles } from '../../../auth/interfaces/login.interface';
 
 export interface UsersInterface {
   id: string;

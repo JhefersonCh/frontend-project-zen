@@ -10,7 +10,7 @@ export const organizationalRoutes: Routes = [
           {
             path: 'create',
             loadComponent: () =>
-              import('./pages/manage-users/manage-users.component').then(
+              import('./users/pages/manage-users/manage-users.component').then(
                 (m) => m.ManageUserComponent
               )
           }

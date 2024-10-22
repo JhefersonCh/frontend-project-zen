@@ -13,8 +13,8 @@ import { Members, ProjectRoles } from '../../interfaces/projects.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MembersService } from '../../services/members.service';
-import { UsersService } from '../../../users/services/users.service';
-import { UsersInterface } from '../../../users/interfaces/users.interface';
+import { UsersService } from '../../../organizational/users/services/users.service';
+import { UsersInterface } from '../../../organizational/users/interfaces/users.interface';
 import { MatInputModule } from '@angular/material/input';
 import { debounceTime } from 'rxjs';
 

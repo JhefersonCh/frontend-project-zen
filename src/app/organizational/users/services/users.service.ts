@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import {
   ApiResponseCreateInterface,
   ApiResponseInterface
-} from '../../shared/interfaces/api-response.interface';
-import { HttpUtilitiesService } from '../../shared/utilities/http-utilities.service';
-import { environment } from '../../../environments/environment';
+} from '../../../shared/interfaces/api-response.interface';
+import { HttpUtilitiesService } from '../../../shared/utilities/http-utilities.service';
+import { environment } from '../../../../environments/environment';
 import { UsersInterface } from '../interfaces/users.interface';
-import { UserInterface } from '../../shared/interfaces/user.interface';
+import { RegisterUserInterface } from '../../../auth/interfaces/register.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
@@ -25,12 +25,11 @@ export class UsersService {
       { params }
     );
   }
-  registerUserRole(
-    user: UserInterface
+  createUser(
+    user: RegisterUserInterface
   ): Observable<ApiResponseCreateInterface> {
-    // const params = this._httpUtilities.httpParamsFromObject(user);
     return this._httpClient.post<ApiResponseCreateInterface>(
-      `${environment.apiUrl}organizational/manager-users`,
+      `${environment.apiUrl}user/create`,
       user
     );
   }
