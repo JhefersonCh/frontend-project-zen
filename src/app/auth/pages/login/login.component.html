@@ -55,13 +55,18 @@
             >
           </mat-form-field>
 
-          <button
-            type="button"
-            class="btn btn-dark w-100 mb-4 mt-1"
-            (click)="login()"
-          >
-            Iniciar sesión
-          </button>
+          <section class="d-flex row gap-md-0 gap-1 justify-content-end">
+            <div class="col-12 col-md-5 col-lg-3 px-1">
+              <button
+                mat-stroked-button
+                color="primary"
+                class="w-100 mb-2"
+                (click)="login()"
+              >
+                Registrarse
+              </button>
+            </div>
+          </section>
 
           <div>
             <a routerLink="/auth/recover-password" class="text-decoration-none"

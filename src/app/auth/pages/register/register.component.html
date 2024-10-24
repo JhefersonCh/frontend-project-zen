@@ -92,10 +92,14 @@
               <mat-icon matPrefix>phone</mat-icon>
             </mat-form-field>
 
-            <div class="d-flex justify-content-end mt-2">
-              <button class="btn btn-dark" type="button" matStepperNext>
-                Siguiente
-              </button>
+            <div actions class="w-100 align-content-center">
+              <section class="d-flex row gap-md-0 gap-1 justify-content-end">
+                <div class="col-12 col-md-5 col-lg-3 px-1">
+                  <button mat-fab extended="true" class="w-100" matStepperNext>
+                    Siguiente
+                  </button>
+                </div>
+              </section>
             </div>
           </form>
         </mat-step>
@@ -191,12 +195,28 @@
               </div>
             </div>
 
-            <div class="d-flex justify-content-end mt-2">
-              <button matStepperPrevious class="btn btn-dark mr-3">
-                Anterior
-              </button>
-              <button class="btn btn-dark" (click)="save()">Registrarse</button>
-            </div>
+            <section class="d-flex row gap-md-0 gap-1 justify-content-end">
+              <div class="col-12 col-md-5 col-lg-3 px-1">
+                <button
+                  mat-fab
+                  extended="true"
+                  class="w-100 mr-3"
+                  matStepperPrevious
+                >
+                  Anterior
+                </button>
+              </div>
+              <div class="col-12 col-md-5 col-lg-3 px-1">
+                <button
+                  mat-stroked-button
+                  color="primary"
+                  class="w-100"
+                  (click)="save()"
+                >
+                  Registrarse
+                </button>
+              </div>
+            </section>
           </form>
         </mat-step>
       </mat-horizontal-stepper>
