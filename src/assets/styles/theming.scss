@@ -114,7 +114,7 @@ mat-form-field {
   }
 
   .mdc-fab--extended {
-    font-weight: 600 !important;
+    font-weight: 500 !important;
     font-size: $brand-mobile-font-size !important;
     height: $brand-mobile-height !important;
   }
@@ -229,7 +229,8 @@ mat-form-field {
 
 .mdc-button:hover {
   background-color: $primary-light !important;
-  color: $black-color-base !important;
+  color: $white-color-base !important;
+  font-weight: 500 !important;
 
   &.mat-mdc-outlined-button:not(:disabled) {
     border-color: transparent !important;
