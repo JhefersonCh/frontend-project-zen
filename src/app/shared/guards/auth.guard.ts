@@ -24,7 +24,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       const allowedRoutes = ROLE_PERMISSIONS[userRole];
       const currentRoute = state.url;
 
-      if (userRole === 'admin') {
+      if (userRole === 'admin' || userRole === 'superadmin') {
         return true;
       }
 

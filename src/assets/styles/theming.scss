@@ -242,6 +242,10 @@ mat-form-field {
   }
 }
 
+.mat-mdc-extended-fab[disabled] {
+  opacity: 0.6 !important;
+}
+
 .mdc-fab:hover {
   background-color: $deep-purple-900 !important;
   color: $white-color-base !important;

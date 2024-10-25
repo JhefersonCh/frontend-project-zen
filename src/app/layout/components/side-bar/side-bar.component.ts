@@ -84,7 +84,7 @@ export class SideBarComponent implements OnInit {
 
   private filterMenuByRole(): void {
     if (this.userRole) {
-      if (this.userRole === 'admin') {
+      if (this.userRole === 'admin' || this.userRole === 'superadmin') {
         this.menuWithItems = MENU_CONST;
       } else {
         this.menuWithItems = MENU_CONST.map((module) => ({

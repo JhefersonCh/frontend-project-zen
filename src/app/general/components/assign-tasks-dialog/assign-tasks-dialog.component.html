@@ -1,0 +1,113 @@
+<app-base-dialog>
+  <section header>
+    <span>Asignar tarea</span>
+  </section>
+  <section subtitle>
+    <span>¡Asigna tareas a los miembros de tu equipo!</span>
+  </section>
+  <section content>
+    <form [formGroup]="form">
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-12 mt-2">
+          <mat-label>Tarea</mat-label>
+          <input matInput type="text" formControlName="title" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-12 mt-2">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput formControlName="description" rows="2"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
+          <mat-label>Miembro</mat-label>
+          <mat-select formControlName="memberId" placeholder="Elije un valor">
+            @for (member of data.members; track $index) {
+              <mat-option [value]="member.id">{{
+                member?.user?.fullName
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
+          <mat-label>Prioridad</mat-label>
+          <mat-select
+            formControlName="priorityId"
+            placeholder="Elije un miembro"
+          >
+            @for (priority of priorities; track $index) {
+              <mat-option [value]="priority?.id">{{
+                priority?.title
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="statusId" placeholder="Elije un estado">
+            @for (status of statuses; track $index) {
+              <mat-option [value]="status?.id">{{ status?.title }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
+          <mat-label>Etiquetas</mat-label>
+          <mat-select
+            formControlName="tagIds"
+            placeholder="Elije algunas etiquetas"
+            [multiple]="true"
+          >
+            @for (tag of tags; track $index) {
+              <mat-option [value]="tag?.id">{{ tag?.title }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
+          <mat-label>Fecha límite</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="deadline" />
+          <mat-hint>MM/DD/AAAA</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </section>
+  <section actions class="w-100">
+    <div class="row w-100 m-0 justify-content-center justify-content-md-end">
+      <div class="col-6 col-md-3 px-1">
+        <button
+          mat-fab
+          extended="true"
+          color="warn"
+          class="w-100"
+          (click)="closeDialog()"
+          [disabled]="creating"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-6 col-md-3 px-1">
+        <button
+          mat-fab
+          extended="true"
+          color="primary"
+          class="w-100"
+          (click)="createTask()"
+          [disabled]="creating"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </section>
+</app-base-dialog>

@@ -1,3 +1,5 @@
+@import 'breackpoints';
+
 .cdk-drag-placeholder {
   opacity: 0;
 }
@@ -17,4 +19,11 @@
 .cdk-drag-preview {
   box-shadow: 0 4px 20px rgba(26, 55, 200, 0.996);
   border-radius: 10px;
+}
+.brand-cards-container {
+  @include media-desktop {
+    background-color: #e9e9e94d;
+    padding: 15px;
+    border-radius: 15px;
+  }
 }

@@ -10,7 +10,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
   height: 14px;
   z-index: 5000;
 }
@@ -24,7 +24,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #292929;
+  background: transparent;
   width: 10px;
   z-index: 5000;
 }

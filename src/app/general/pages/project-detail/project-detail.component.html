@@ -1,5 +1,9 @@
-<app-base-page [title]="project?.title || ''" [subtitle]="project?.description">
-  <div content>
+<app-base-page
+  [title]="project?.title || ''"
+  [subtitle]="project?.description"
+  class="h-100"
+>
+  <div content class="h-100 d-flex flex-column">
     @if (!loadingPage) {
       @if (project?.finishDate) {
         <app-progress-time-bar
@@ -7,9 +11,9 @@
           [startDate]="project?.createdAt || currentDate"
         ></app-progress-time-bar>
       }
-      <div class="mx-0 mt-3 px-0 w-100">
-        <div class="row">
-          <div class="col-12 col-md-3">
+      <div class="mx-0 mt-3 px-0 w-100 flex-grow-1 d-flex">
+        <div class="row flex-grow-1 w-100">
+          <div class="col-12 col-md-3 flex-grow-1 d-flex flex-column">
             <div class="text-center p-3 brand-border-button-text-container">
               <span class="brand-text-headline-s">No iniciado</span>
             </div>
@@ -17,12 +21,12 @@
             <div
               cdkDropList
               #todoList="cdkDropList"
-              [cdkDropListData]="todo"
+              [cdkDropListData]="notStarted"
               [cdkDropListConnectedTo]="[doneList, revisionList, revisedList]"
               (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3 h-100"
+              class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
             >
-              @for (item of todo; track item) {
+              @for (item of notStarted; track item) {
                 <app-base-card
                   cdkDrag
                   class="brand-cursor-move brand-box"
@@ -30,14 +34,29 @@
                   [cdkDragDisabled]="isMobile"
                 >
                   <div header>
-                    {{ item }}
+                    {{ item.title }}
+                  </div>
+                  <div content>
+                    <p class="brand-text-body-m text-black-50 fw-medium">
+                      {{ item.description }}
+                    </p>
+                    <span
+                      ><strong>Etiquetas: </strong>
+                      @for (taskTag of item.taskTags; track $index) {
+                        <span>{{
+                          taskTag.tag.title
+                            | arrayInlineFormater
+                              : $index + 1 === item.taskTags?.length
+                        }}</span>
+                      }
+                    </span>
                   </div>
                 </app-base-card>
               }
             </div>
           </div>
 
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-3 flex-grow-1 d-flex flex-column">
             <div class="text-center p-3 brand-border-button-text-container">
               <span class="brand-text-headline-s">En proceso</span>
             </div>
@@ -45,12 +64,12 @@
             <div
               cdkDropList
               #doneList="cdkDropList"
-              [cdkDropListData]="done"
+              [cdkDropListData]="inProgress"
               [cdkDropListConnectedTo]="[todoList, revisionList, revisedList]"
               (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3 h-100"
+              class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
             >
-              @for (item of done; track item) {
+              @for (item of inProgress; track item) {
                 <app-base-card
                   cdkDrag
                   class="brand-cursor-move"
@@ -58,14 +77,29 @@
                   [cdkDragDisabled]="isMobile"
                 >
                   <div header>
-                    {{ item }}
+                    {{ item.title }}
+                  </div>
+                  <div content>
+                    <p class="brand-text-body-m text-black-50 fw-medium">
+                      {{ item.description }}
+                    </p>
+                    <span
+                      ><strong>Etiquetas: </strong>
+                      @for (taskTag of item.taskTags; track $index) {
+                        <span>{{
+                          taskTag.tag.title
+                            | arrayInlineFormater
+                              : $index + 1 === item.taskTags?.length
+                        }}</span>
+                      }
+                    </span>
                   </div>
                 </app-base-card>
               }
             </div>
           </div>
 
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-3 flex-grow-1 d-flex flex-column">
             <div class="text-center p-3 brand-border-button-text-container">
               <span class="brand-text-headline-s">Terminado</span>
             </div>
@@ -73,12 +107,12 @@
             <div
               cdkDropList
               #revisionList="cdkDropList"
-              [cdkDropListData]="revision"
+              [cdkDropListData]="completed"
               [cdkDropListConnectedTo]="[todoList, doneList, revisedList]"
               (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3 h-100"
+              class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
             >
-              @for (item of revision; track item) {
+              @for (item of completed; track item) {
                 <app-base-card
                   cdkDrag
                   [ripple]="true"
@@ -86,14 +120,29 @@
                   [cdkDragDisabled]="isMobile"
                 >
                   <div header>
-                    {{ item }}
+                    {{ item.title }}
+                  </div>
+                  <div content>
+                    <p class="brand-text-body-m text-black-50 fw-medium">
+                      {{ item.description }}
+                    </p>
+                    <span
+                      ><strong>Etiquetas: </strong>
+                      @for (taskTag of item.taskTags; track $index) {
+                        <span>{{
+                          taskTag.tag.title
+                            | arrayInlineFormater
+                              : $index + 1 === item.taskTags?.length
+                        }}</span>
+                      }
+                    </span>
                   </div>
                 </app-base-card>
               }
             </div>
           </div>
 
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-3 flex-grow-1 d-flex flex-column">
             <div class="text-center p-3 brand-border-button-text-container">
               <span class="brand-text-headline-s">Revisado</span>
             </div>
@@ -104,7 +153,7 @@
               [cdkDropListData]="revised"
               [cdkDropListConnectedTo]="[todoList, doneList, revisionList]"
               (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3 h-100"
+              class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
             >
               @for (item of revised; track item) {
                 <app-base-card
@@ -114,7 +163,22 @@
                   class="brand-cursor-move"
                 >
                   <div header>
-                    {{ item }}
+                    {{ item.title }}
+                  </div>
+                  <div content>
+                    <p class="brand-text-body-m text-black-50 fw-medium">
+                      {{ item.description }}
+                    </p>
+                    <span
+                      ><strong>Etiquetas: </strong>
+                      @for (taskTag of item.taskTags; track $index) {
+                        <span>{{
+                          taskTag.tag.title
+                            | arrayInlineFormater
+                              : $index + 1 === item.taskTags?.length
+                        }}</span>
+                      }
+                    </span>
                   </div>
                 </app-base-card>
               }
@@ -149,6 +213,7 @@
             color="primary"
             class="w-100"
             [disabled]="!userLoggedIsLeader()"
+            (click)="openAssignTaskDialog()"
           >
             Asignar tarea
           </button>

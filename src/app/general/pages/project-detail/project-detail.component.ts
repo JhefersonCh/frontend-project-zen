@@ -18,6 +18,13 @@ import {
   transferArrayItem
 } from '@angular/cdk/drag-drop';
 import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AssignTasksDialogComponent } from '../../components/assign-tasks-dialog/assign-tasks-dialog.component';
+import { TasksService } from '../../services/tasks.service';
+import { TasksInterface } from '../../interfaces/tasks.interface';
+import { taskStatuses } from '../../constants/tasks.constant';
+import { finalize } from 'rxjs';
+import { ArrayInlineFormaterPipe } from '../../../shared/pipes/array-inline-formater.pipe';
 
 @Component({
   selector: 'app-project-detail',
@@ -29,7 +36,8 @@ import { BaseCardComponent } from '../../../shared/components/base-card/base-car
     LoaderComponent,
     DragDropModule,
     BaseCardComponent,
-    RouterLink
+    RouterLink,
+    ArrayInlineFormaterPipe
   ],
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']
@@ -40,21 +48,30 @@ export class ProjectDetailComponent implements OnInit {
   projectId: string = '';
   project?: ProjectInterface;
   userLogged!: UserInterface;
+  notStarted: TasksInterface[] = [];
+  inProgress: TasksInterface[] = [];
+  completed: TasksInterface[] = [];
+  revised: TasksInterface[] = [];
+  taskStatuses = taskStatuses;
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _projectsService: ProjectsService = inject(ProjectsService);
   private readonly _authService: AuthService = inject(AuthService);
+  private readonly _dialog: MatDialog = inject(MatDialog);
+  private readonly _tasksService: TasksService = inject(TasksService);
 
   isMobile: boolean = false;
 
   ngOnInit(): void {
     this.projectId = this._activatedRoute.snapshot.params['id'];
     this._getProject();
+    this._getTasks();
     this._getUserLoggedin();
     this.isMobile = window.innerWidth <= 768;
   }
 
   private _getProject(): void {
     if (this.projectId) {
+      this.loadingPage = true;
       this._projectsService.getProjectById(Number(this.projectId)).subscribe({
         next: (response) => {
           this.project = response?.data;
@@ -65,6 +82,42 @@ export class ProjectDetailComponent implements OnInit {
         error: (error) => console.error(error)
       });
     }
+  }
+
+  private _reloadArrays(): void {
+    this.notStarted = [];
+    this.inProgress = [];
+    this.completed = [];
+    this.revised = [];
+  }
+
+  private _getTasks(): void {
+    if (!this.projectId) return;
+
+    this.loadingPage = true;
+    this._reloadArrays();
+
+    this._tasksService
+      .getByProjectId(Number(this.projectId))
+      .pipe(finalize(() => (this.loadingPage = false)))
+      .subscribe({
+        next: (response) => {
+          const statusMap = {
+            [taskStatuses.pending]: this.notStarted,
+            [taskStatuses.inProgress]: this.inProgress,
+            [taskStatuses.completed]: this.completed,
+            [taskStatuses.revised]: this.revised
+          };
+
+          response?.data.forEach((task) => {
+            const targetArray = statusMap[task.statusId];
+            if (targetArray) {
+              targetArray.push(task);
+            }
+          });
+        },
+        error: (error) => console.error(error)
+      });
   }
 
   private _getUserLoggedin(): void {
@@ -79,12 +132,21 @@ export class ProjectDetailComponent implements OnInit {
       : false;
   }
 
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-  revision = ['Siu', 'Nou'];
-  revised = ['Revisado', 'Cómo va'];
+  openAssignTaskDialog(): void {
+    const dialogRef = this._dialog.open(AssignTasksDialogComponent, {
+      data: {
+        members: this.project?.members,
+        projectId: Number(this.projectId)
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._getTasks();
+      }
+    });
+  }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<TasksInterface[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
