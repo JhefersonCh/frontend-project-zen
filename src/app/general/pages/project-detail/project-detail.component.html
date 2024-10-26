@@ -5,187 +5,40 @@
 >
   <div content class="h-100 d-flex flex-column">
     @if (!loadingPage) {
-      @if (project?.finishDate) {
-        <app-progress-time-bar
-          [endDate]="project?.finishDate || currentDate"
-          [startDate]="project?.createdAt || currentDate"
-        ></app-progress-time-bar>
-      }
-      <div class="mx-0 mt-3 px-0 w-100 flex-grow-1 d-flex">
-        <div class="row flex-grow-1 w-100">
-          <div class="col-12 col-md-3 flex-grow-1 d-flex flex-column">
-            <div class="text-center p-3 brand-border-button-text-container">
-              <span class="brand-text-headline-s">No iniciado</span>
-            </div>
-
-            <div
-              cdkDropList
-              #todoList="cdkDropList"
-              [cdkDropListData]="notStarted"
-              [cdkDropListConnectedTo]="[doneList, revisionList, revisedList]"
-              (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
-            >
-              @for (item of notStarted; track item) {
-                <app-base-card
-                  cdkDrag
-                  class="brand-cursor-move brand-box"
-                  [ripple]="true"
-                  [cdkDragDisabled]="isMobile"
-                >
-                  <div header>
-                    {{ item.title }}
-                  </div>
-                  <div content>
-                    <p class="brand-text-body-m text-black-50 fw-medium">
-                      {{ item.description }}
-                    </p>
-                    <span
-                      ><strong>Etiquetas: </strong>
-                      @for (taskTag of item.taskTags; track $index) {
-                        <span>{{
-                          taskTag.tag.title
-                            | arrayInlineFormater
-                              : $index + 1 === item.taskTags?.length
-                        }}</span>
-                      }
-                    </span>
-                  </div>
-                </app-base-card>
-              }
-            </div>
-          </div>
-
-          <div class="col-12 col-md-3 flex-grow-1 d-flex flex-column">
-            <div class="text-center p-3 brand-border-button-text-container">
-              <span class="brand-text-headline-s">En proceso</span>
-            </div>
-
-            <div
-              cdkDropList
-              #doneList="cdkDropList"
-              [cdkDropListData]="inProgress"
-              [cdkDropListConnectedTo]="[todoList, revisionList, revisedList]"
-              (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
-            >
-              @for (item of inProgress; track item) {
-                <app-base-card
-                  cdkDrag
-                  class="brand-cursor-move"
-                  [ripple]="true"
-                  [cdkDragDisabled]="isMobile"
-                >
-                  <div header>
-                    {{ item.title }}
-                  </div>
-                  <div content>
-                    <p class="brand-text-body-m text-black-50 fw-medium">
-                      {{ item.description }}
-                    </p>
-                    <span
-                      ><strong>Etiquetas: </strong>
-                      @for (taskTag of item.taskTags; track $index) {
-                        <span>{{
-                          taskTag.tag.title
-                            | arrayInlineFormater
-                              : $index + 1 === item.taskTags?.length
-                        }}</span>
-                      }
-                    </span>
-                  </div>
-                </app-base-card>
-              }
-            </div>
-          </div>
-
-          <div class="col-12 col-md-3 flex-grow-1 d-flex flex-column">
-            <div class="text-center p-3 brand-border-button-text-container">
-              <span class="brand-text-headline-s">Terminado</span>
-            </div>
-
-            <div
-              cdkDropList
-              #revisionList="cdkDropList"
-              [cdkDropListData]="completed"
-              [cdkDropListConnectedTo]="[todoList, doneList, revisedList]"
-              (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
-            >
-              @for (item of completed; track item) {
-                <app-base-card
-                  cdkDrag
-                  [ripple]="true"
-                  class="brand-cursor-move"
-                  [cdkDragDisabled]="isMobile"
-                >
-                  <div header>
-                    {{ item.title }}
-                  </div>
-                  <div content>
-                    <p class="brand-text-body-m text-black-50 fw-medium">
-                      {{ item.description }}
-                    </p>
-                    <span
-                      ><strong>Etiquetas: </strong>
-                      @for (taskTag of item.taskTags; track $index) {
-                        <span>{{
-                          taskTag.tag.title
-                            | arrayInlineFormater
-                              : $index + 1 === item.taskTags?.length
-                        }}</span>
-                      }
-                    </span>
-                  </div>
-                </app-base-card>
-              }
-            </div>
-          </div>
-
-          <div class="col-12 col-md-3 flex-grow-1 d-flex flex-column">
-            <div class="text-center p-3 brand-border-button-text-container">
-              <span class="brand-text-headline-s">Revisado</span>
-            </div>
-
-            <div
-              cdkDropList
-              #revisedList="cdkDropList"
-              [cdkDropListData]="revised"
-              [cdkDropListConnectedTo]="[todoList, doneList, revisionList]"
-              (cdkDropListDropped)="drop($event)"
-              class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
-            >
-              @for (item of revised; track item) {
-                <app-base-card
-                  cdkDrag
-                  [ripple]="true"
-                  [cdkDragDisabled]="isMobile"
-                  class="brand-cursor-move"
-                >
-                  <div header>
-                    {{ item.title }}
-                  </div>
-                  <div content>
-                    <p class="brand-text-body-m text-black-50 fw-medium">
-                      {{ item.description }}
-                    </p>
-                    <span
-                      ><strong>Etiquetas: </strong>
-                      @for (taskTag of item.taskTags; track $index) {
-                        <span>{{
-                          taskTag.tag.title
-                            | arrayInlineFormater
-                              : $index + 1 === item.taskTags?.length
-                        }}</span>
-                      }
-                    </span>
-                  </div>
-                </app-base-card>
-              }
-            </div>
+      <ng-container>
+        @if (project?.finishDate) {
+          <app-progress-time-bar
+            [endDate]="project?.finishDate || currentDate"
+            [startDate]="project?.createdAt || currentDate"
+          ></app-progress-time-bar>
+        }
+        <div class="mx-0 mt-3 px-0 w-100 flex-grow-1 d-flex">
+          <div class="row flex-grow-1 w-100">
+            @for (status of statusMapEntries; track $index) {
+              <div class="col-12 col-md-6 col-lg-3 mb-3">
+                <app-tasks-panel
+                  [status]="status[1].label"
+                  [tasksList]="status[1].list"
+                  [dropListConnectedTo]="status[1].connectedTo"
+                  (dropEvent)="drop($event)"
+                  [isMobile]="isMobile"
+                  [listTag]="status[1].listTag"
+                ></app-tasks-panel>
+              </div>
+            }
           </div>
         </div>
-      </div>
+        @if (showDoneButton) {
+          <button
+            mat-fab
+            class="save-button d-none d-md-flex"
+            (click)="saveNewStatuses()"
+            matTooltip="Guardar"
+          >
+            <mat-icon>done</mat-icon>
+          </button>
+        }
+      </ng-container>
     } @else {
       <app-loader></app-loader>
     }
@@ -197,10 +50,9 @@
         <div class="col-12 col-md-5 col-lg-3 px-1">
           <button
             mat-fab
-            extended="true"
+            extended
             color="primary"
             class="w-100"
-            [disabled]="!userLoggedIsLeader()"
             [routerLink]="['members']"
             [queryParams]="{ title: project?.title }"
           >
@@ -212,7 +64,6 @@
             mat-stroked-button
             color="primary"
             class="w-100"
-            [disabled]="!userLoggedIsLeader()"
             (click)="openAssignTaskDialog()"
           >
             Asignar tarea

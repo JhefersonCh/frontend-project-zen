@@ -62,10 +62,12 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadUserProfile();
     this._subscription.add(
       this._authService._isLoggedSubject.subscribe((isLogged) => {
         this.isLoggedUser = isLogged;
+        if (this.isLoggedUser) {
+          this.loadUserProfile();
+        }
       })
     );
     this.isLoggedUser = this._authService.isAuthenticated();
@@ -78,12 +80,17 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
         this.module = this.router.url.split('/');
         this.optionSelected = this.module[1];
         this.isLoggedUser = this._authService.isAuthenticated();
+        if (this.isLoggedUser) {
+          this.loadUserProfile();
+        }
       });
+    if (this.isLoggedUser) {
+      this.loadUserProfile();
+    }
   }
 
   loadUserProfile(): void {
-    this.userId =
-      this._localStorageService.getAllSessionData()?.user?.id;
+    this.userId = this._localStorageService.getAllSessionData()?.user?.id;
 
     this.userId &&
       this._profileService.getUserProfile(this.userId).subscribe({
@@ -93,6 +100,7 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
         },
         error: (error) => {
           console.error('Error al cargar el usuario', error);
+          this.pageLoading = false;
         }
       });
   }

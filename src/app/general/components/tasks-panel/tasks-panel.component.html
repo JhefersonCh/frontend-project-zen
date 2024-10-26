@@ -1,0 +1,41 @@
+<div class="flex-grow-1 d-flex flex-column h-100">
+  <div class="text-center p-3 brand-border-button-text-container">
+    <span class="brand-text-headline-s">{{ status }}</span>
+  </div>
+
+  <div
+    cdkDropList
+    [id]="listTag"
+    [cdkDropListData]="tasksList"
+    [cdkDropListConnectedTo]="dropListConnectedTo"
+    (cdkDropListDropped)="onDrop($event)"
+    class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
+  >
+    @for (item of tasksList; track $index) {
+      <ng-container>
+        <app-base-card
+          cdkDrag
+          class="brand-cursor-move"
+          [ripple]="true"
+          [cdkDragDisabled]="isMobile"
+        >
+          <div header>{{ item.title }}</div>
+          <div content>
+            <p class="brand-text-body-m text-black-50 fw-medium">
+              {{ item.description }}
+            </p>
+            <span
+              ><strong>Etiquetas: </strong>
+              @for (taskTag of item.taskTags; track $index) {
+                <span>{{
+                  taskTag.tag.title
+                    | arrayInlineFormater: $index + 1 === item.taskTags?.length
+                }}</span>
+              }
+            </span>
+          </div>
+        </app-base-card>
+      </ng-container>
+    }
+  </div>
+</div>

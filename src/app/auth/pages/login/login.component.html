@@ -37,7 +37,7 @@
           <mat-form-field appearance="outline" class="mt-2">
             <mat-label>Contraseña</mat-label>
             <input
-              [type]="showPassword ? 'password' : 'text'"
+              [type]="!showPassword ? 'password' : 'text'"
               matInput
               formControlName="password"
             />
@@ -58,12 +58,13 @@
           <section class="d-flex row gap-md-0 gap-1 justify-content-end">
             <div class="col-12 col-md-5 col-lg-3 px-1">
               <button
-                mat-stroked-button
+                mat-fab
+                extended="true"
                 color="primary"
                 class="w-100 mb-2"
                 (click)="login()"
               >
-                Registrarse
+                Iniciar sesión
               </button>
             </div>
           </section>

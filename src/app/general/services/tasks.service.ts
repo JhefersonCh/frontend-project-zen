@@ -38,4 +38,13 @@ export class TasksService {
       `${environment.apiUrl}tasks/find-by-project/${projectId}`
     );
   }
+
+  updateManyStatuses(
+    tasks: { statusId: number; id: number }[]
+  ): Observable<unknown> {
+    return this._httpClient.post<unknown>(
+      `${environment.apiUrl}tasks/update-statuses`,
+      { tasks }
+    );
+  }
 }
