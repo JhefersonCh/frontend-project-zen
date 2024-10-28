@@ -13,6 +13,7 @@ import { RegisterUserInterface } from '../../../auth/interfaces/register.interfa
 @Injectable({ providedIn: 'root' })
 export class UsersService {
   private readonly _httpClient: HttpClient = inject(HttpClient);
+
   private readonly _httpUtilities: HttpUtilitiesService =
     inject(HttpUtilitiesService);
 
@@ -31,6 +32,12 @@ export class UsersService {
     return this._httpClient.post<ApiResponseCreateInterface>(
       `${environment.apiUrl}user/create`,
       user
+    );
+  }
+
+  getUsers(userId: string): Observable<ApiResponseInterface<UsersInterface[]>> {
+    return this._httpClient.get<ApiResponseInterface<UsersInterface[]>>(
+      `${environment.apiUrl}user/${userId}`
     );
   }
 }

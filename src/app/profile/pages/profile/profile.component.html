@@ -1,90 +1,121 @@
 @if (!pageLoading) {
-<app-base-page title="Perfil de usuario" subtitle="Aquí puedes encontrar tu información y estadísticas de tus tareas"
-  previusUrl="/">
+  <app-base-page
+    title="Perfil de usuario"
+    subtitle="Aquí puedes encontrar tu información y estadísticas de tus tareas"
+    previusUrl="/"
+  >
+    <section content class="row justify-content-center">
+      <div class="col-12 col-md-10">
+        <section content>
+          <app-base-card
+            [withHeader]="false"
+            [withActions]="false"
+            [isProfileCard]="true"
+            [ripple]="true"
+          >
+            <div content>
+              <div class="profile-cover brand-border-radius">
+                <div class="profile">
+                  <img
+                    [src]="
+                      user?.avatarUrl ||
+                      '../../../../assets/login_and_register/userdefault.png'
+                    "
+                    class="rounded-circle w-100 h-100"
+                    alt="Foto de usuario"
+                  />
+                </div>
+              </div>
 
-  <section content class="row justify-content-center">
-    <div class="col-12 col-md-10">
-
-      <section content>
-        <app-base-card [withHeader]="false" [withActions]="false" [isProfileCard]="true" [ripple]="true">
-          <div content>
-            <div class="profile-cover brand-border-radius">
-              <div class="profile">
-                <img [src]="user?.avatarUrl || '../../../../assets/login_and_register/userdefault.png'"
-                  class="rounded-circle w-100 h-100" alt="Foto de usuario" />
+              <div class="text-center mt-5">
+                <h1>{{ user?.fullName }}</h1>
+                <h4>{{ '@' + user?.username }}</h4>
               </div>
             </div>
-
-            <div class="text-center mt-5">
-              <h1>{{ user?.fullName }}</h1>
-              <h4>{{'@' + user?.username }}</h4>
+          </app-base-card>
+          <br />
+          <app-base-card [withActions]="false" [ripple]="true">
+            <div header>
+              <span>Información Personal</span>
             </div>
-          </div>
-        </app-base-card >
-        <br>
-        <app-base-card [withActions]="false" [ripple]="true">
-          <div header>
-            <span>Información Personal</span>
-          </div>
-          <div content>
-            <p>Tipo de identificación: {{ user?.identificationTypeId }}</p>
-            <p>Identificación: {{ user?.identification }}</p>
-            <p>Correo electrónico: {{ user?.email }}</p>
-            <p>Teléfono: {{ user?.phone }}</p>
-          </div>
-        </app-base-card>
-        <br>
-        <app-base-card [withActions]="false" [ripple]="true">
-          <div header>
-            <span>Estadísticas</span>
-          </div>
-          <div content>
-            <div>
-              <H1>contenido 1</H1>
+            <div content>
+              <p>Tipo de identificación: {{ user?.identificationTypeId }}</p>
+              <p>Identificación: {{ user?.identification }}</p>
+              <p>Correo electrónico: {{ user?.email }}</p>
+              <p>Teléfono: {{ user?.phone }}</p>
             </div>
-            <div>
-              <H1>contenido 2</H1>
+          </app-base-card>
+          <br />
+          <app-base-card [withActions]="false" [ripple]="true">
+            <div header>
+              <span>Estadísticas</span>
             </div>
-            <div>
-              <H1>contenido 3</H1>
+            <div content>
+              <div>
+                <H1>contenido 1</H1>
+              </div>
+              <div>
+                <H1>contenido 2</H1>
+              </div>
+              <div>
+                <H1>contenido 3</H1>
+              </div>
+              <div>
+                <H1>contenido 4</H1>
+              </div>
             </div>
-            <div>
-              <H1>contenido 4</H1>
+          </app-base-card>
+          <br />
+          <app-base-card [withActions]="false" [ripple]="true">
+            <div header>
+              <span>Otra información</span>
             </div>
-          </div>
-        </app-base-card>
-        <br>
-        <app-base-card [withActions]="false" [ripple]="true">
-          <div header>
-            <span>Otra información</span>
-          </div>
-          <div content>
-            <p>Miembro desde: {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}</p>
-          </div>
-        </app-base-card>
-
-      </section>
-    </div>
-
-  </section>
-
-  <div actions class="w-100 align-content-center">
-    <div class="row justify-content-center justify-content-md-end">
-      <div class="col-12 col-md-4">
-        <button mat-stroked-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="w-100">
-          Opciones
-        </button>
+            <div content>
+              <p>
+                Miembro desde:
+                {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}
+              </p>
+            </div>
+          </app-base-card>
+        </section>
       </div>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item type="button" color="primary" [routerLink]="[userId+'/edit']">Editar perfil</button>
-        <button mat-menu-item type="button" color="primary" [routerLink]="[userId+'/settings']">Configuración</button>
-      </mat-menu>
-    </div>
-  </div>
+    </section>
 
-</app-base-page>
+    <div actions class="w-100 align-content-center">
+      <div class="row justify-content-center justify-content-md-end">
+        <div class="col-12 col-md-4">
+          <button
+            mat-stroked-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+            class="w-100"
+          >
+            Opciones
+          </button>
+        </div>
+        <mat-menu #menu="matMenu">
+          <button
+            mat-menu-item
+            type="button"
+            color="primary"
+            [routerLink]="[userId + '/edit']"
+          >
+            Editar perfil
+          </button>
+          <button
+            mat-menu-item
+            type="button"
+            color="primary"
+            [routerLink]="[userId + '/settings']"
+          >
+            Configuración
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </app-base-page>
 } @else {
-<div class="loader-container">
-  <app-loader></app-loader>
-</div>
+  <div class="loader-container">
+    <app-loader></app-loader>
+  </div>
 }
