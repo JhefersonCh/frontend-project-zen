@@ -19,6 +19,7 @@ import { EmptyPanelComponent } from '../../../shared/components/empty-panel/empt
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserInterface } from '../../../shared/interfaces/user.interface';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-projects',
@@ -32,7 +33,8 @@ import { UserInterface } from '../../../shared/interfaces/user.interface';
     RouterLink,
     BaseDialogComponent,
     EmptyPanelComponent,
-    LoaderComponent
+    LoaderComponent,
+    DatePipe
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'

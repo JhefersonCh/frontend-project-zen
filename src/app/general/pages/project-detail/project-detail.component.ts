@@ -134,7 +134,7 @@ export class ProjectDetailComponent implements OnInit {
               listTag: 'inProgress'
             },
             [taskStatuses.completed]: {
-              label: 'Completado',
+              label: 'Terminado',
               list: this.completed,
               connectedTo: ['notStarted', 'inProgress', 'revised'],
               listTag: 'completed'
@@ -305,6 +305,10 @@ export class ProjectDetailComponent implements OnInit {
     });
   }
 
+  public reloadTasks(): void {
+    this._getTasks();
+  }
+
   isBlinking = false;
   startBlinking() {
     this.isBlinking = true;
@@ -312,5 +316,14 @@ export class ProjectDetailComponent implements OnInit {
     setTimeout(() => {
       this.isBlinking = false;
     }, 3000);
+  }
+
+  deleteTask(taskId: number): void {
+    this._tasksService.deleteTask(taskId).subscribe({
+      next: () => {
+        this._getTasks();
+      },
+      error: (error) => console.error(error)
+    });
   }
 }

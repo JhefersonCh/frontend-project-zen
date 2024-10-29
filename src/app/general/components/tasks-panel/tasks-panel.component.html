@@ -20,10 +20,10 @@
           [cdkDragDisabled]="isMobile"
         >
           <div header>{{ item.title }}</div>
-          <div content>
-            <p class="brand-text-body-m text-black-50 fw-medium">
+          <div content class="d-flex flex-column gap-2">
+            <span class="brand-text-body-m text-black-50 fw-medium">
               {{ item.description }}
-            </p>
+            </span>
             <span
               ><strong>Etiquetas: </strong>
               @for (taskTag of item.taskTags; track $index) {
@@ -33,7 +33,34 @@
                 }}</span>
               }
             </span>
+            <span><strong>Priopridad: </strong>{{ item.priority.title }}</span>
+            <div class="d-flex flex-column">
+              <span class="brand-text-body-m text-muted">
+                <strong>Fecha de incio:</strong>
+                {{ item.createdAt | date: 'dd-MM-yyyy HH:mm' }}
+              </span>
+              <span class="brand-text-body-m text-muted">
+                <strong>Fecha límite:</strong>
+                {{ item.deadline | date: 'dd-MM-yyyy' }}
+              </span>
+            </div>
           </div>
+          <section actions>
+            <button
+              mat-icon-button
+              matTooltip="Eliminar"
+              (click)="openDeleteTaskDialog(item.id, $event)"
+            >
+              <mat-icon color="primary">delete</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Ver detalles de la tarea."
+              (click)="openShowTaskInfoDialog(item, $event)"
+            >
+              <mat-icon color="primary">visibility</mat-icon>
+            </button>
+          </section>
         </app-base-card>
       </ng-container>
     }

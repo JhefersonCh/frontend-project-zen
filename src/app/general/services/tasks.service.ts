@@ -47,4 +47,15 @@ export class TasksService {
       { tasks }
     );
   }
+
+  updateTask(task: object): Observable<unknown> {
+    return this._httpClient.patch<unknown>(
+      `${environment.apiUrl}tasks/update`,
+      task
+    );
+  }
+
+  deleteTask(id: number): Observable<void> {
+    return this._httpClient.delete<void>(`${environment.apiUrl}tasks/${id}`);
+  }
 }

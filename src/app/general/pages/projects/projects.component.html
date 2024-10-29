@@ -16,10 +16,10 @@
               <div header>
                 {{ project.title }}
               </div>
-              <div content>
-                <p class="brand-text-body-m text-black-50 fw-medium">
+              <div content class="d-flex flex-column gap-2">
+                <span class="brand-text-body-m text-black-50 fw-medium">
                   {{ project.description }}
-                </p>
+                </span>
                 <div>
                   <strong>Categorías: </strong>
                   @for (tag of project.projectCategories; track $index) {
@@ -29,6 +29,22 @@
                           : $index + 1 === project.projectCategories?.length
                     }}</span>
                   }
+                </div>
+                @if (project.members) {
+                  <span>
+                    <strong>Rol: </strong>
+                    {{ project.members[0]?.projectRole?.roleName }}
+                  </span>
+                }
+                <div class="d-flex flex-column">
+                  <span>
+                    <strong class="text-muted">Fecha de inicio: </strong>
+                    {{ project.createdAt | date: 'dd/MM/yyyy' }}
+                  </span>
+                  <span>
+                    <strong class="text-muted">Fecha de fin: </strong>
+                    {{ project.finishDate | date: 'dd/MM/yyyy' }}
+                  </span>
                 </div>
               </div>
               <div actions>

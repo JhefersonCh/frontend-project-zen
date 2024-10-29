@@ -31,7 +31,7 @@
 
 /* Tamaños de texto */
 .brand-text-body-xl {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: normal;
 }
 
@@ -501,4 +501,13 @@
       }
     }
   }
+}
+
+.brand-date-formated {
+  display: flex;
+  align-items: center;
+  background-color: $secondary-color;
+  color: white;
+  padding: 10px;
+  border-radius: 35px;
 }

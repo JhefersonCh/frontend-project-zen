@@ -1,7 +1,7 @@
 <app-base-page
   [title]="project?.title || ''"
   [subtitle]="project?.description"
-  class="h-100"
+  class="h-100 position-relative"
 >
   <div content class="h-100 d-flex flex-column">
     @if (!loadingPage) {
@@ -23,6 +23,9 @@
                   (dropEvent)="drop($event)"
                   [isMobile]="isMobile"
                   [listTag]="status[1].listTag"
+                  [members]="project?.members || []"
+                  (updated)="reloadTasks()"
+                  (deleteTask)="deleteTask($event)"
                 ></app-tasks-panel>
               </div>
             }
@@ -38,6 +41,13 @@
             <mat-icon>done</mat-icon>
           </button>
         }
+        <button
+          mat-fab
+          class="info-button d-none d-md-flex bg-warning"
+          matTooltip="Arrastra las tareas a su estado correspondiente, luego haz clic en el botón verde que aparecerá abajo para guardar."
+        >
+          <mat-icon>info</mat-icon>
+        </button>
       </ng-container>
     } @else {
       <app-loader></app-loader>

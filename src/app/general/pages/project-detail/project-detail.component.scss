@@ -17,14 +17,33 @@
 
 .save-button {
   position: fixed;
-  bottom: calc(100vh - 93vh);
+  bottom: calc(100vh - 92vh);
   right: 30px;
   background-color: rgb(24, 161, 24) !important;
-  animation: pulse 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
   transition: all 0.3s ease;
 
   &:hover {
     background-color: rgb(36, 177, 39) !important;
+    animation: none;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    animation: none;
+  }
+}
+
+.info-button {
+  position: fixed;
+  cursor: default !important;
+  bottom: calc(100vh - 85vh);
+  right: 30px;
+  animation: pulse 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgb(255, 174, 0) !important;
     animation: none;
     transform: scale(1.1);
   }
