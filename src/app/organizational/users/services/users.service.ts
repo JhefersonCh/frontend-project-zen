@@ -35,9 +35,11 @@ export class UsersService {
     );
   }
 
-  getUsers(userId: string): Observable<ApiResponseInterface<UsersInterface[]>> {
+  getUsers(query: object): Observable<ApiResponseInterface<UsersInterface[]>> {
+    const params = this._httpUtilities.httpParamsFromObject(query);
     return this._httpClient.get<ApiResponseInterface<UsersInterface[]>>(
-      `${environment.apiUrl}user/${userId}`
+      `${environment.apiUrl}user/paginated-list`,
+      { params }
     );
   }
 }
