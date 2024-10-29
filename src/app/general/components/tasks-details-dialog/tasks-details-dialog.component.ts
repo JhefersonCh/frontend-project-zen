@@ -2,7 +2,7 @@ import { Priority, TasksInterface } from './../../interfaces/tasks.interface';
 import { Component, inject, OnInit } from '@angular/core';
 import { BaseDialogComponent } from '../../../shared/components/base-dialog/base-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { ArrayInlineFormaterPipe } from '../../../shared/pipes/array-inline-formater.pipe';
 import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TasksService } from '../../services/tasks.service';
 import { finalize } from 'rxjs';
 import { Members } from '../../interfaces/projects.interface';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tasks-details-dialog',
@@ -34,7 +35,9 @@ import { Members } from '../../interfaces/projects.interface';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    NgIf
+    NgIf,
+    MatIconModule,
+    NgClass
   ],
   templateUrl: './tasks-details-dialog.component.html',
   styleUrl: './tasks-details-dialog.component.scss'
@@ -111,5 +114,20 @@ export class TasksDetailsDialogComponent implements OnInit {
           console.error(error);
         }
       });
+  }
+
+  getPriorityInfo(priorityId: number, requirement: string): string {
+    switch (priorityId) {
+      case 4:
+        return requirement === 'icon' ? 'keyboard_double_arrow_down' : 'low';
+      case 3:
+        return requirement === 'icon' ? 'keyboard_arrow_down' : 'medium';
+      case 2:
+        return requirement === 'icon' ? 'expand_less' : 'high';
+      case 1:
+        return requirement === 'icon' ? 'keyboard_double_arrow_up' : 'urgent';
+      default:
+        return 'info';
+    }
   }
 }

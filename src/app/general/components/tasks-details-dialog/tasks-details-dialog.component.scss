@@ -1,0 +1,50 @@
+.tag {
+  background-color: rgb(214, 214, 214);
+  border-radius: 25px;
+  padding: 5px 10px;
+}
+.tag-container {
+  max-width: 100%;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding-bottom: 10px;
+}
+.tag-container::-webkit-scrollbar {
+  display: none;
+}
+
+.priority-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  color: white;
+  font-size: 0.9rem;
+  width: 50px !important;
+  height: 50px !important;
+  &.priority-low {
+    color: #6c757d;
+  }
+  &.priority-medium {
+    color: #174ab8;
+  }
+  &.priority-high {
+    color: #ffbf00;
+  }
+  &.priority-urgent {
+    color: #e2182c;
+  }
+  mat-icon {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.title {
+  word-break: break-all;
+  //   white-space: normal;
+}

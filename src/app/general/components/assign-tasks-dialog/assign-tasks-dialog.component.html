@@ -7,19 +7,19 @@
   </section>
   <section content>
     <form [formGroup]="form">
-      <div class="row">
+      <div class="row w-100 mx-0">
         <mat-form-field appearance="outline" class="col-12 mt-2">
           <mat-label>Tarea</mat-label>
           <input matInput type="text" formControlName="title" />
         </mat-form-field>
       </div>
-      <div class="row">
+      <div class="row w-100 mx-0">
         <mat-form-field appearance="outline" class="col-12 mt-2">
           <mat-label>Descripción</mat-label>
           <textarea matInput formControlName="description" rows="2"></textarea>
         </mat-form-field>
       </div>
-      <div class="row">
+      <div class="row w-100 mx-0">
         <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
           <mat-label>Miembro</mat-label>
           <mat-select formControlName="memberId" placeholder="Elije un valor">
@@ -45,7 +45,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="row">
+      <div class="row w-100 mx-0">
         <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
           <mat-label>Estado</mat-label>
           <mat-select formControlName="statusId" placeholder="Elije un estado">
@@ -68,7 +68,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="row">
+      <div class="row w-100 mx-0">
         <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
           <mat-label>Fecha límite</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="deadline" />

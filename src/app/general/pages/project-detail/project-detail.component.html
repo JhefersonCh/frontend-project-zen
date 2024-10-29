@@ -24,6 +24,7 @@
                   [isMobile]="isMobile"
                   [listTag]="status[1].listTag"
                   [members]="project?.members || []"
+                  [isDropping]="showDoneButton"
                   (updated)="reloadTasks()"
                   (deleteTask)="deleteTask($event)"
                 ></app-tasks-panel>

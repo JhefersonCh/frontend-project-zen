@@ -12,6 +12,7 @@ import { TasksDetailsDialogComponent } from '../tasks-details-dialog/tasks-detai
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Members } from '../../interfaces/projects.interface';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
+import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 
 @Component({
   selector: 'app-tasks-panel',
@@ -23,7 +24,8 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
     DatePipe,
     MatButtonModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TruncatePipe
   ],
   templateUrl: './tasks-panel.component.html',
   styleUrl: './tasks-panel.component.scss'
@@ -39,8 +41,10 @@ export class TasksPanelComponent {
   @Output() updated = new EventEmitter<boolean>();
   @Output() deleteTask = new EventEmitter<number>();
   private _matDialog: MatDialog = inject(MatDialog);
+  @Input() isDropping: boolean = false;
 
   onDrop(event: CdkDragDrop<any>) {
+    this.isDropping = true;
     this.dropEvent.emit(event);
   }
 

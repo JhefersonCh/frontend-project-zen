@@ -1,9 +1,23 @@
 <app-base-dialog>
   <section header class="row">
-    <span class="col">
-      {{ data.task.title }}
+    <span class="col-12 col-md-8 d-flex flex-row align-items-center">
+      <span
+        [ngClass]="
+          'priority-' + getPriorityInfo(data.task.priority.id, 'class')
+        "
+        class="priority-badge"
+      >
+        <mat-icon [matTooltip]="data.task.priority.title">{{
+          getPriorityInfo(data.task.priorityId, 'icon')
+        }}</mat-icon>
+      </span>
+      <span class="title">
+        {{ data.task.title }}
+      </span>
     </span>
-    <div class="col d-flex justify-content-center justify-content-md-end">
+    <div
+      class="col-12 col-md-4 mt-3 mt-md-0 d-flex justify-content-center justify-content-md-end"
+    >
       <span
         class="brand-text-body-m brand-date-formated text-center"
         [matTooltip]="'Fecha límite: ' + data.task.deadline"
@@ -14,50 +28,47 @@
   </section>
   <section content class="d-flex flex-column gap-2">
     @if (!isEditing) {
+      <span
+        class="mt-2 d-flex flex-row gap-1 justify-content-center tag-container"
+        ><strong></strong>
+        @for (taskTag of data.task.taskTags; track $index) {
+          <span class="tag brand-text-body-l fw-semibold"
+            >#{{ taskTag.tag.title }}</span
+          >
+        }
+      </span>
       <span class="brand-text-body-xl text-black-50 fw-medium">
         {{ data.task.description }}
       </span>
-      <span
-        ><strong>Etiquetas: </strong>
-        @for (taskTag of data.task.taskTags; track $index) {
-          <span>{{
-            taskTag.tag.title
-              | arrayInlineFormater: $index + 1 === data.task.taskTags?.length
-          }}</span>
-        }
-      </span>
-      <span><strong>Priopridad: </strong>{{ data.task.priority.title }}</span>
-      <div class="d-flex flex-column">
-        <span class="brand-text-body-m text-muted">
-          <strong>Fecha de incio:</strong>
-          {{ data.task.createdAt | date: 'dd-MM-yyyy HH:mm' }}
-        </span>
-      </div>
     } @else {
-      <form [formGroup]="form" class="d-flex flex-column gap-2">
-        <mat-form-field appearance="outline">
-          <mat-label>Título</mat-label>
-          <input
-            matInput
-            formControlName="title"
-            placeholder="Ingrese un título"
-          />
-          <mat-error *ngIf="form.get('title')?.hasError('required')">
-            El título es requerido
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Descripción</mat-label>
-          <textarea
-            matInput
-            formControlName="description"
-            placeholder="Ingrese una descripción"
-          ></textarea>
-          <mat-error *ngIf="form.get('description')?.hasError('required')">
-            La descripción es requerida
-          </mat-error>
-        </mat-form-field>
-        <div class="row">
+      <form [formGroup]="form" class="d-flex flex-column gap-2 mt-3">
+        <div class="row w-100 mx-0">
+          <mat-form-field appearance="outline">
+            <mat-label>Título</mat-label>
+            <input
+              matInput
+              formControlName="title"
+              placeholder="Ingrese un título"
+            />
+            <mat-error *ngIf="form.get('title')?.hasError('required')">
+              El título es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row mx-0 w-100">
+          <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea
+              matInput
+              formControlName="description"
+              placeholder="Ingrese una descripción"
+            ></textarea>
+            <mat-error *ngIf="form.get('description')?.hasError('required')">
+              La descripción es requerida
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row w-100 mx-auto">
           <mat-form-field
             appearance="outline"
             class="col-12 col-md-6 gap-2 gap-md-0"
@@ -86,17 +97,19 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <mat-form-field appearance="outline">
-          <mat-label>Etiquetas</mat-label>
-          <mat-select formControlName="tagIds" multiple="true">
-            @for (tag of tags; track $index) {
-              <mat-option [value]="tag.id">{{ tag.title }}</mat-option>
-            }
-          </mat-select>
-          <mat-error *ngIf="form.get('taskTags')?.hasError('required')">
-            Las etiquetas son requeridas
-          </mat-error>
-        </mat-form-field>
+        <div class="row w-100 mx-0">
+          <mat-form-field appearance="outline">
+            <mat-label>Etiquetas</mat-label>
+            <mat-select formControlName="tagIds" multiple="true">
+              @for (tag of tags; track $index) {
+                <mat-option [value]="tag.id">{{ tag.title }}</mat-option>
+              }
+            </mat-select>
+            <mat-error *ngIf="form.get('taskTags')?.hasError('required')">
+              Las etiquetas son requeridas
+            </mat-error>
+          </mat-form-field>
+        </div>
       </form>
     }
   </section>
