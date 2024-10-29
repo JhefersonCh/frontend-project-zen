@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { MatIcon } from '@angular/material/icon';
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-edit-user',
@@ -19,6 +20,7 @@ import { MatIcon } from '@angular/material/icon';
     MatButtonModule,
     BasePageComponent,
     MatIcon,
+    LoaderComponent
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss'
@@ -26,6 +28,8 @@ import { MatIcon } from '@angular/material/icon';
 export class EditUserComponent implements OnInit {
   userId: string = '';
   user?: UserInterface;
+  pageLoading: boolean = true;
+  isLoading = true;
 
   form: FormGroup;
 
@@ -55,6 +59,7 @@ export class EditUserComponent implements OnInit {
     this._userService.getUserProfile(userId).subscribe({
       next: (response) => {
         this.user = response?.data;
+        this.pageLoading = false;
         this.updateFormData();
       },
       error: (error) => {
@@ -83,15 +88,13 @@ export class EditUserComponent implements OnInit {
     };
 
     if (this.form.invalid) return;
-    this._userService
-      .updateUserProfile(this.userId, userUpdate)
-      .subscribe({
-        next: () => {
-          this._router.navigate(['user/profile']);
-        },
-        error: (error) => {
-          console.error('Error al actualizar el usuario', error);
-        }
-      });
+    this._userService.updateUserProfile(this.userId, userUpdate).subscribe({
+      next: () => {
+        this._router.navigate(['../../profile']);
+      },
+      error: (error) => {
+        console.error('Error al actualizar el usuario', error);
+      }
+    });
   }
 }

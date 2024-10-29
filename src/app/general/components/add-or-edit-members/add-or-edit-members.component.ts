@@ -87,8 +87,6 @@ export class AddOrEditMembersComponent implements OnInit {
   }
 
   private _getUsersWithPagination(search: string): void {
-    console.log(search);
-
     this._usersService.getUserWithPagination({ search }).subscribe({
       next: (res) => {
         this.users = res?.data || [];
