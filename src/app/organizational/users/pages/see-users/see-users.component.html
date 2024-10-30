@@ -1,81 +1,61 @@
-<!-- <app-base-page title="Lista de usuarios" [subtitle]="subtitle">
+<app-base-page title="Miembros" subtitle="subtitle">
   <section actions class="w-100">
     <div class="row justify-content-end">
       <div class="col-12 col-md-5 col-lg-3">
-        <button
-          mat-fab
-          extended="true"
-          class="w-100"
-          routerLink="/users/manage-users"
-        >
-          Agregar
-        </button>
+        <button mat-fab extended="true" class="w-100">Agregar</button>
       </div>
     </div>
   </section>
-
   <section content>
-    <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-form-field [appearance]="'outline'" class="w-100">
       <mat-label>Buscar</mat-label>
       <input
         matInput
-        placeholder="Ej. Mia"
-        #input
         (keyup)="applyFilter($event)"
+        placeholder="Ex. Mia"
+        #input
       />
     </mat-form-field>
 
-    <div class="mat-elevation-z8">
-      <div class="overflow-auto mb-3">
-        <table mat-table [dataSource]="dataSource" matSort>
+    <div>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Filtrar usuarios"
+      />
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="identification">
+          <th mat-header-cell *matHeaderCellDef>Identificación</th>
+          <td mat-cell *matCellDef="let user">{{ user.identification }}</td>
+        </ng-container>
 
-          <ng-container matColumnDef="identification">
-            <th mat-header-cell *matHeaderCellDef>Identificación</th>
-            <td mat-cell *matCellDef="let row">{{ row.identification }}</td>
-          </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
 
+        <ng-container matColumnDef="roleId">
+          <th mat-header-cell *matHeaderCellDef>Rol</th>
+          <td mat-cell *matCellDef="let user">{{ user.roleId }}</td>
+        </ng-container>
 
-          <ng-container matColumnDef="fullName">
-            <th mat-header-cell *matHeaderCellDef>Nombre</th>
-            <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
-          </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let user">
+            <button mat-button>Editar</button>
+            <button mat-button>Eliminar</button>
+          </td>
+        </ng-container>
 
-
-          <ng-container matColumnDef="roleId">
-            <th mat-header-cell *matHeaderCellDef>Rol</th>
-            <td mat-cell *matCellDef="let row">{{ row.roleId }}</td>
-          </ng-container>
-
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Acciones</th>
-            <td mat-cell *matCellDef="let row">
-              <button mat-icon-button color="primary">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell text-center brand-text-body-l py-3" colspan="4">
-              No hay usuarios con el nombre: "{{ input.value }}"
-            </td>
-          </tr>
-        </table>
-      </div>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
 
       <mat-paginator
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Seleccionar página de usuarios"
-      >
-      </mat-paginator>
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </section>
-</app-base-page>  -->
+</app-base-page>

@@ -26,20 +26,13 @@ export class UsersService {
       { params }
     );
   }
+
   createUser(
     user: RegisterUserInterface
   ): Observable<ApiResponseCreateInterface> {
     return this._httpClient.post<ApiResponseCreateInterface>(
       `${environment.apiUrl}user/create`,
       user
-    );
-  }
-
-  getUsers(query: object): Observable<ApiResponseInterface<UsersInterface[]>> {
-    const params = this._httpUtilities.httpParamsFromObject(query);
-    return this._httpClient.get<ApiResponseInterface<UsersInterface[]>>(
-      `${environment.apiUrl}user/paginated-list`,
-      { params }
     );
   }
 }
