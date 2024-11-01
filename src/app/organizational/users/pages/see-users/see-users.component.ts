@@ -39,9 +39,9 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   private readonly _usersService: UsersService = inject(UsersService);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource = new MatTableDataSource<UsersInterface>([]);
-  displayedColumns: string[] = ['identification', 'email', 'roleId', 'actions'];
+  displayedColumns: string[] = ['identification', 'email', 'role', 'actions'];
   totalItems: number = 0;
-  pageSize: number = 10; // Tamaño de página inicial
+  pageSize: number = 5; // Tamaño de página inicial
   currentPage: number = 0;
 
   ngOnInit(): void {
