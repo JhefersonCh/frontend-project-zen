@@ -92,17 +92,19 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
   loadUserProfile(): void {
     this.userId = this._localStorageService.getAllSessionData()?.user?.id;
 
-    this.userId &&
-      this._profileService.getUserProfile(this.userId).subscribe({
-        next: (response) => {
-          this.user = response?.data;
-          this.pageLoading = false;
-        },
-        error: (error) => {
-          console.error('Error al cargar el usuario', error);
-          this.pageLoading = false;
-        }
-      });
+    if (!this.user) {
+      this.userId &&
+        this._profileService.getUserProfile(this.userId).subscribe({
+          next: (response) => {
+            this.user = response?.data;
+            this.pageLoading = false;
+          },
+          error: (error) => {
+            console.error('Error al cargar el usuario', error);
+            this.pageLoading = false;
+          }
+        });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -149,6 +151,7 @@ export class NavBarComponent implements OnInit, OnChanges, OnDestroy {
       this._authService.logout(sessionDataToLogout).subscribe({
         next: () => {
           this._authService.cleanStorageAndRedirectToLogin();
+          this.user = undefined;
         },
         error: () => {
           this._authService.cleanStorageAndRedirectToLogin();

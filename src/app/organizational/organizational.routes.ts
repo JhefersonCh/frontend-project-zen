@@ -20,6 +20,13 @@ export const organizationalRoutes: Routes = [
               import('./users/pages/see-users/see-users.component').then(
                 (m) => m.SeeUsersComponent
               )
+          },
+          {
+            path: ':id/edit',
+            loadComponent: () =>
+              import('./users/pages/manage-users/manage-users.component').then(
+                (m) => m.ManageUserComponent
+              )
           }
         ]
       }

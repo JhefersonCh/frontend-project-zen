@@ -11,13 +11,16 @@ import { UsersService } from '../../services/users.service';
 import { UsersInterface } from '../../interfaces/users.interface';
 import { ApiResponseInterface } from '../../../../shared/interfaces/api-response.interface';
 import { MatButtonModule } from '@angular/material/button';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { BasePageComponent } from '../../../../shared/components/base-page/base-page.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { debounceTime } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { YesNoDialogComponent } from '../../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 
 @Component({
   selector: 'app-see-users',
@@ -41,6 +44,8 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   private readonly _usersService: UsersService = inject(UsersService);
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _router = inject(Router);
+  private readonly _matDialog: MatDialog = inject(MatDialog);
+  searchControl: FormControl = new FormControl('');
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource = new MatTableDataSource<UsersInterface>([]);
   displayedColumns: string[] = [
@@ -53,14 +58,21 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   pageSize: number = 5; // Tamaño de página inicial
   currentPage: number = 0;
   projectId: string = '';
-  subtitle: string = '';
+  subtitle: string = 'Gestiona los miembros registrados en la aplicación.';
 
   ngOnInit(): void {
     this.loadUsers();
     this.projectId = this._activatedRoute.snapshot.params?.['email'];
-    this._activatedRoute.queryParams.subscribe((params) => {
-      this.subtitle = `Gestiona los roles de los usuarios activos de: ${params['title']}.`;
-    });
+    this._listenControls();
+  }
+
+  private _listenControls(): void {
+    this.searchControl.valueChanges
+      .pipe(debounceTime(300))
+      .subscribe((value) => {
+        this.currentPage = 0;
+        this.loadUsers(value);
+      });
   }
 
   goToCreateUser(): void {
@@ -75,20 +87,20 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value
-      .trim()
-      .toLowerCase();
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value
+  //     .trim()
+  //     .toLowerCase();
 
-    this.currentPage = 0;
-    this.loadUsers(filterValue);
-  }
+  //   this.currentPage = 0;
+  //   this.loadUsers(filterValue);
+  // }
 
   loadUsers(filter: string = ''): void {
     const query = {
       page: this.currentPage + 1,
       perPage: this.pageSize,
-      search: filter // Añade el filtro aquí
+      search: filter
     };
 
     this._usersService.getUserWithPagination(query).subscribe({
@@ -99,6 +111,27 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
       },
       error: (error) => {
         console.error('Error en la solicitud:', error);
+      }
+    });
+  }
+
+  private _deleteUser(id: string): void {
+    this._usersService.deleteUser(id).subscribe({
+      next: () => {
+        this.loadUsers();
+      },
+      error: (error) => {
+        console.error('Error en la solicitud:', error);
+      }
+    });
+  }
+
+  openDeleteUserDialog(id: string) {
+    const dialogRef = this._matDialog.open(YesNoDialogComponent);
+
+    dialogRef.afterClosed().subscribe((confirm) => {
+      if (confirm) {
+        this._deleteUser(id);
       }
     });
   }

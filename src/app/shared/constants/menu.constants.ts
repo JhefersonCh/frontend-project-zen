@@ -27,19 +27,19 @@ export const MENU_CONST: MenuInterface[] = [
     items: [
       {
         name: 'Usuarios',
-        //route: '/organizacional/users',
+        route: '/organizational/users/list',
         icon: 'person',
-        order: 1,
-        subItems: [
-          {
-            name: 'Crear usuario',
-            route: '/organizational/users/create'
-          },
-          {
-            name: 'Ver usuarios',
-            route: '/organizational/users/list'
-          }
-        ]
+        order: 1
+        // subItems: [
+        //   {
+        //     name: 'Crear usuario',
+        //     route: '/organizational/users/create'
+        //   },
+        //   {
+        //     name: 'Ver usuarios',
+        //     route: '/organizational/users/list'
+        //   }
+        // ]
       },
       {
         name: 'Roles',
@@ -52,9 +52,7 @@ export const MENU_CONST: MenuInterface[] = [
 ];
 
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
-  user: [
-    'profile',
-     'Proyectos']
+  user: ['profile', 'Proyectos']
 };
 
 export const ROUTE_MAP: Record<string, string> = {

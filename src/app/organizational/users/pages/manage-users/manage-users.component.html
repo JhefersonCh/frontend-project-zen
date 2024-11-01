@@ -1,16 +1,12 @@
 <app-base-page
-  title="Crear usuarios"
+  [title]="userId ? 'Editar usuario' : 'Crear usuarios'"
   subtitle="Aquí puedes crear usuarios con sus respectivos roles para tu grupo de trabajo"
-  previusUrl="/create"
+  [previusUrl]="userId ? '../../list' : '../list'"
 >
   <div header>Crear usuario</div>
   <section content class="row">
     <div content>
-      <form
-        [formGroup]="userForm"
-        (ngSubmit)="save()"
-        class="col-12 col-md-6 d-flex flex-column"
-      >
+      <form [formGroup]="userForm" class="col-12 col-md-6 d-flex flex-column">
         <mat-form-field appearance="outline" class="w-100 mt-2">
           <mat-label>Rol</mat-label>
           <mat-select formControlName="roleId" requied>
@@ -109,8 +105,14 @@
         <div actions class="w-100 align-content-center">
           <section class="d-flex row gap-md-0 gap-1 justify-content-end">
             <div class="col-12 col-md-5 col-lg-3 px-1">
-              <button mat-fab extended="true" class="w-100" type="submit">
-                Crear usuario
+              <button
+                mat-fab
+                extended="true"
+                class="w-100"
+                type="button"
+                (click)="save()"
+              >
+                {{ userId ? 'Guardar' : 'Crear usuario' }}
               </button>
             </div>
           </section>

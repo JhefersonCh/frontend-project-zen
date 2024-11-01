@@ -27,9 +27,13 @@
                 </div>
               </div>
 
-              <div class="text-center mt-5">
-                <h1>{{ user?.fullName }}</h1>
-                <h4>{{ '@' + user?.username }}</h4>
+              <div class="text-center mt-5 d-flex flex-column gap-2">
+                <span class="brand-text-headline-xxl fw-semibold">{{
+                  user?.fullName
+                }}</span>
+                <span class="brand-text-body-l fw-medium text-black-50">{{
+                  '@' + user?.username
+                }}</span>
               </div>
             </div>
           </app-base-card>
