@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { BasePageComponent } from '../../../../shared/components/base-page/base-page.component';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-see-users',
@@ -30,22 +31,40 @@ import { BasePageComponent } from '../../../../shared/components/base-page/base-
     CommonModule,
     MatPaginatorModule,
     BasePageComponent,
-    MatTableModule
+    MatTableModule,
+    RouterLink
   ],
   templateUrl: './see-users.component.html',
   styleUrls: ['./see-users.component.scss']
 })
 export class SeeUsersComponent implements OnInit, AfterViewInit {
   private readonly _usersService: UsersService = inject(UsersService);
+  private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private readonly _router = inject(Router);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource = new MatTableDataSource<UsersInterface>([]);
-  displayedColumns: string[] = ['identification', 'email', 'role', 'actions'];
+  displayedColumns: string[] = [
+    'identification',
+    'fullName',
+    'role',
+    'actions'
+  ];
   totalItems: number = 0;
   pageSize: number = 5; // Tamaño de página inicial
   currentPage: number = 0;
+  projectId: string = '';
+  subtitle: string = '';
 
   ngOnInit(): void {
     this.loadUsers();
+    this.projectId = this._activatedRoute.snapshot.params?.['email'];
+    this._activatedRoute.queryParams.subscribe((params) => {
+      this.subtitle = `Gestiona los roles de los usuarios activos de: ${params['title']}.`;
+    });
+  }
+
+  goToCreateUser(): void {
+    this._router.navigate(['/users/create']);
   }
 
   ngAfterViewInit(): void {
@@ -57,35 +76,29 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.currentPage = 0;
+    this.loadUsers(filterValue);
   }
 
-  loadUsers(): void {
+  loadUsers(filter: string = ''): void {
     const query = {
-      page: this.currentPage + 1, // Sumar 1 si tu paginación comienza en 1
-      perPage: this.pageSize
+      page: this.currentPage + 1,
+      perPage: this.pageSize,
+      search: filter // Añade el filtro aquí
     };
 
     this._usersService.getUserWithPagination(query).subscribe({
       next: (res: ApiResponseInterface<UsersInterface[]>) => {
-        if (res.data) {
-          this.dataSource.data = res.data.filter((user) => user !== null) || [];
-          this.totalItems = res.pagination?.total || 0;
-          this.paginator.length = this.totalItems;
-        } else {
-          console.warn('No se encontraron datos en la respuesta');
-        }
+        this.dataSource.data = res.data || [];
+        this.totalItems = res.pagination?.total || 0;
+        this.paginator.length = this.totalItems;
       },
       error: (error) => {
         console.error('Error en la solicitud:', error);
-        if (error.error && error.error.message) {
-          console.error('Mensajes de error:', error.error.message);
-        }
       }
     });
   }
