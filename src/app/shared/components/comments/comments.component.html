@@ -1,0 +1,142 @@
+<div class="mt-5 p-1">
+  <mat-accordion>
+    <mat-expansion-panel
+      (opened)="panelExpanded.emit(true)"
+      (closed)="panelExpanded.emit(false)"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="d-flex align-items-center">
+            <span class="mb-0">
+              <mat-icon class="align-middle me-2">comments</mat-icon>
+              Comentarios
+            </span>
+          </div>
+          <mat-panel-description>
+            <div class="d-flex justify-content-end w-100">
+              <span
+                class="badge bg-primary"
+                [matTooltip]="comments.length + ' comentarios.'"
+                >{{ comments.length }}</span
+              >
+            </div>
+          </mat-panel-description>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="card-body">
+        <div class="comments-list" style="max-height: 400px; overflow-y: auto">
+          @if (comments.length === 0) {
+            <div class="text-center text-muted py-4">
+              <mat-icon
+                class="d-block mx-auto mb-2"
+                style="font-size: 48px; width: 48px; height: 48px"
+              >
+                chat_bubble_outline
+              </mat-icon>
+              No hay comentarios aún
+            </div>
+          } @else {
+            @for (comment of comments; track comment.id) {
+              <div class="comment-item mb-3">
+                <div class="d-flex align-items-start">
+                  <div class="comment-avatar me-2">
+                    <div
+                      class="rounded-circle bg-light d-flex align-items-center justify-content-center"
+                      style="width: 40px; height: 40px"
+                    >
+                      @if (!comment?.user?.avatarUrl) {
+                        <mat-icon>account_circle</mat-icon>
+                      } @else {
+                        <img
+                          class="rounded-circle w-100 h-100"
+                          [src]="comment.user.avatarUrl"
+                          alt="User Avatar"
+                        />
+                      }
+                    </div>
+                  </div>
+
+                  <div class="comment-content flex-grow-1">
+                    <div class="card">
+                      <div class="card-header bg-light py-2">
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <span class="fw-bold">{{
+                            comment.user.fullName
+                          }}</span>
+                          <small class="text-muted">
+                            <mat-icon
+                              class="align-middle me-1"
+                              style="font-size: 16px; width: 16px; height: 16px"
+                            >
+                              schedule
+                            </mat-icon>
+                            {{ comment.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+                          </small>
+                        </div>
+                      </div>
+                      <div class="card-body py-2">
+                        <p class="mb-0">{{ comment.content }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    @if (comment.user.id === userLoggedId) {
+                      <button
+                        mat-icon-button
+                        color="primary"
+                        (click)="deleteComment(comment.id)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          }
+        </div>
+
+        <form [formGroup]="commentForm" class="new-comment mt-3">
+          <div class="d-flex gap-2">
+            <mat-form-field appearance="outline" class="flex-grow-1">
+              <mat-label>Escribe un comentario</mat-label>
+              <textarea
+                matInput
+                formControlName="content"
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="3"
+                cdkAutosizeMaxRows="5"
+              ></textarea>
+              @if (
+                commentForm.get('content')?.hasError('required') &&
+                commentForm.get('content')?.touched
+              ) {
+                <mat-error>El comentario es requerido</mat-error>
+              }
+              @if (commentForm.get('content')?.hasError('maxlength')) {
+                <mat-error
+                  >El comentario no puede exceder los 500 caracteres</mat-error
+                >
+              }
+            </mat-form-field>
+            <div class="d-flex flex-column justify-content-start">
+              <button
+                mat-mini-fab
+                color="primary"
+                type="submit"
+                [disabled]="!commentForm.valid || commentForm.pristine"
+                (click)="addComment()"
+              >
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

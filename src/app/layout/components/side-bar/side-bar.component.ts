@@ -1,6 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -60,8 +70,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ])
   ]
 })
-export class SideBarComponent implements OnInit {
+export class SideBarComponent implements OnInit, OnChanges {
   @Input() userRole!: string;
+  @Input() closeSideBar: boolean = false;
+  @Output() collapsed: EventEmitter<boolean> = new EventEmitter<boolean>();
   isCollapsed: boolean = true;
   currentRoute: string = '';
   menuWithItems: MenuInterface[] = [];
@@ -82,6 +94,14 @@ export class SideBarComponent implements OnInit {
     this.filterMenuByRole();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['closeSideBar']) {
+      if (this.closeSideBar) {
+        this.closeSideBarMethod();
+      }
+    }
+  }
+
   private filterMenuByRole(): void {
     if (this.userRole) {
       if (this.userRole === 'admin' || this.userRole === 'superadmin') {
@@ -100,6 +120,15 @@ export class SideBarComponent implements OnInit {
   }
 
   toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+    if (this.isCollapsed) {
+      this.closeAllSubMenus();
+    }
+
+    this.collapsed.emit(this.isCollapsed);
+  }
+
+  closeSideBarMethod() {
     this.isCollapsed = !this.isCollapsed;
     if (this.isCollapsed) {
       this.closeAllSubMenus();

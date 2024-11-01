@@ -1,14 +1,15 @@
 <div class="base-page-container w-100 m-0 m-auto position-relative">
   <button
-    mat-icon-button
+    mat-stroked-button
     [routerLink]="previusUrl ? previusUrl : '../'"
     matTooltip="Volver"
     color="primary"
     class="position-absolute back-button"
   >
     <mat-icon class="d-flex justify-content-center align-items-center"
-      >arrow_back_ios</mat-icon
+      >arrow_back</mat-icon
     >
+    Volver
   </button>
   <article class="p-4 pt-5">
     @if (title) {

@@ -11,10 +11,12 @@ import {
   TasksRelatedData
 } from '../interfaces/tasks.interface';
 import { environment } from '../../../environments/environment';
+import { HttpUtilitiesService } from '../../shared/utilities/http-utilities.service';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
   private _httpClient: HttpClient = inject(HttpClient);
+  private _httpUtilities: HttpUtilitiesService = inject(HttpUtilitiesService);
 
   getRelatedData(): Observable<ApiResponseInterface<TasksRelatedData>> {
     return this._httpClient.get<ApiResponseInterface<TasksRelatedData>>(
@@ -36,6 +38,20 @@ export class TasksService {
   ): Observable<ApiResponseInterface<TasksInterface[]>> {
     return this._httpClient.get<ApiResponseInterface<TasksInterface[]>>(
       `${environment.apiUrl}tasks/find-by-project/${projectId}`
+    );
+  }
+
+  getByMemberId(
+    memberId: number,
+    projectId: number
+  ): Observable<ApiResponseInterface<TasksInterface[]>> {
+    const params = this._httpUtilities.httpParamsFromObject({
+      memberId,
+      projectId
+    });
+    return this._httpClient.get<ApiResponseInterface<TasksInterface[]>>(
+      `${environment.apiUrl}tasks/find-by-member`,
+      { params }
     );
   }
 

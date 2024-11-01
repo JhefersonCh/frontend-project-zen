@@ -20,6 +20,9 @@ import { TasksService } from '../../services/tasks.service';
 import { finalize } from 'rxjs';
 import { Members } from '../../interfaces/projects.interface';
 import { MatIconModule } from '@angular/material/icon';
+import { CommentsComponent } from '../../../shared/components/comments/comments.component';
+import { AuthService } from '../../../auth/services/auth.service';
+import { UserInterface } from '../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-tasks-details-dialog',
@@ -37,7 +40,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     NgIf,
     MatIconModule,
-    NgClass
+    NgClass,
+    CommentsComponent
   ],
   templateUrl: './tasks-details-dialog.component.html',
   styleUrl: './tasks-details-dialog.component.scss'
@@ -46,6 +50,7 @@ export class TasksDetailsDialogComponent implements OnInit {
   private _dialogRef: MatDialogRef<TasksDetailsDialogComponent> = inject(
     MatDialogRef<TasksDetailsDialogComponent>
   );
+  private _authService: AuthService = inject(AuthService);
   public data = inject<{ task: TasksInterface; members: Members[] }>(
     MAT_DIALOG_DATA
   );
@@ -56,6 +61,8 @@ export class TasksDetailsDialogComponent implements OnInit {
   statuses!: Priority[];
   tags!: Priority[];
   isUpdating: boolean = false;
+  userLogged!: UserInterface;
+  commentsIsViewed: boolean = false;
 
   constructor() {
     this.form = this._fb.group({
@@ -74,6 +81,7 @@ export class TasksDetailsDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this._getRelatedData();
+    this.userLogged = this._authService.getUserLoggedIn();
   }
 
   private _getRelatedData(): void {

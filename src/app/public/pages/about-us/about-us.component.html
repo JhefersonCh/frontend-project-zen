@@ -1,34 +1,71 @@
-<app-base-page 
-title="Preguntas frecuentes"   
-[subtitle]="'Aquí puedes hacer tur preguntas'"
-previusUrl="/home">
-  
-    <div content class="accordion" id="faqAccordion">
-      <div class="accordion-item" *ngFor="let faq of preguntasFrecuentes">
-        <h2 class="accordion-header" [id]="'heading' + generarId(faq.pregunta)">
-          <button
-            class="accordion-button"
-            type="button"
-            data-bs-toggle="collapse"
-            [attr.data-bs-target]="'#collapse' + generarId(faq.pregunta)"
-            [attr.aria-expanded]="faq.pregunta === preguntasFrecuentes[0].pregunta"
-            [attr.aria-controls]="'collapse' + generarId(faq.pregunta)"
-          >
-            {{ faq.pregunta }}
-          </button>
-        </h2>
-        <div
-          [id]="'collapse' + generarId(faq.pregunta)"
-          class="accordion-collapse collapse"
-          [class.show]="faq.pregunta === preguntasFrecuentes[0].pregunta"
-          [attr.aria-labelledby]="'heading' + generarId(faq.pregunta)"
-          data-bs-parent="#faqAccordion"
+<app-base-page
+  title="Soporte"
+  [subtitle]="
+    'Resuelve tus inquietudes, revisa las preguntas frecuentes o contactanos.'
+  "
+  previusUrl="/home"
+>
+  <div content>
+    <section>
+      <div class="mb-3">
+        <span class="brand-text-headline-m fw-semibold"
+          >Preguntas frecuentes</span
         >
-          <div class="accordion-body">
-            {{ faq.respuesta }}
+      </div>
+      <mat-accordion>
+        @for (item of faqs; track $index) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> {{ item.pregunta }} </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{ item.respuesta }}</p>
+          </mat-expansion-panel>
+        }
+      </mat-accordion>
+    </section>
+    <section>
+      <div class="mb-3 mt-5 d-flex flex-column">
+        <span class="brand-text-headline-m fw-semibold">PQRs</span>
+        <span class="brand-text-body-xl fw-semibold text-black-50"
+          >Escribenos una petición, queja o reclamo en el siguiente
+          forulario.</span
+        >
+      </div>
+
+      <form [formGroup]="form" class="row">
+        <div class="col-12 col-md-6 d-flex flex-column">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mt-1">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+            @if (form.get('email')?.hasError('required')) {
+              <mat-error>El email es requerido</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mt-1">
+            <mat-label>Mensaje</mat-label>
+            <textarea matInput formControlName="message" rows="2"></textarea>
+            @if (form.get('message')?.hasError('required')) {
+              <mat-error>El mensaje es requerido</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="text-end">
+            <button
+              mat-fab
+              extended="true"
+              color="primary"
+              type="button"
+              (click)="sendPqrs()"
+            >
+              Enviar
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-  </app-base-page>
-  
+      </form>
+    </section>
+  </div>
+</app-base-page>

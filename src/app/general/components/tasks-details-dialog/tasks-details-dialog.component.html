@@ -40,6 +40,12 @@
       <span class="brand-text-body-xl text-black-50 fw-medium">
         {{ data.task.description }}
       </span>
+      <app-comments
+        [rowId]="data.task.id"
+        [rowTable]="'Tasks'"
+        [userLoggedId]="userLogged.id || ''"
+        (panelExpanded)="commentsIsViewed = $event"
+      ></app-comments>
     } @else {
       <form [formGroup]="form" class="d-flex flex-column gap-2 mt-3">
         <div class="row w-100 mx-0">
@@ -113,31 +119,33 @@
       </form>
     }
   </section>
-  <section actions class="w-100">
-    <div class="row w-100 m-0 justify-content-center justify-content-md-end">
-      <div class="col-6 col-md-3 px-1">
-        <button
-          mat-fab
-          extended="true"
-          color="warn"
-          class="w-100"
-          (click)="isEditing ? (isEditing = false) : close()"
-        >
-          {{ isEditing ? 'Volver' : 'Cancelar' }}
-        </button>
+  @if (!commentsIsViewed) {
+    <section actions class="w-100">
+      <div class="row w-100 m-0 justify-content-center justify-content-md-end">
+        <div class="col-6 col-md-3 px-1">
+          <button
+            mat-fab
+            extended="true"
+            color="warn"
+            class="w-100"
+            (click)="isEditing ? (isEditing = false) : close()"
+          >
+            {{ isEditing ? 'Volver' : 'Cancelar' }}
+          </button>
+        </div>
+        <div class="col-6 col-md-3 px-1">
+          <button
+            mat-fab
+            extended="true"
+            color="primary"
+            class="w-100"
+            (click)="!isEditing ? (isEditing = true) : save()"
+            [disabled]="isEditing && isUpdating"
+          >
+            {{ isEditing ? 'Guardar' : 'Editar' }}
+          </button>
+        </div>
       </div>
-      <div class="col-6 col-md-3 px-1">
-        <button
-          mat-fab
-          extended="true"
-          color="primary"
-          class="w-100"
-          (click)="!isEditing ? (isEditing = true) : save()"
-          [disabled]="isEditing && isUpdating"
-        >
-          {{ isEditing ? 'Guardar' : 'Editar' }}
-        </button>
-      </div>
-    </div>
-  </section>
+    </section>
+  }
 </app-base-dialog>

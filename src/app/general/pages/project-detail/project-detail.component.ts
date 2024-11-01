@@ -5,7 +5,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProjectsService } from '../../services/projects.service';
-import { ProjectInterface } from '../../interfaces/projects.interface';
+import { Members, ProjectInterface } from '../../interfaces/projects.interface';
 import { ProgressTimeBarComponent } from '../../components/progress-time-bar/progress-time-bar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -25,6 +25,9 @@ import { finalize } from 'rxjs';
 import { TasksPanelComponent } from '../../components/tasks-panel/tasks-panel.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-project-detail',
@@ -37,7 +40,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     RouterLink,
     TasksPanelComponent,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']
@@ -71,6 +77,8 @@ export class ProjectDetailComponent implements OnInit {
   } = {};
   showDoneButton: boolean = false;
   newStatuses: { id: number; statusId: number }[] = [];
+  memberControl: FormControl = new FormControl('');
+  memberLoggedIn?: Members;
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _projectsService: ProjectsService = inject(ProjectsService);
   private readonly _authService: AuthService = inject(AuthService);
@@ -82,9 +90,11 @@ export class ProjectDetailComponent implements OnInit {
   ngOnInit(): void {
     this.projectId = this._activatedRoute.snapshot.params['id'];
     this._getProject();
-    this._getTasks();
     this._getUserLoggedin();
     this.isMobile = window.innerWidth <= 768;
+    this.memberControl.valueChanges.subscribe((value) => {
+      this._getTasks(value);
+    });
   }
 
   private _getProject(): void {
@@ -94,8 +104,13 @@ export class ProjectDetailComponent implements OnInit {
         next: (response) => {
           this.project = response?.data;
           this.loadingPage = false;
-
           this.userLoggedIsLeader();
+          this._getMemberData();
+          if (this.userLoggedIsLeader()) {
+            this._getTasks();
+          } else {
+            this._getTasks(this.memberLoggedIn?.id);
+          }
         },
         error: (error) => console.error(error)
       });
@@ -109,54 +124,99 @@ export class ProjectDetailComponent implements OnInit {
     this.revised = [];
   }
 
-  private _getTasks(): void {
+  private _getTasks(memberId?: number): void {
     if (!this.projectId) return;
 
     this.loadingPage = true;
     this._reloadArrays();
 
-    this._tasksService
-      .getByProjectId(Number(this.projectId))
-      .pipe(finalize(() => (this.loadingPage = false)))
-      .subscribe({
-        next: (response) => {
-          this.statusMap = {
-            [taskStatuses.pending]: {
-              label: 'No iniciado',
-              list: this.notStarted,
-              connectedTo: ['inProgress', 'completed', 'revised'],
-              listTag: 'notStarted'
-            },
-            [taskStatuses.inProgress]: {
-              label: 'En progreso',
-              list: this.inProgress,
-              connectedTo: ['notStarted', 'completed', 'revised'],
-              listTag: 'inProgress'
-            },
-            [taskStatuses.completed]: {
-              label: 'Terminado',
-              list: this.completed,
-              connectedTo: ['notStarted', 'inProgress', 'revised'],
-              listTag: 'completed'
-            },
-            [taskStatuses.revised]: {
-              label: 'Revisado',
-              list: this.revised,
-              connectedTo: ['notStarted', 'inProgress', 'completed'],
-              listTag: 'revised'
-            }
-          };
+    if (!memberId && this.userLoggedIsLeader()) {
+      this._tasksService
+        .getByProjectId(Number(this.projectId))
+        .pipe(finalize(() => (this.loadingPage = false)))
+        .subscribe({
+          next: (response) => {
+            this.statusMap = {
+              [taskStatuses.pending]: {
+                label: 'No iniciado',
+                list: this.notStarted,
+                connectedTo: ['inProgress', 'completed', 'revised'],
+                listTag: 'notStarted'
+              },
+              [taskStatuses.inProgress]: {
+                label: 'En progreso',
+                list: this.inProgress,
+                connectedTo: ['notStarted', 'completed', 'revised'],
+                listTag: 'inProgress'
+              },
+              [taskStatuses.completed]: {
+                label: 'Terminado',
+                list: this.completed,
+                connectedTo: ['notStarted', 'inProgress', 'revised'],
+                listTag: 'completed'
+              },
+              [taskStatuses.revised]: {
+                label: 'Revisado',
+                list: this.revised,
+                connectedTo: ['notStarted', 'inProgress', 'completed'],
+                listTag: 'revised'
+              }
+            };
 
-          response?.data.forEach((task) => {
-            const targetArray = this.statusMap[task.statusId];
-            if (targetArray) {
-              targetArray.list.push(task);
-            }
-          });
-          this._storeOriginalTasksState(this.statusMap, true);
-        },
-        error: (error) => console.error(error)
-      });
+            response?.data.forEach((task) => {
+              const targetArray = this.statusMap[task.statusId];
+              if (targetArray) {
+                targetArray.list.push(task);
+              }
+            });
+            this._storeOriginalTasksState(this.statusMap, true);
+          },
+          error: (error) => console.error(error)
+        });
+    } else if (memberId) {
+      this._tasksService
+        .getByMemberId(memberId, Number(this.projectId))
+        .pipe(finalize(() => (this.loadingPage = false)))
+        .subscribe({
+          next: (response) => {
+            this.statusMap = {
+              [taskStatuses.pending]: {
+                label: 'No iniciado',
+                list: this.notStarted,
+                connectedTo: ['inProgress', 'completed', 'revised'],
+                listTag: 'notStarted'
+              },
+              [taskStatuses.inProgress]: {
+                label: 'En progreso',
+                list: this.inProgress,
+                connectedTo: ['notStarted', 'completed', 'revised'],
+                listTag: 'inProgress'
+              },
+              [taskStatuses.completed]: {
+                label: 'Terminado',
+                list: this.completed,
+                connectedTo: ['notStarted', 'inProgress', 'revised'],
+                listTag: 'completed'
+              },
+              [taskStatuses.revised]: {
+                label: 'Revisado',
+                list: this.revised,
+                connectedTo: ['notStarted', 'inProgress', 'completed'],
+                listTag: 'revised'
+              }
+            };
+
+            response?.data.forEach((task) => {
+              const targetArray = this.statusMap[task.statusId];
+              if (targetArray) {
+                targetArray.list.push(task);
+              }
+            });
+            this._storeOriginalTasksState(this.statusMap, true);
+          },
+          error: (error) => console.error(error)
+        });
+    }
   }
 
   private _storeOriginalTasksState(
@@ -194,6 +254,12 @@ export class ProjectDetailComponent implements OnInit {
     return member
       ? ['Líder', 'Moderador'].includes(member.projectRole.roleName)
       : false;
+  }
+
+  private _getMemberData(): void {
+    const members = this.project?.members;
+    const member = members?.find((mem) => mem.userId === this.userLogged.id);
+    this.memberLoggedIn = member;
   }
 
   openAssignTaskDialog(): void {
@@ -298,7 +364,7 @@ export class ProjectDetailComponent implements OnInit {
     const tasks = this.newStatuses;
     this._tasksService.updateManyStatuses(tasks).subscribe({
       next: () => {
-        this._getTasks();
+        this._getProject();
         this.showDoneButton = false;
       },
       error: (error) => console.error(error)

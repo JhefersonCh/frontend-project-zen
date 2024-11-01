@@ -11,64 +11,84 @@
     (cdkDropListDropped)="onDrop($event)"
     class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
   >
-    @for (item of tasksList; track $index) {
-      <ng-container>
-        <app-base-card
-          cdkDrag
-          class="brand-cursor-move"
-          [ripple]="true"
-          [cdkDragDisabled]="isMobile"
-        >
-          <div header>{{ item.title | truncate: 20 }}</div>
-          <div content class="d-flex flex-column gap-2">
-            <span class="brand-text-body-m text-black-50 fw-medium">
-              {{ item.description | truncate }}
-            </span>
-            <span
-              ><strong>Etiquetas: </strong>
-              @for (taskTag of item.taskTags; track $index) {
-                <span>{{
-                  taskTag.tag.title
-                    | arrayInlineFormater: $index + 1 === item.taskTags?.length
-                }}</span>
+    @if (tasksList?.length) {
+      @for (item of tasksList; track $index) {
+        <ng-container>
+          <app-base-card
+            cdkDrag
+            class="brand-cursor-move"
+            [ripple]="true"
+            [cdkDragDisabled]="isMobile"
+          >
+            <div header>{{ item.title | truncate: 20 }}</div>
+            <div content class="d-flex flex-column gap-2">
+              <span class="brand-text-body-m text-black-50 fw-medium">
+                {{ item.description | truncate }}
+              </span>
+              <span
+                ><strong>Etiquetas: </strong>
+                @for (taskTag of item.taskTags; track $index) {
+                  <span>{{
+                    taskTag.tag.title
+                      | arrayInlineFormater
+                        : $index + 1 === item.taskTags?.length
+                  }}</span>
+                }
+              </span>
+              <span>
+                <strong>Priopridad: </strong>{{ item.priority.title }}.
+              </span>
+              <div class="d-flex flex-column">
+                <span class="brand-text-body-m text-muted">
+                  <strong>Fecha de incio:</strong>
+                  {{ item.createdAt | date: 'dd-MM-yyyy ' }}
+                </span>
+                <span class="brand-text-body-m text-muted">
+                  <strong>Fecha límite:</strong>
+                  {{ item.deadline | date: 'dd-MM-yyyy' }}
+                </span>
+              </div>
+
+              @if (isLeader) {
+                <span
+                  ><strong>Responsable: </strong
+                  >{{ getMemberAssigned(item.memberId) }}</span
+                >
               }
-            </span>
-            <span><strong>Priopridad: </strong>{{ item.priority.title }}</span>
-            <div class="d-flex flex-column">
-              <span class="brand-text-body-m text-muted">
-                <strong>Fecha de incio:</strong>
-                {{ item.createdAt | date: 'dd-MM-yyyy ' }}
-              </span>
-              <span class="brand-text-body-m text-muted">
-                <strong>Fecha límite:</strong>
-                {{ item.deadline | date: 'dd-MM-yyyy' }}
-              </span>
             </div>
-          </div>
-          <section actions>
-            <button
-              mat-icon-button
-              matTooltip="Eliminar"
-              (click)="openDeleteTaskDialog(item.id, $event)"
-              [disabled]="isDropping"
-            >
-              <mat-icon [color]="isDropping ? 'accent' : 'primary'"
-                >delete</mat-icon
+            <section actions>
+              @if (isLeader) {
+                <button
+                  mat-icon-button
+                  matTooltip="Eliminar"
+                  (click)="openDeleteTaskDialog(item.id, $event)"
+                  [disabled]="isDropping"
+                >
+                  <mat-icon [color]="isDropping ? 'accent' : 'primary'">
+                    delete
+                  </mat-icon>
+                </button>
+              }
+              <button
+                mat-icon-button
+                matTooltip="Ver detalles de la tarea."
+                (click)="openShowTaskInfoDialog(item, $event)"
+                [disabled]="isDropping"
               >
-            </button>
-            <button
-              mat-icon-button
-              matTooltip="Ver detalles de la tarea."
-              (click)="openShowTaskInfoDialog(item, $event)"
-              [disabled]="isDropping"
-            >
-              <mat-icon [color]="isDropping ? 'accent' : 'primary'"
-                >visibility</mat-icon
-              >
-            </button>
-          </section>
-        </app-base-card>
-      </ng-container>
+                <mat-icon [color]="isDropping ? 'accent' : 'primary'"
+                  >visibility</mat-icon
+                >
+              </button>
+            </section>
+          </app-base-card>
+        </ng-container>
+      }
+    } @else {
+      <div
+        class="text-center brand-text-body-l fw-medium text-black-50 h-100 align-content-center"
+      >
+        No hay nada aquí.
+      </div>
     }
   </div>
 </div>

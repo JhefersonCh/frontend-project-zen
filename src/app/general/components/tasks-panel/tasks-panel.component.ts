@@ -36,6 +36,7 @@ export class TasksPanelComponent {
   @Input() dropListConnectedTo!: string[];
   @Input() isMobile: boolean = false;
   @Input() listTag: string = '';
+  @Input() isLeader: boolean = false;
   @Input() members: Members[] = [];
   @Output() dropEvent = new EventEmitter<CdkDragDrop<any>>();
   @Output() updated = new EventEmitter<boolean>();
@@ -44,7 +45,6 @@ export class TasksPanelComponent {
   @Input() isDropping: boolean = false;
 
   onDrop(event: CdkDragDrop<any>) {
-    this.isDropping = true;
     this.dropEvent.emit(event);
   }
 
@@ -77,5 +77,10 @@ export class TasksPanelComponent {
         this.deleteTask.emit(taskId);
       }
     });
+  }
+
+  public getMemberAssigned(memberId: number): string {
+    const member = this.members.find((m) => m.id === memberId);
+    return member ? member.user.fullName : '';
   }
 }

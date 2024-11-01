@@ -26,11 +26,18 @@ import { LocalStorageService } from '../../shared/services/localStorage.service'
 export class DefaultLayoutComponent implements OnInit {
   isLoggedUser: boolean = false;
   userInfo?: UserInterface;
+  isCollapsedSideBar: boolean = true;
+  isPhone: boolean = false;
+  closeSideBar: boolean = false;
   private readonly _router: Router = inject(Router);
   private readonly _authService: AuthService = inject(AuthService);
   private readonly _localStorage: LocalStorageService =
     inject(LocalStorageService);
   private _subscription: Subscription = new Subscription();
+
+  constructor() {
+    this.isPhone = window.innerWidth <= 768;
+  }
 
   ngOnInit(): void {
     this._subscription.add(
@@ -48,5 +55,10 @@ export class DefaultLayoutComponent implements OnInit {
       });
 
     this.userInfo = this._localStorage.getUserData();
+  }
+
+  listenEvent(event: boolean): void {
+    this.isCollapsedSideBar = event;
+    this.closeSideBar = false;
   }
 }

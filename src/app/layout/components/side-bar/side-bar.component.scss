@@ -50,6 +50,10 @@ aside {
   z-index: 999;
 }
 
+.collapsed .toggle-button-wrapper {
+  right: 5px;
+}
+
 .nav-link {
   white-space: nowrap;
   transition: padding 0.3s ease;

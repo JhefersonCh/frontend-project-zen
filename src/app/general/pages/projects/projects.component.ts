@@ -20,6 +20,7 @@ import { LoaderComponent } from '../../../shared/components/loader/loader.compon
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { DatePipe } from '@angular/common';
+import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 
 @Component({
   selector: 'app-projects',
@@ -34,7 +35,8 @@ import { DatePipe } from '@angular/common';
     BaseDialogComponent,
     EmptyPanelComponent,
     LoaderComponent,
-    DatePipe
+    DatePipe,
+    TruncatePipe
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'

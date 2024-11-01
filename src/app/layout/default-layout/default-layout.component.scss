@@ -6,3 +6,18 @@
   left: 0;
   z-index: 3;
 }
+
+.router-outlet-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  cursor: pointer;
+}
+
+.brand-router-outlet-container {
+  position: relative;
+}

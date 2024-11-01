@@ -18,7 +18,7 @@
               </div>
               <div content class="d-flex flex-column gap-2">
                 <span class="brand-text-body-m text-black-50 fw-medium">
-                  {{ project.description }}
+                  {{ project.description | truncate: 150 }}
                 </span>
                 <div>
                   <strong>Categorías: </strong>
@@ -33,7 +33,7 @@
                 @if (project.members) {
                   <span>
                     <strong>Rol: </strong>
-                    {{ project.members[0]?.projectRole?.roleName }}
+                    {{ project.members[0].projectRole.roleName }}
                   </span>
                 }
                 <div class="d-flex flex-column">
