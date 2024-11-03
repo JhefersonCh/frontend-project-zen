@@ -1,0 +1,37 @@
+<app-base-page
+  [title]="'Panel de administrador'"
+  [subtitle]="'Manejo de los datos de relevantes dentro de la aplicación.'"
+>
+  <section content>
+    @if (!loadingPage) {
+      <mat-tab-group>
+        @for (element of panelElementsMapEntries; track $index) {
+          <mat-tab [label]="translateLabels(element?.[0] || '') || ''">
+            <div
+              class="mt-2 d-flex justify-content-center justify-content-md-end"
+            >
+              <button
+                mat-fab
+                extended="true"
+                (click)="openCreateElementDialog(element?.[0] || '')"
+              >
+                Agregar nuevo
+              </button>
+            </div>
+            <div class="card-container d-flex flex-wrap gap-3 w-100 p-4 pt-5">
+              @for (obj of element?.[1]; track $index) {
+                <app-base-card [isMiniCard]="true" [ripple]="true">
+                  <section header>
+                    {{ obj.title ?? obj.type ?? obj.roleName }}
+                  </section>
+                </app-base-card>
+              }
+            </div>
+          </mat-tab>
+        }
+      </mat-tab-group>
+    } @else {
+      <app-loader></app-loader>
+    }
+  </section>
+</app-base-page>

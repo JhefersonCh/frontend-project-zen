@@ -97,7 +97,7 @@ export class AuthService {
     return this._httpClient
       .post<
         ApiResponseInterface<LoginSuccessInterface>
-      >(`${environment.apiUrl}auth/refresh-token`, { refreshToken: refreshToken }, { headers: { publicToken: '1' } })
+      >(`${environment.apiUrl}auth/refresh-token`, { refreshToken: refreshToken })
       .pipe(
         tap((response: ApiResponseInterface<LoginSuccessInterface>): void => {
           this._updateAccessToken(response?.data?.tokens?.accessToken);
@@ -111,13 +111,12 @@ export class AuthService {
   }
 
   private _updateAccessToken(accessToken: string): void {
-    const userTokens: LoginSuccessInterface | null =
+    const user: LoginSuccessInterface | null =
       this._localStorageService.getAllSessionData();
 
-    if (userTokens) {
-      userTokens.tokens.accessToken = accessToken;
-
-      localStorage.setItem(this._tokensStorageKey, JSON.stringify(userTokens));
+    if (user) {
+      user.tokens.accessToken = accessToken;
+      localStorage.setItem(this._tokensStorageKey, JSON.stringify(user));
     }
   }
 

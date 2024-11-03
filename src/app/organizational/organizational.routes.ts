@@ -5,6 +5,11 @@ export const organizationalRoutes: Routes = [
     path: '',
     children: [
       {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'
+      },
+      {
         path: 'users',
         children: [
           {
@@ -26,6 +31,18 @@ export const organizationalRoutes: Routes = [
             loadComponent: () =>
               import('./users/pages/manage-users/manage-users.component').then(
                 (m) => m.ManageUserComponent
+              )
+          }
+        ]
+      },
+      {
+        path: 'panel',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/admin-panel/admin-panel.component').then(
+                (m) => m.AdminPanelComponent
               )
           }
         ]

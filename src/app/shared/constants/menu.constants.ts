@@ -42,8 +42,8 @@ export const MENU_CONST: MenuInterface[] = [
         // ]
       },
       {
-        name: 'Roles',
-        route: '/organizacional/roles',
+        name: 'Panel de Admin',
+        route: '/organizational/panel',
         icon: 'security',
         order: 2
       }

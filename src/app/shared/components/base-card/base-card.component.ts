@@ -15,4 +15,5 @@ export class BaseCardComponent {
   @Input() withHeader: boolean = true;
   @Input() withActions: boolean = true;
   @Input() isProfileCard: boolean = false;
+  @Input() isMiniCard: boolean = false;
 }
