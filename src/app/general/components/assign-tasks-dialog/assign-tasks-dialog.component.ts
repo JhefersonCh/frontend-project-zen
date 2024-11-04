@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Members } from '../../interfaces/projects.interface';
 import { TasksService } from '../../services/tasks.service';
+import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
 
 @Component({
   selector: 'app-assign-tasks-dialog',
@@ -32,6 +33,9 @@ import { TasksService } from '../../services/tasks.service';
   styleUrl: './assign-tasks-dialog.component.scss'
 })
 export class AssignTasksDialogComponent implements OnInit {
+  private readonly _customValidations: CustomValidationsService = inject(
+    CustomValidationsService
+  );
   private readonly _fb: FormBuilder = inject(FormBuilder);
   private readonly _tasksService: TasksService = inject(TasksService);
   private readonly _dialogRef = inject(
@@ -51,7 +55,10 @@ export class AssignTasksDialogComponent implements OnInit {
     this.form = this._fb.group({
       memberId: ['', [Validators.required]],
       projectId: [this.data?.projectId],
-      deadline: ['', [Validators.required]],
+      deadline: [
+        '',
+        [Validators.required, this._customValidations.isLessThanToday()]
+      ],
       description: ['', [Validators.required]],
       title: ['', [Validators.required]],
       tagIds: [[], [Validators.required]],

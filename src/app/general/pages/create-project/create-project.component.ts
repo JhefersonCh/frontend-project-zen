@@ -16,6 +16,7 @@ import { ProjectsService } from '../../services/projects.service';
 import { ProjectInterface } from '../../interfaces/projects.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
 
 @Component({
   selector: 'app-create-project',
@@ -41,12 +42,18 @@ export class CreateProjectComponent implements OnInit {
   private readonly _fb: FormBuilder = inject(FormBuilder);
   private readonly _projectsService: ProjectsService = inject(ProjectsService);
   private readonly _router: Router = inject(Router);
+  private readonly _customValidations: CustomValidationsService = inject(
+    CustomValidationsService
+  );
 
   constructor() {
     this.projectForm = this._fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      finishDate: ['', [Validators.required]],
+      finishDate: [
+        '',
+        [Validators.required, this._customValidations.isLessThanToday()]
+      ],
       categoryIds: [[], [Validators.required]]
     });
   }

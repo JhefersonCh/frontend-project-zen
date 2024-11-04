@@ -28,15 +28,15 @@
   </section>
   <section content class="d-flex flex-column gap-2">
     @if (!isEditing) {
-      <span
-        class="mt-2 d-flex flex-row gap-1 justify-content-center tag-container"
-        ><strong></strong>
+      <div
+        class="mt-2 mx-0 w-100 d-flex flex-row gap-1 justify-content-center tag-container"
+      >
         @for (taskTag of data.task.taskTags; track $index) {
           <span class="tag brand-text-body-l fw-semibold"
             >#{{ taskTag.tag.title }}</span
           >
         }
-      </span>
+      </div>
       <span class="brand-text-body-xl text-black-50 fw-medium">
         {{ data.task.description }}
       </span>

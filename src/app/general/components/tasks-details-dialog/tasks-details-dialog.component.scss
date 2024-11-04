@@ -1,17 +1,24 @@
+@import 'breackpoints';
 .tag {
   background-color: rgb(214, 214, 214);
   border-radius: 25px;
   padding: 5px 10px;
 }
 .tag-container {
-  max-width: 100%;
   overflow-x: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
   padding-bottom: 10px;
-}
-.tag-container::-webkit-scrollbar {
-  display: none;
+  position: relative;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tag:first-child {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+  }
 }
 
 .priority-badge {

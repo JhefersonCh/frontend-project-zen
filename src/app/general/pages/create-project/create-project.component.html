@@ -44,6 +44,10 @@
           >
             La fecha de finalización es requerida
           </mat-error>
+          <mat-error
+            *ngIf="projectForm.get('finishDate')?.errors?.['futureDate']"
+            >La fecha de finalización no puede ser menor a la actual</mat-error
+          >
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="mt-3">

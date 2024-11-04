@@ -11,12 +11,18 @@
         <mat-form-field appearance="outline" class="col-12 mt-2">
           <mat-label>Tarea</mat-label>
           <input matInput type="text" formControlName="title" />
+          @if (form.get('title')?.hasError('required')) {
+            <mat-error> El título es requerido </mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="row w-100 mx-0">
         <mat-form-field appearance="outline" class="col-12 mt-2">
           <mat-label>Descripción</mat-label>
           <textarea matInput formControlName="description" rows="2"></textarea>
+          @if (form.get('description')?.hasError('required')) {
+            <mat-error> La descripción es requerida </mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="row w-100 mx-0">
@@ -29,6 +35,9 @@
               }}</mat-option>
             }
           </mat-select>
+          @if (form.get('memberId')?.hasError('required')) {
+            <mat-error> El miembro es requerido </mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
@@ -43,6 +52,9 @@
               }}</mat-option>
             }
           </mat-select>
+          @if (form.get('priorityId')?.hasError('required')) {
+            <mat-error> La prioridad es requerida </mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="row w-100 mx-0">
@@ -53,6 +65,9 @@
               <mat-option [value]="status?.id">{{ status?.title }}</mat-option>
             }
           </mat-select>
+          @if (form.get('statusId')?.hasError('required')) {
+            <mat-error> El estado es requerido </mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
@@ -66,6 +81,9 @@
               <mat-option [value]="tag?.id">{{ tag?.title }}</mat-option>
             }
           </mat-select>
+          @if (form.get('tagIds')?.hasError('required')) {
+            <mat-error> Selecciona por lo menos una etiqueta </mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="row w-100 mx-0">
@@ -78,6 +96,14 @@
             [for]="picker"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          @if (form.get('deadline')?.hasError('required')) {
+            <mat-error> La fecha límite es requerida </mat-error>
+          }
+          @if (form.get('deadline')?.hasError('futureDate')) {
+            <mat-error>
+              La fecha límite no puede ser menor a la actual
+            </mat-error>
+          }
         </mat-form-field>
       </div>
     </form>
