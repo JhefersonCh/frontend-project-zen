@@ -3,7 +3,7 @@
   position: relative;
   height: 150px;
   width: 100%;
-  background: linear-gradient(0deg, rgb(101, 81, 174), rgb(63, 59, 151), rgb(31, 110, 128));
+  background: linear-gradient(0deg, rgb(141, 115, 235), rgb(31, 110, 128));
   margin-bottom: 90px;
 }
 
@@ -19,10 +19,20 @@
   padding: 5px;
 }
 /* Cargando de perfil */
-.loader-container{
+.loader-container {
   height: 500px;
   width: 100%;
   justify-content: center;
   display: flex;
   align-items: center;
+}
+.option-button:hover {
+  background-color: rgb(255, 255, 255) !important;
+  color: black !important;
+}
+
+.back-button {
+  top: 5px;
+  left: 5px;
+  border: none !important;
 }

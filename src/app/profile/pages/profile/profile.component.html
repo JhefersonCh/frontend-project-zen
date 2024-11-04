@@ -1,123 +1,124 @@
 @if (!pageLoading) {
-  <app-base-page
-    title="Perfil de usuario"
-    subtitle="Aquí puedes encontrar tu información y estadísticas de tus tareas"
-    previusUrl="/"
-  >
-    <section content class="row justify-content-center">
-      <div class="col-12 col-md-10">
-        <section content>
-          <app-base-card
-            [withHeader]="false"
-            [withActions]="false"
-            [isProfileCard]="true"
-            [ripple]="true"
-          >
-            <div content>
-              <div class="profile-cover brand-border-radius">
-                <div class="profile">
-                  <img
-                    [src]="
-                      user?.avatarUrl ||
-                      '../../../../assets/login_and_register/userdefault.png'
-                    "
-                    class="rounded-circle w-100 h-100"
-                    alt="Foto de usuario"
-                  />
-                </div>
-              </div>
-
-              <div class="text-center mt-5 d-flex flex-column gap-2">
-                <span class="brand-text-headline-xxl fw-semibold">{{
-                  user?.fullName
-                }}</span>
-                <span class="brand-text-body-l fw-medium text-black-50">{{
-                  '@' + user?.username
-                }}</span>
-              </div>
-            </div>
-          </app-base-card>
-          <br />
-          <app-base-card [withActions]="false" [ripple]="true">
-            <div header>
-              <span>Información Personal</span>
-            </div>
-            <div content>
-              <p>Tipo de identificación: {{ user?.identificationTypeId }}</p>
-              <p>Identificación: {{ user?.identification }}</p>
-              <p>Correo electrónico: {{ user?.email }}</p>
-              <p>Teléfono: {{ user?.phone }}</p>
-            </div>
-          </app-base-card>
-          <br />
-          <app-base-card [withActions]="false" [ripple]="true">
-            <div header>
-              <span>Estadísticas</span>
-            </div>
-            <div content>
-              <div>
-                <H1>contenido 1</H1>
-              </div>
-              <div>
-                <H1>contenido 2</H1>
-              </div>
-              <div>
-                <H1>contenido 3</H1>
-              </div>
-              <div>
-                <H1>contenido 4</H1>
-              </div>
-            </div>
-          </app-base-card>
-          <br />
-          <app-base-card [withActions]="false" [ripple]="true">
-            <div header>
-              <span>Otra información</span>
-            </div>
-            <div content>
-              <p>
-                Miembro desde:
-                {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}
-              </p>
-            </div>
-          </app-base-card>
-        </section>
-      </div>
-    </section>
-
-    <div actions class="w-100 align-content-center">
-      <div class="row justify-content-center justify-content-md-end">
-        <div class="col-12 col-md-4">
+  <section>
+    <app-base-card
+      [withHeader]="false"
+      [withActions]="false"
+      [isProfileCard]="true"
+    >
+      <div content>
+        <div class="profile-cover brand-border-radius">
+          <div class="profile">
+            <img
+              [src]="
+                user?.avatarUrl ||
+                '../../../../assets/login_and_register/userdefault.png'
+              "
+              class="rounded-circle w-100 h-100"
+              alt="Foto de usuario"
+            />
+          </div>
           <button
             mat-stroked-button
-            [matMenuTriggerFor]="menu"
-            aria-label="Example icon-button with a menu"
-            class="w-100"
+            [routerLink]="'../'"
+            matTooltip="Volver"
+            color="primary"
+            class="position-absolute back-button text-white border border-1 fw-normal"
           >
-            Opciones
+            <mat-icon class="d-flex justify-content-center align-items-center"
+              >arrow_back</mat-icon
+            >
+            Volver
           </button>
+          <div class="d-flex justify-content-end pt-3 mx-3">
+            @if (isPhone) {
+              <button
+                mat-icon-button
+                class="bg-body-secondary text-black option-button text-center"
+                [matMenuTriggerFor]="menu"
+              >
+                <mat-icon class="text-center">more_vert</mat-icon>
+              </button>
+            } @else {
+              <button
+                mat-fab
+                extended="true"
+                class="bg-body-secondary text-black option-button text-center"
+                [matMenuTriggerFor]="menu"
+              >
+                <mat-icon class="text-center">more_vert</mat-icon>
+                {{ isPhone ? '' : 'Opciones' }}
+              </button>
+            }
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                type="button"
+                color="primary"
+                [routerLink]="[userId + '/edit']"
+              >
+                Editar perfil
+              </button>
+              <button
+                mat-menu-item
+                type="button"
+                color="primary"
+                [routerLink]="[userId + '/settings']"
+              >
+                Configuración
+              </button>
+            </mat-menu>
+          </div>
         </div>
-        <mat-menu #menu="matMenu">
-          <button
-            mat-menu-item
-            type="button"
-            color="primary"
-            [routerLink]="[userId + '/edit']"
+
+        <div class="text-center d-flex flex-column gap-2">
+          <span
+            class="brand-text-headline-xxl fw-semibold text-decoration-underline"
+            >{{ user?.fullName || 'usuario' }}</span
           >
-            Editar perfil
-          </button>
-          <button
-            mat-menu-item
-            type="button"
-            color="primary"
-            [routerLink]="[userId + '/settings']"
-          >
-            Configuración
-          </button>
-        </mat-menu>
+          <span class="brand-text-body-l fw-medium text-black-50">{{
+            '@' + user?.username || 'usuario'
+          }}</span>
+        </div>
+
+        <section class="px-4 px-md-5 mt-3 d-flex flex-column gap-3">
+          <div>
+            <p class="fw-bold brand-text-headline-s text-decoration-underline">
+              Información destacáda
+            </p>
+            <p class="brand-text-body-l">
+              <strong>Identificación:</strong>
+              <span class="fw-medium text-black-50">
+                {{ user?.identification }}
+              </span>
+            </p>
+            <p class="brand-text-body-l">
+              <strong>Correo electrónico:</strong>
+              <span class="fw-medium text-black-50">
+                {{ user?.email }}
+              </span>
+            </p>
+            <p class="brand-text-body-l">
+              <strong>Teléfono:</strong>
+              <span class="fw-medium text-black-50">
+                {{ user?.phone }}
+              </span>
+            </p>
+            <p class="brand-text-body-l">
+              <strong>Miembro desde:</strong>
+              <span class="fw-medium text-black-50">
+                {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}
+              </span>
+            </p>
+          </div>
+          <div>
+            <p class="fw-bold brand-text-headline-s text-decoration-underline">
+              Estadísticas
+            </p>
+          </div>
+        </section>
       </div>
-    </div>
-  </app-base-page>
+    </app-base-card>
+  </section>
 } @else {
   <div class="loader-container">
     <app-loader></app-loader>

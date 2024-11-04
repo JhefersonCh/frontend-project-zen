@@ -21,7 +21,9 @@
                 Agregar nuevo
               </button>
             </div>
-            <div class="card-container d-flex flex-wrap gap-3 w-100 p-4 pt-5">
+            <div
+              class="card-container d-flex flex-wrap gap-3 w-100 p-2 p-md-4 pt-3"
+            >
               @for (obj of element?.[1]; track $index) {
                 <app-base-card [isMiniCard]="true" [ripple]="true">
                   <section header>

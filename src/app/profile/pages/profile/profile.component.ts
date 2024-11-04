@@ -11,8 +11,8 @@ import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { UserService } from '../../../shared/services/user.service';
 import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { BasePageComponent } from "../../../shared/components/base-page/base-page.component";
-import { BaseCardComponent } from "../../../shared/components/base-card/base-card.component";
+import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
+import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -34,7 +34,7 @@ import { MatMenuModule } from '@angular/material/menu';
     BaseCardComponent,
     LoaderComponent,
     MatMenuModule
-],
+  ],
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
@@ -42,6 +42,7 @@ export class ProfileComponent implements OnInit {
   user?: UserInterface;
   isLoading = true;
   userId: string = '';
+  isPhone: boolean = false;
 
   private readonly _profileService: UserService = inject(UserService);
   private readonly _localStorageService: LocalStorageService =
@@ -51,9 +52,11 @@ export class ProfileComponent implements OnInit {
     this.loadUserProfile();
   }
 
+  constructor() {
+    this.isPhone = window.innerWidth <= 768;
+  }
   loadUserProfile(): void {
-    this.userId =
-      this._localStorageService.getAllSessionData()?.user?.id;
+    this.userId = this._localStorageService.getAllSessionData()?.user?.id;
 
     this.userId &&
       this._profileService.getUserProfile(this.userId).subscribe({
@@ -66,7 +69,4 @@ export class ProfileComponent implements OnInit {
         }
       });
   }
-
-
-  
 }
