@@ -2,13 +2,13 @@ import { IdentificationType } from '../users/interfaces/users.interface';
 
 export interface AdminPanelElementInterface {
   identificationTypes: IdentificationType[];
-  categories: Element[];
-  tags: Element[];
-  projectRoles: Element[];
-  stauses: Element[];
+  categories: ElementType[];
+  tags: ElementType[];
+  projectRoles: ElementType[];
+  stauses: ElementType[];
 }
 
-export interface Element {
+export interface ElementType {
   id: number;
   title?: string;
   description?: string;

@@ -6,32 +6,57 @@
     {{ getTraduction(data.elementType) }}
   </section>
   <section content>
-    <form [formGroup]="form">
-      <div class="row w-100 mx-0">
-        <mat-form-field appearance="outline" class="col-12 mt-2">
-          <mat-label>Título</mat-label>
-          <input matInput type="text" formControlName="title" required />
-          @if (form.get('title')?.hasError('required')) {
-            <mat-error> El título es requerido </mat-error>
-          }
-        </mat-form-field>
-      </div>
-      <div class="row w-100 mx-0">
-        <mat-form-field appearance="outline" class="col-12 mt-2">
-          <mat-label>Descripción</mat-label>
-          <textarea
-            matInput
-            formControlName="description"
-            maxlength="2000"
-          ></textarea>
-          @if (form.get('description')?.hasError('required')) {
-            <mat-error> La descripción es requerida </mat-error>
-          }
-          <mat-hint [align]="'end'"
-            >{{ form.get('description')?.value?.length }}/2000</mat-hint
-          >
-        </mat-form-field>
-      </div>
+    <form [formGroup]="formTest">
+      @for (field of getObjectKeys(formTest.controls); track $index) {
+        <div class="row mx-0 d-flex flex-column gap-3">
+          <mat-form-field appearance="outline" class="mt-2">
+            <mat-label>{{ getTraduction(field) || field }}</mat-label>
+            @switch (fieldType[field].type) {
+              @case ('input') {
+                <input
+                  matInput
+                  [formControlName]="field"
+                  [placeholder]="'Ingrese ' + (getTraduction(field) || field)"
+                  [attr.data-testid]="'input-' + field"
+                />
+              }
+              @case ('textArea') {
+                <textarea
+                  matInput
+                  [formControlName]="field"
+                  [placeholder]="'Ingrese ' + (getTraduction(field) || field)"
+                  [attr.data-testid]="'textarea-' + field"
+                  maxlength="2000"
+                  rows="4"
+                ></textarea>
+              }
+            }
+
+            @if (fieldType[field].type === 'textArea') {
+              <mat-hint align="end"
+                >{{ formTest.get(field)?.value?.length }}/2000
+              </mat-hint>
+            }
+
+            @if (
+              formTest.get(field)?.hasError('required') &&
+              formTest.get(field)?.touched
+            ) {
+              <mat-error>{{ getTraduction(field) }} es requerido</mat-error>
+            }
+            @if (
+              formTest.get(field)?.hasError('maxlength') &&
+              formTest.get(field)?.touched
+            ) {
+              <mat-error
+                >Máximo
+                {{ formTest.get(field)?.errors?.['maxlength']?.requiredLength }}
+                caracteres</mat-error
+              >
+            }
+          </mat-form-field>
+        </div>
+      }
     </form>
   </section>
   <section actions class="w-100">

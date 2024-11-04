@@ -6,11 +6,11 @@
 >
   @if (withHeader) {
     <mat-card-header
-      class="mb-2 fw-semibold pt-0 pb-3 title px-1"
+      class="fw-semibold pt-0 title px-1"
       [ngClass]="{
         'base-info-header': withHeader,
-        'border-0 brand-text-body-l': isMiniCard,
-        'brand-text-headline-s': !isMiniCard
+        'border-0 brand-text-body-l pb-0 mb-0': isMiniCard,
+        'brand-text-headline-s pb-3 mb-2': !isMiniCard
       }"
     >
       <ng-content select="[header]"></ng-content>

@@ -4,7 +4,10 @@
 >
   <section content>
     @if (!loadingPage) {
-      <mat-tab-group>
+      <mat-tab-group
+        [(selectedIndex)]="selectedTabIndex"
+        (selectedIndexChange)="onTabChange($event)"
+      >
         @for (element of panelElementsMapEntries; track $index) {
           <mat-tab [label]="translateLabels(element?.[0] || '') || ''">
             <div
@@ -23,6 +26,24 @@
                 <app-base-card [isMiniCard]="true" [ripple]="true">
                   <section header>
                     {{ obj.title ?? obj.type ?? obj.roleName }}
+                  </section>
+                  <section actions>
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      (click)="
+                        openDeleteElementDialog(element?.[0] || '', obj.id)
+                      "
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      (click)="openCreateElementDialog(element?.[0] || '', obj)"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
                   </section>
                 </app-base-card>
               }

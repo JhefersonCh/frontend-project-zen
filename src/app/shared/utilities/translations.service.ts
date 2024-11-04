@@ -9,7 +9,13 @@ export class TranslationsService {
     categories: 'Categorías',
     tags: 'Etiquetas',
     stauses: 'Estados',
-    projectRoles: 'Roles de proyecto'
+    projectRoles: 'Roles de proyecto',
+    title: 'Título',
+    description: 'Descripción',
+    priorities: 'Prioridades',
+    type: 'Tipo',
+    code: 'Código',
+    roleName: 'Nombre del rol'
   };
   getTranslation(key: string): string {
     return this.traductions[key] || key;
