@@ -3,7 +3,6 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  AbstractControl,
   ReactiveFormsModule
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { RegisterUserInterface } from '../../interfaces/register.interface';
 import * as uuid from 'uuid';
 import { UserService } from '../../../shared/services/user.service';
+import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
 
 @Component({
   selector: 'app-register',
@@ -48,6 +48,11 @@ export class RegisterComponent {
   showConfirmPassword: boolean = false;
   private readonly _userService: UserService = inject(UserService);
   private readonly _router: Router = inject(Router);
+  private readonly _customValidations: CustomValidationsService = inject(
+    CustomValidationsService
+  );
+  private readonly _passwordValidationService: CustomValidationsService =
+    inject(CustomValidationsService);
 
   identificationTypes: { type: string; id: number }[] = [
     { type: 'Cédula de ciudadanía', id: 1 },
@@ -56,9 +61,14 @@ export class RegisterComponent {
     { type: 'Cédula de extrangería', id: 4 }
   ];
 
+  /**
+   * Se recibe la información diligenciada en el formulario.
+   * @param constructor - Creación del formulario.
+   * @param formStep1 - Formulario 1 de información personal.
+   * @param formStep2 - Formulario 2 de cuenta.
+   */
   constructor(private _fb: FormBuilder) {
     this.formStep1 = this._fb.group({
-      creationDate: [new Date()],
       identificationTypeId: ['', Validators.required],
       identification: ['', Validators.required],
       fullName: ['', Validators.required],
@@ -70,29 +80,36 @@ export class RegisterComponent {
       {
         avatarUrl: [''],
         username: ['', [Validators.required]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', Validators.required]
+        password: [
+          '',
+          [
+            Validators.required,
+            this._passwordValidationService.passwordStrength()
+          ]
+        ],
+        confirmPassword: ['']
       },
       {
-        validators: this.passwordMatchValidator
+        validators: this._customValidations.passwordsMatch(
+          'password',
+          'confirmPassword'
+        )
       }
     );
   }
 
-  passwordMatchValidator(formGroup: AbstractControl) {
-    const password = formGroup.get('password')?.value;
-    const confirmPassword = formGroup.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { mismatch: true };
-  }
-
+  /**
+   * @param nextStep - Función para seguir al siguiente formulario.
+   */
   nextStep() {
     if (this.formStep1.valid) {
       this.currentStep = 'two';
-    } else {
-      // Lógica para mostrar mensajes de error
     }
   }
 
+  /**
+   * @param save - Envío de información al backend.
+   */
   save() {
     if (this.formStep2.valid && this.formStep1.valid) {
       const userToRegister: RegisterUserInterface = {
@@ -112,15 +129,19 @@ export class RegisterComponent {
           this._router.navigate(['/auth/login']);
         }
       });
-    } else {
-      // Muestra errores si uno de los formularios no es válido
     }
   }
 
+  /**
+   * @param togglePasswordVisibility - Ver contraseña.
+   */
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
 
+  /**
+   * @param toggleConfirmPasswordVisibility - Ver confirmar contraseña.
+   */
   toggleConfirmPasswordVisibility(): void {
     this.showConfirmPassword = !this.showConfirmPassword;
   }

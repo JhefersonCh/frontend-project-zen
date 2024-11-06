@@ -87,15 +87,6 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value
-  //     .trim()
-  //     .toLowerCase();
-
-  //   this.currentPage = 0;
-  //   this.loadUsers(filterValue);
-  // }
-
   loadUsers(filter: string = ''): void {
     const query = {
       page: this.currentPage + 1,

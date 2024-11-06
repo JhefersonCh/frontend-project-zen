@@ -19,7 +19,7 @@
       </div>
 
       <mat-horizontal-stepper
-        [linear]="true"
+        [linear]="false"
         #stepper
         class="w-100 h-100 bg-white"
       >
@@ -27,9 +27,7 @@
           <form [formGroup]="formStep1">
             <ng-template matStepLabel>Información Personal</ng-template>
 
-            <input type="hidden" formControlName="creationDate" />
-
-            <mat-form-field appearance="outline" class="w-100 mt-3">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>Tipo de Identificación</mat-label>
               <mat-select formControlName="identificationTypeId" required>
                 <mat-option value="" disabled selected
@@ -52,7 +50,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>Identificación</mat-label>
               <input matInput formControlName="identification" required />
               <mat-icon matPrefix>credit_card</mat-icon>
@@ -63,7 +61,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>Nombre Completo</mat-label>
               <input matInput formControlName="fullName" required />
               <mat-icon matPrefix>account_box</mat-icon>
@@ -74,7 +72,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>Correo Electrónico</mat-label>
               <input matInput formControlName="email" required />
               <mat-icon matPrefix>email</mat-icon>
@@ -86,7 +84,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>Teléfono</mat-label>
               <input matInput formControlName="phone" />
               <mat-icon matPrefix>phone</mat-icon>
@@ -108,13 +106,13 @@
           <form [formGroup]="formStep2">
             <ng-template matStepLabel>Tu cuenta</ng-template>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>URL de Imagen</mat-label>
               <input matInput formControlName="avatarUrl" />
               <mat-icon matPrefix>image</mat-icon>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>Nombre de usuario</mat-label>
               <input matInput formControlName="username" required />
               <mat-icon matPrefix>person</mat-icon>
@@ -125,7 +123,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>Contraseña</mat-label>
               <input
                 [type]="showPassword ? 'text' : 'password'"
@@ -148,9 +146,17 @@
               >
                 Contraseña requerida
               </mat-error>
+              <mat-error
+                *ngIf="
+                  !formStep2.get('password')?.hasError('required') &&
+                  formStep2.get('password')?.hasError('passwordStrength')
+                "
+                >La contraseña debe tener al menos 6 caracteres, incluyendo una
+                mayúscula, una minúscula y un carácter especial.
+              </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-form-field appearance="outline" class="w-100 mt-3 mb-2">
               <mat-label>Confirmar Contraseña</mat-label>
               <input
                 [type]="showConfirmPassword ? 'text' : 'password'"
@@ -168,32 +174,18 @@
                   showConfirmPassword ? 'visibility' : 'visibility_off'
                 }}</mat-icon>
               </button>
-              <mat-error
-                *ngIf="formStep2.get('confirmPassword')?.hasError('required')"
-              >
-                Confirmar contraseña requerido
+              <mat-error *ngIf="formStep2.hasError('passwordMismatch')">
+                Las contraseñas no coinciden
               </mat-error>
+              <mat-hint
+                *ngIf="
+                  !formStep2.hasError('passwordMismatch') &&
+                  formStep2.get('confirmPassword')?.value
+                "
+              >
+                Las contraseñas coinciden
+              </mat-hint>
             </mat-form-field>
-
-            <div class="d-flex justify-content-start">
-              <div
-                *ngIf="
-                  formStep2.hasError('mismatch') &&
-                  formStep2.get('confirmPassword')?.touched
-                "
-              >
-                <mat-error>Las constraseñas no coinciden</mat-error>
-              </div>
-
-              <div
-                *ngIf="
-                  !formStep2.hasError('mismatch') &&
-                  formStep2.get('confirmPassword')?.touched
-                "
-              >
-                <mat-hint>Las contraseñas coinciden</mat-hint>
-              </div>
-            </div>
 
             <section class="d-flex row gap-md-0 gap-1 justify-content-end">
               <div class="col-12 col-md-5 col-lg-3 px-1">
@@ -223,11 +215,13 @@
         </mat-step>
       </mat-horizontal-stepper>
 
-      <div class="text-center mt-0 d-flex flex-column">
-        <span>¿Ya tienes una cuenta? </span>
-        <a routerLink="/auth/login" class="text-decoration-none"
-          >Inicia sesión aquí</a
-        >
+      <div
+        class="text-center mt-0 d-flex flex-column justify-content-center align-items-center"
+      >
+        <span>¿Ya tienes una cuenta?</span>
+        <a routerLink="/auth/login" class="text-decoration-none">
+          Inicia sesión aquí
+        </a>
       </div>
     </div>
   </article>
