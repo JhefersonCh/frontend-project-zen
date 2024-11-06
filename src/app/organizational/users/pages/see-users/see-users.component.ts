@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Component,
   inject,
@@ -11,16 +12,17 @@ import { UsersService } from '../../services/users.service';
 import { UsersInterface } from '../../interfaces/users.interface';
 import { ApiResponseInterface } from '../../../../shared/interfaces/api-response.interface';
 import { MatButtonModule } from '@angular/material/button';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { BasePageComponent } from '../../../../shared/components/base-page/base-page.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { debounceTime } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from '../../../../shared/components/yes-no-dialog/yes-no-dialog.component';
+import { SearchField } from '../../../../shared/interfaces/search.interface';
+import { SearchFieldsComponent } from '../../../../shared/components/search-fields/search-fields.component';
 
 @Component({
   selector: 'app-see-users',
@@ -35,7 +37,8 @@ import { YesNoDialogComponent } from '../../../../shared/components/yes-no-dialo
     MatPaginatorModule,
     BasePageComponent,
     MatTableModule,
-    RouterLink
+    RouterLink,
+    SearchFieldsComponent
   ],
   templateUrl: './see-users.component.html',
   styleUrls: ['./see-users.component.scss']
@@ -45,8 +48,8 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   private readonly _matDialog: MatDialog = inject(MatDialog);
-  searchControl: FormControl = new FormControl('');
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(SearchFieldsComponent) searchComponent!: SearchFieldsComponent;
   dataSource = new MatTableDataSource<UsersInterface>([]);
   displayedColumns: string[] = [
     'identification',
@@ -55,24 +58,43 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
     'actions'
   ];
   totalItems: number = 0;
-  pageSize: number = 5; // Tamaño de página inicial
+  pageSize: number = 5;
   currentPage: number = 0;
   projectId: string = '';
+  showClearButton: boolean = false;
   subtitle: string = 'Gestiona los miembros registrados en la aplicación.';
+  searchFields: SearchField[] = [
+    {
+      name: 'fullName',
+      label: 'Nombre completo',
+      type: 'text',
+      placeholder: 'Buscar por nombre'
+    },
+    {
+      name: 'search',
+      label: 'Buscar',
+      type: 'text',
+      placeholder: 'Buscar por buscar'
+    }
+  ];
+
+  form!: FormGroup;
+
+  onSearchSubmit(values: any): void {
+    this.loadUsers(values?.['search']);
+  }
+
+  onSearchChange(values: any): void {
+    if (values.length) {
+      this.showClearButton = true;
+    } else {
+      this.showClearButton = false;
+    }
+  }
 
   ngOnInit(): void {
     this.loadUsers();
     this.projectId = this._activatedRoute.snapshot.params?.['email'];
-    this._listenControls();
-  }
-
-  private _listenControls(): void {
-    this.searchControl.valueChanges
-      .pipe(debounceTime(300))
-      .subscribe((value) => {
-        this.currentPage = 0;
-        this.loadUsers(value);
-      });
   }
 
   goToCreateUser(): void {

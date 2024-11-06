@@ -9,6 +9,7 @@ import {
 import { RegisterUserInterface } from '../../auth/interfaces/register.interface';
 import { environment } from '../../../environments/environment.development';
 import { UserInterface } from '../interfaces/user.interface';
+import { IdentificationType } from '../../organizational/users/interfaces/users.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,14 @@ export class UserService {
       `${environment.apiUrl}user/register`,
       user
     );
+  }
+
+  registerRelatedData(): Observable<
+    ApiResponseInterface<{ identificationTypes: IdentificationType[] }>
+  > {
+    return this._httpClient.get<
+      ApiResponseInterface<{ identificationTypes: IdentificationType[] }>
+    >(`${environment.apiUrl}user/register/related-data`);
   }
 
   getUserProfile(

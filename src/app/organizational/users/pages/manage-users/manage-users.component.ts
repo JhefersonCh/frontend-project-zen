@@ -21,6 +21,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserInterface } from '../../../../shared/interfaces/user.interface';
+import { SearchFieldsComponent } from '../../../../shared/components/search-fields/search-fields.component';
 
 @Component({
   selector: 'app-manage-users',
@@ -37,7 +38,8 @@ import { UserInterface } from '../../../../shared/interfaces/user.interface';
     NgFor,
     MatButtonModule,
     FontAwesomeModule,
-    MatIcon
+    MatIcon,
+    SearchFieldsComponent
   ],
   templateUrl: './manage-users.component.html',
   styleUrl: './manage-users.component.scss'

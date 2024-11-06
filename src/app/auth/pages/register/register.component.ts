@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,6 +19,7 @@ import { RegisterUserInterface } from '../../interfaces/register.interface';
 import * as uuid from 'uuid';
 import { UserService } from '../../../shared/services/user.service';
 import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
+import { IdentificationType } from '../../../organizational/users/interfaces/users.interface';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +39,7 @@ import { CustomValidationsService } from '../../../shared/validators/customValid
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   formStep1: FormGroup;
   formStep2: FormGroup;
   currentStep: string = 'one';
@@ -46,6 +47,7 @@ export class RegisterComponent {
   eyeClose = faEyeSlash;
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  identificationTypes: IdentificationType[] = [];
   private readonly _userService: UserService = inject(UserService);
   private readonly _router: Router = inject(Router);
   private readonly _customValidations: CustomValidationsService = inject(
@@ -53,13 +55,6 @@ export class RegisterComponent {
   );
   private readonly _passwordValidationService: CustomValidationsService =
     inject(CustomValidationsService);
-
-  identificationTypes: { type: string; id: number }[] = [
-    { type: 'Cédula de ciudadanía', id: 1 },
-    { type: 'Tarjeta de Identidad', id: 2 },
-    { type: 'Pasaporte', id: 3 },
-    { type: 'Cédula de extrangería', id: 4 }
-  ];
 
   /**
    * Se recibe la información diligenciada en el formulario.
@@ -73,7 +68,7 @@ export class RegisterComponent {
       identification: ['', Validators.required],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['']
+      phone: ['', [Validators.required, Validators.pattern('^3\\d{9}$')]]
     });
 
     this.formStep2 = this._fb.group(
@@ -87,7 +82,7 @@ export class RegisterComponent {
             this._passwordValidationService.passwordStrength()
           ]
         ],
-        confirmPassword: ['']
+        confirmPassword: ['', [Validators.required]]
       },
       {
         validators: this._customValidations.passwordsMatch(
@@ -96,6 +91,35 @@ export class RegisterComponent {
         )
       }
     );
+  }
+
+  /**
+   * Inicializa el campo confirmar contraseña como disable.
+   * @param ngOnInit - Trae la data.
+   * @param formStep2 - Le decimos al campo confirmPassword que inicie bloqueado.
+   * @param formStep2 - Luego condicionamos para que al llenar password se desbloque confirmPassword.
+   */
+  ngOnInit(): void {
+    this.getRelatedData();
+    this.formStep2.get('confirmPassword')?.disable();
+    this.formStep2.get('password')?.valueChanges.subscribe((value) => {
+      if (!value) {
+        this.formStep2.get('confirmPassword')?.disable();
+      } else {
+        this.formStep2.get('confirmPassword')?.enable();
+      }
+    });
+  }
+
+  /**
+   * @param getRelatedData - Obtiene los tipos de identificación.
+   */
+  getRelatedData(): void {
+    this._userService.registerRelatedData().subscribe({
+      next: (res) => {
+        this.identificationTypes = res.data?.identificationTypes || [];
+      }
+    });
   }
 
   /**

@@ -16,8 +16,9 @@ export class CustomValidationsService {
       const pass = formGroup.get(password);
       const confirmPass = formGroup.get(confirmPassword);
 
-      if (!pass || !confirmPass) {
-        return null;
+      if (!pass?.value || !confirmPass?.value) {
+        // confirmPass?.setErrors({ required: true });
+        return { passwordMismatch: null };
       }
 
       if (pass.value !== confirmPass.value) {
