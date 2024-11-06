@@ -1,5 +1,8 @@
 <mat-card
-  [ngClass]="{ 'p-0': isProfileCard }"
+  [ngClass]="{
+    'p-0 not-hover': isProfileCard,
+    'clickeable-card': isClickeable
+  }"
   class="base-info-card h-100 w-100"
   matRipple
   [matRippleDisabled]="!ripple"

@@ -135,6 +135,10 @@ export class SideBarComponent implements OnInit, OnChanges {
     }
   }
 
+  getActiveElement(routeElement: string): boolean {
+    return this.currentRoute.includes(routeElement);
+  }
+
   openSubMenu: Record<string, boolean> = {};
 
   closeAllSubMenus() {

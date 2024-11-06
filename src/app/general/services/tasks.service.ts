@@ -12,6 +12,7 @@ import {
 } from '../interfaces/tasks.interface';
 import { environment } from '../../../environments/environment';
 import { HttpUtilitiesService } from '../../shared/utilities/http-utilities.service';
+import { PaginationInterface } from '../../shared/interfaces/pagination.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
@@ -73,5 +74,16 @@ export class TasksService {
 
   deleteTask(id: number): Observable<void> {
     return this._httpClient.delete<void>(`${environment.apiUrl}tasks/${id}`);
+  }
+
+  tasksWithPagination(query: object): Observable<{
+    pagination: PaginationInterface;
+    data: TasksInterface[];
+  }> {
+    const params = this._httpUtilities.httpParamsFromObject(query);
+    return this._httpClient.get<{
+      pagination: PaginationInterface;
+      data: TasksInterface[];
+    }>(`${environment.apiUrl}tasks/paginated-list`, { params });
   }
 }

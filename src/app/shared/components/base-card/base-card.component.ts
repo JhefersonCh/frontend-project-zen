@@ -16,4 +16,5 @@ export class BaseCardComponent {
   @Input() withActions: boolean = true;
   @Input() isProfileCard: boolean = false;
   @Input() isMiniCard: boolean = false;
+  @Input() isClickeable: boolean = false;
 }

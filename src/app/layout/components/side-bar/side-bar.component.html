@@ -23,7 +23,7 @@
             <a
               [matTooltip]="item.name"
               class="nav-link brand-cursor-pointer"
-              [ngClass]="{ active: currentRoute === item.route }"
+              [ngClass]="{ active: getActiveElement(item.route || '') }"
               [routerLink]="
                 !item?.subItems?.length && item.route ? item?.route : null
               "

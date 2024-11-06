@@ -13,9 +13,9 @@ export const MENU_CONST: MenuInterface[] = [
         order: 1
       },
       {
-        name: 'Test',
-        route: '/test',
-        icon: 'grid_view',
+        name: 'Tareas',
+        route: '/general/tasks',
+        icon: 'checklist',
         order: 2
       }
     ]
@@ -52,10 +52,11 @@ export const MENU_CONST: MenuInterface[] = [
 ];
 
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
-  user: ['profile', 'Proyectos']
+  user: ['profile', 'Proyectos', 'Tareas']
 };
 
 export const ROUTE_MAP: Record<string, string> = {
   Proyectos: '/general/projects',
+  Tareas: '/general/tasks',
   profile: '/profile'
 };

@@ -9,6 +9,7 @@
         <div class="projects-grid">
           @for (project of projects; track $index) {
             <app-base-card
+              [isClickeable]="true"
               [routerLink]="project.id ? [project.id] : []"
               class="brand-cursor-pointer"
               [ripple]="true"

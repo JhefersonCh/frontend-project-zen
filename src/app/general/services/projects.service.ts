@@ -16,7 +16,7 @@ import {
 export class ProjectsService {
   private _httpClient: HttpClient = inject(HttpClient);
 
-  getProjects(): Observable<ApiResponseInterface<ProjectInterface[]>> {
+  getProjectsByUser(): Observable<ApiResponseInterface<ProjectInterface[]>> {
     return this._httpClient.get<ApiResponseInterface<ProjectInterface[]>>(
       `${environment.apiUrl}projects/byUser`
     );

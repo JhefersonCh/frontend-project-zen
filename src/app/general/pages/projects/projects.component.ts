@@ -60,7 +60,7 @@ export class ProjectsComponent implements OnInit {
   private _getProjects(
     dialogRef?: MatDialogRef<EditProjectDialogComponent>
   ): void {
-    this._projectsService.getProjects().subscribe({
+    this._projectsService.getProjectsByUser().subscribe({
       next: (res) => {
         this.pageLoading = false;
         this.projects = res?.data || [];

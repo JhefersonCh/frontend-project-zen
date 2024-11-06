@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import { ArrayInlineFormaterPipe } from '../../../shared/pipes/array-inline-formater.pipe';
 import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
 import { TasksInterface } from '../../interfaces/tasks.interface';
@@ -30,7 +37,8 @@ import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
   templateUrl: './tasks-panel.component.html',
   styleUrl: './tasks-panel.component.scss'
 })
-export class TasksPanelComponent {
+export class TasksPanelComponent implements OnInit {
+  @Input() taskId?: number;
   @Input() status!: string;
   @Input() tasksList!: TasksInterface[];
   @Input() dropListConnectedTo!: string[];
@@ -44,13 +52,25 @@ export class TasksPanelComponent {
   private _matDialog: MatDialog = inject(MatDialog);
   @Input() isDropping: boolean = false;
 
+  ngOnInit(): void {
+    if (this.taskId) {
+      const taskToShow = this.tasksList.find(
+        (task) => task.id === Number(this.taskId)
+      );
+
+      if (taskToShow) {
+        this.openShowTaskInfoDialog(taskToShow);
+      }
+    }
+  }
+
   onDrop(event: CdkDragDrop<any>) {
     this.dropEvent.emit(event);
   }
 
-  openShowTaskInfoDialog(task: TasksInterface, event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
+  openShowTaskInfoDialog(task: TasksInterface, event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
     const dialogRef = this._matDialog.open(TasksDetailsDialogComponent, {
       data: {
         task,

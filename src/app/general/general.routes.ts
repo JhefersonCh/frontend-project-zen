@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 export const generalRoutes: Routes = [
   {
     path: '',
-
     children: [
       {
         path: '',
@@ -45,6 +44,18 @@ export const generalRoutes: Routes = [
                   ).then((m) => m.ProjectMembersComponent)
               }
             ]
+          }
+        ]
+      },
+      {
+        path: 'tasks',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/tasks/tasks.component').then(
+                (m) => m.TasksComponent
+              )
           }
         ]
       }

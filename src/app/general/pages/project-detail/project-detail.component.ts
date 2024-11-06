@@ -3,7 +3,7 @@
 
 import { Component, inject, OnInit } from '@angular/core';
 import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 import { ProjectsService } from '../../services/projects.service';
 import { Members, ProjectInterface } from '../../interfaces/projects.interface';
 import { ProgressTimeBarComponent } from '../../components/progress-time-bar/progress-time-bar.component';
@@ -79,6 +79,7 @@ export class ProjectDetailComponent implements OnInit {
   newStatuses: { id: number; statusId: number }[] = [];
   memberControl: FormControl = new FormControl('');
   memberLoggedIn?: Members;
+  queryParams: Params = {};
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _projectsService: ProjectsService = inject(ProjectsService);
   private readonly _authService: AuthService = inject(AuthService);
@@ -89,6 +90,8 @@ export class ProjectDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectId = this._activatedRoute.snapshot.params['id'];
+    this.queryParams = this._activatedRoute.snapshot.queryParams;
+
     this._getProject();
     this._getUserLoggedin();
     this.isMobile = window.innerWidth <= 768;
