@@ -22,6 +22,8 @@ import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserInterface } from '../../../../shared/interfaces/user.interface';
 import { SearchFieldsComponent } from '../../../../shared/components/search-fields/search-fields.component';
+import { IdentificationType } from '../../interfaces/users.interface';
+import { Roles } from '../../../../auth/interfaces/login.interface';
 
 @Component({
   selector: 'app-manage-users',
@@ -41,6 +43,7 @@ import { SearchFieldsComponent } from '../../../../shared/components/search-fiel
     MatIcon,
     SearchFieldsComponent
   ],
+
   templateUrl: './manage-users.component.html',
   styleUrl: './manage-users.component.scss'
 })
@@ -50,25 +53,13 @@ export class ManageUserComponent implements OnInit {
   showConfirmPassword: boolean = false;
   userId: string = '';
   user?: UserInterface;
+  identificationTypes: IdentificationType[] = [];
+  roles: Roles[] = [];
   private readonly _usersService: UsersService = inject(UsersService);
   private readonly _usersSharedService: UsersSharedService =
     inject(UsersSharedService);
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _router: Router = inject(Router);
-
-  identificationTypes: { type: string; id: number }[] = [
-    { type: 'Cédula de ciudadanía', id: 1 },
-    { type: 'Tarjeta de Identidad', id: 2 },
-    { type: 'Pasaporte', id: 3 },
-    { type: 'Cédula de extrangería', id: 4 }
-  ];
-
-  role: { type: string; id: number }[] = [
-    { type: 'Admin', id: 1 },
-    { type: 'Subadmin', id: 2 },
-    { type: 'Usuario', id: 3 },
-    { type: 'Visitante', id: 4 }
-  ];
 
   constructor(private _fb: FormBuilder) {
     this.userForm = this._fb.group({
@@ -89,8 +80,20 @@ export class ManageUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadRelatedData();
     this.userId = this._activatedRoute.snapshot.params['id'];
     if (this.userId) this._getUserToEdit(this.userId);
+  }
+
+  loadRelatedData(): void {
+    this._usersService.createUsersRelatedData().subscribe({
+      next: (response) => {
+        this.identificationTypes = response.data.identificationTypes;
+        this.roles = response.data.roles;
+      },
+      error: (error) =>
+        console.error('Error al cargar datos relacionados:', error)
+    });
   }
 
   private _getUserToEdit(userId: string): void {

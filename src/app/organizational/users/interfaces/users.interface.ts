@@ -26,3 +26,8 @@ export interface IdentificationType {
   deletedAt?: Date;
   name?: string;
 }
+
+export interface RelatedDataResponse {
+  identificationTypes: IdentificationType[];
+  roles: Roles[];
+}

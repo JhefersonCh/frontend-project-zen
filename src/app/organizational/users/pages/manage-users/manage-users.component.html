@@ -9,13 +9,13 @@
       <form [formGroup]="userForm" class="col-12 col-md-6 d-flex flex-column">
         <mat-form-field appearance="outline" class="w-100 mt-2">
           <mat-label>Rol</mat-label>
-          <mat-select formControlName="roleId" requied>
+          <mat-select formControlName="roleId" required>
             <mat-option value="" disabled selected
               >Seleccione el rol del usuario</mat-option
             >
-            <mat-option *ngFor="let type of role" [value]="type.id">{{
-              type.type
-            }}</mat-option>
+            <mat-option *ngFor="let role of roles" [value]="role.id">
+              {{ role.name }}
+            </mat-option>
           </mat-select>
           <mat-icon matPrefix>library_books</mat-icon>
           <mat-error *ngIf="userForm.get('roleId')?.hasError('required')">

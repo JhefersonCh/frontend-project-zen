@@ -7,7 +7,10 @@ import {
 } from '../../../shared/interfaces/api-response.interface';
 import { HttpUtilitiesService } from '../../../shared/utilities/http-utilities.service';
 import { environment } from '../../../../environments/environment';
-import { UsersInterface } from '../interfaces/users.interface';
+import {
+  RelatedDataResponse,
+  UsersInterface
+} from '../interfaces/users.interface';
 import { RegisterUserInterface } from '../../../auth/interfaces/register.interface';
 
 @Injectable({ providedIn: 'root' })
@@ -24,6 +27,14 @@ export class UsersService {
     return this._httpClient.get<ApiResponseInterface<UsersInterface[]>>(
       `${environment.apiUrl}user/paginated-list`,
       { params }
+    );
+  }
+
+  createUsersRelatedData(): Observable<
+    ApiResponseInterface<RelatedDataResponse>
+  > {
+    return this._httpClient.get<ApiResponseInterface<RelatedDataResponse>>(
+      `${environment.apiUrl}user/create/related-data`
     );
   }
 
