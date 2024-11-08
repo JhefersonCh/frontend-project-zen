@@ -7,34 +7,32 @@
     @if (!pageLoading) {
       <div class="col-12 col-md-6">
         <form [formGroup]="form">
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>Nombre completo</mat-label>
-              <input type="text" matInput formControlName="fullName" />
-              <mat-icon matPrefix>account_box</mat-icon>
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>Nombre de usuario</mat-label>
-              <input type="text" matInput formControlName="username" />
-              <mat-icon matPrefix>person</mat-icon>
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>Teléfono</mat-label>
-              <input type="text" matInput formControlName="phone" />
-              <mat-icon matPrefix>phone</mat-icon>
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>Url de imagen</mat-label>
-              <input matInput formControlName="avatarUrl" />
-              <mat-icon matPrefix> insert_link</mat-icon>
-            </mat-form-field>
-          </div>
+          <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
+            <mat-label>Nombre completo</mat-label>
+            <input type="text" matInput formControlName="fullName" />
+            <mat-icon matPrefix>account_box</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
+            <mat-label>Nombre de usuario</mat-label>
+            <input type="text" matInput formControlName="username" />
+            <mat-icon matPrefix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
+            <mat-label>Teléfono</mat-label>
+            <input type="text" matInput formControlName="phone" />
+            <mat-icon matPrefix>phone</mat-icon>
+            <mat-error *ngIf="form.get('phone')?.hasError('pattern')">
+              El número de celular debe empezar con 3 y tener 10 dígitos.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
+            <mat-label>Url de imagen</mat-label>
+            <input matInput formControlName="avatarUrl" />
+            <mat-icon matPrefix> insert_link</mat-icon>
+          </mat-form-field>
         </form>
         <button
           mat-fab

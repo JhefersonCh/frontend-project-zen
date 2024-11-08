@@ -2,7 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { UserService } from '../../../shared/services/user.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,7 +49,7 @@ export class EditUserComponent implements OnInit {
       identification: [''],
       username: [''],
       email: [''],
-      phone: [''],
+      phone: ['', [Validators.required, Validators.pattern('^3\\d{9}$')]],
       avatarUrl: [''],
       roleId: [''],
       identificationTypeId: ['']

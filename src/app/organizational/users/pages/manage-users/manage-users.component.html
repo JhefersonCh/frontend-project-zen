@@ -7,7 +7,7 @@
   <section content class="row">
     <div content>
       <form [formGroup]="userForm" class="col-12 col-md-6 d-flex flex-column">
-        <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Rol</mat-label>
           <mat-select formControlName="roleId" required>
             <mat-option value="" disabled selected
@@ -23,7 +23,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Identificación</mat-label>
           <mat-icon matPrefix>credit_card</mat-icon>
           <input
@@ -39,7 +39,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Tipo de Identificación</mat-label>
           <mat-select formControlName="identificationTypeId" required>
             <mat-option value="" disabled selected
@@ -60,7 +60,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Nombre completo</mat-label>
           <input matInput formControlName="fullName" required />
           <mat-icon matPrefix>account_box</mat-icon>
@@ -69,13 +69,13 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>URL de Imagen</mat-label>
           <mat-icon matPrefix>image</mat-icon>
           <input matInput formControlName="avatarUrl" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Nombre de usuario</mat-label>
           <input matInput formControlName="username" required />
           <mat-icon matPrefix>person</mat-icon>
@@ -84,13 +84,19 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Teléfono</mat-label>
           <input matInput formControlName="phone" />
           <mat-icon matPrefix>phone</mat-icon>
+          <mat-error *ngIf="userForm.get('phone')?.hasError('required')">
+            Email requerido
+          </mat-error>
+          <mat-error *ngIf="userForm.get('phone')?.hasError('pattern')">
+            El número debe empezar por 3 y tener un máximo de 10 números
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Correo Electrónico</mat-label>
           <input matInput formControlName="email" required />
           <mat-icon matPrefix>email</mat-icon>

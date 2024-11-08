@@ -1,7 +1,6 @@
 import { UserService as UsersSharedService } from '../../../../shared/services/user.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { BasePageComponent } from '../../../../shared/components/base-page/base-page.component';
-import { BaseCardComponent } from '../../../../shared/components/base-card/base-card.component';
 import { CommonModule, NgFor } from '@angular/common';
 import {
   FormBuilder,
@@ -21,7 +20,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserInterface } from '../../../../shared/interfaces/user.interface';
-import { SearchFieldsComponent } from '../../../../shared/components/search-fields/search-fields.component';
 import { IdentificationType } from '../../interfaces/users.interface';
 import { Roles } from '../../../../auth/interfaces/login.interface';
 
@@ -30,7 +28,6 @@ import { Roles } from '../../../../auth/interfaces/login.interface';
   standalone: true,
   imports: [
     BasePageComponent,
-    BaseCardComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -40,8 +37,7 @@ import { Roles } from '../../../../auth/interfaces/login.interface';
     NgFor,
     MatButtonModule,
     FontAwesomeModule,
-    MatIcon,
-    SearchFieldsComponent
+    MatIcon
   ],
 
   templateUrl: './manage-users.component.html',
@@ -66,7 +62,7 @@ export class ManageUserComponent implements OnInit {
       fullName: ['', Validators.required],
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phone: [''],
+      phone: ['', [Validators.required, Validators.pattern('^3\\d{9}$')]],
       identification: ['', Validators.required],
       identificationTypeId: ['', Validators.required],
       avatarUrl: [''],
