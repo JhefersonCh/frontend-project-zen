@@ -62,7 +62,7 @@ export class ManageUserComponent implements OnInit {
       fullName: ['', Validators.required],
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^3\\d{9}$')]],
+      phone: [''],
       identification: ['', Validators.required],
       identificationTypeId: ['', Validators.required],
       avatarUrl: [''],

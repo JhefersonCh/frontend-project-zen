@@ -6,11 +6,14 @@ import {
   ViewChild,
   AfterViewInit
 } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UsersService } from '../../services/users.service';
 import { UsersInterface } from '../../interfaces/users.interface';
-import { ApiResponseInterface } from '../../../../shared/interfaces/api-response.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,7 +26,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from '../../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { SearchField } from '../../../../shared/interfaces/search.interface';
 import { SearchFieldsComponent } from '../../../../shared/components/search-fields/search-fields.component';
-
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { ApiResponseInterface } from '../../../../shared/interfaces/api-response.interface';
 @Component({
   selector: 'app-see-users',
   standalone: true,
@@ -38,7 +42,9 @@ import { SearchFieldsComponent } from '../../../../shared/components/search-fiel
     BasePageComponent,
     MatTableModule,
     RouterLink,
-    SearchFieldsComponent
+    SearchFieldsComponent,
+    MatTabGroup,
+    MatTab
   ],
   templateUrl: './see-users.component.html',
   styleUrls: ['./see-users.component.scss']
@@ -52,18 +58,53 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   @ViewChild(SearchFieldsComponent) searchComponent!: SearchFieldsComponent;
   dataSource = new MatTableDataSource<UsersInterface>([]);
   displayedColumns: string[] = [
-    'identification',
+    'identificationType',
     'fullName',
     'role',
     'actions'
   ];
+
+  form!: FormGroup;
   totalItems: number = 0;
   pageSize: number = 5;
   currentPage: number = 0;
   projectId: string = '';
   showClearButton: boolean = false;
+  selectedTabIndex = 0;
+
+  loading: boolean = false;
+  paginationParams = { order: 'ASC', page: 1, perPage: 5 };
+  params: any = {};
+  paginationResults = {
+    page: 1,
+    perPage: 5,
+    total: 0,
+    pageCount: 0,
+    hasPreviousPage: false,
+    hasNextPage: false
+  };
   subtitle: string = 'Gestiona los miembros registrados en la aplicación.';
   searchFields: SearchField[] = [
+    {
+      name: 'roleId',
+      label: 'Rol',
+      type: 'select',
+      options: [],
+      placeholder: 'Buscar por rol'
+    },
+    {
+      name: 'identification',
+      label: 'Identificación',
+      type: 'text',
+      placeholder: 'Buscar por identificación'
+    },
+    {
+      name: 'identificationType',
+      label: 'Tipo de identificación',
+      type: 'select',
+      options: [],
+      placeholder: 'Buscar por tipo de identificación'
+    },
     {
       name: 'fullName',
       label: 'Nombre completo',
@@ -71,30 +112,90 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
       placeholder: 'Buscar por nombre'
     },
     {
-      name: 'search',
-      label: 'Buscar',
+      name: 'username',
+      label: 'Nombre de usuario',
       type: 'text',
-      placeholder: 'Buscar por buscar'
+      placeholder: 'Buscar por nombre de usuario'
+    },
+    {
+      name: 'phone',
+      label: 'Teléfono',
+      type: 'text',
+      placeholder: 'Buscar por teléfono'
+    },
+    {
+      name: 'email',
+      label: 'Correo electrónico',
+      type: 'text',
+      placeholder: 'Buscar por correo electrónico'
     }
   ];
 
-  form!: FormGroup;
+  ngOnInit(): void {
+    this.loadUsers();
+    this._getDataForFields();
+    this.projectId = this._activatedRoute.snapshot.params?.['email'];
+  }
+
+  private _getDataForFields(): void {
+    this._usersService.createUsersRelatedData().subscribe({
+      next: (res) => {
+        // Roles
+        const roles = res.data?.roles || [];
+        const roleOption = this.searchFields.find(
+          (field) => field.name === 'roleId'
+        );
+
+        if (roleOption) {
+          roleOption.options = roles.map((role) => ({
+            value: role.id,
+            label: role.name || ''
+          }));
+        }
+      }
+    });
+    // this._usersService.createUsersRelatedData().subscribe({
+    //   next: (res) => {
+    //     const identificationTypes = res.data?.identificationTypes || [];
+
+    //     // Buscamos el campo relacionado con 'identificationType'
+    //     const idoption = this.searchFields.find(
+    //       (field) => field.name === 'identificationType'
+    //     );
+
+    //     // Si encontramos el campo 'identificationType', actualizamos sus opciones
+    //     if (idoption) {
+    //       identificationTypes.forEach((type) => {
+    //         idoption.options?.push({
+    //           value: type.id, // El valor será el 'id' del tipo de identificación
+    //           label: type.type || 'Desconocido' // La etiqueta será el 'type' del tipo de identificación, si está disponible
+    //         });
+    //       });
+    //     }
+    //   },
+    //   error: (error) =>
+    //     console.error('Error al cargar tipos de identificación:', error)
+    // });
+  }
 
   onSearchSubmit(values: any): void {
-    this.loadUsers(values?.['search']);
+    this.params = values;
+    this.paginationParams.page = 1;
+    this.loadUsers();
+  }
+
+  onChangePagination(event: PageEvent): void {
+    this.paginationParams.page = event.pageIndex + 1;
+    this.paginationParams.perPage = event.pageSize;
+    this.loadUsers();
+  }
+
+  onTabChange(index: number): void {
+    this.selectedTabIndex = index;
   }
 
   onSearchChange(values: any): void {
-    if (values.length) {
-      this.showClearButton = true;
-    } else {
-      this.showClearButton = false;
-    }
-  }
-
-  ngOnInit(): void {
-    this.loadUsers();
-    this.projectId = this._activatedRoute.snapshot.params?.['email'];
+    this.showClearButton = !!values.length;
   }
 
   goToCreateUser(): void {
@@ -113,7 +214,8 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
     const query = {
       page: this.currentPage + 1,
       perPage: this.pageSize,
-      search: filter
+      search: filter,
+      ...this.params
     };
 
     this._usersService.getUserWithPagination(query).subscribe({
@@ -122,24 +224,26 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
         this.totalItems = res.pagination?.total || 0;
         this.paginator.length = this.totalItems;
       },
-      error: (error) => {
-        console.error('Error en la solicitud:', error);
-      }
+      error: (error) => console.error('Error en la solicitud:', error)
     });
   }
 
   private _deleteUser(id: string): void {
+    this.loading = true; // Establecer loading a true para mostrar indicador de carga
     this._usersService.deleteUser(id).subscribe({
       next: () => {
+        // Recargar usuarios después de la eliminación
         this.loadUsers();
+        this.loading = false; // Desactivar el indicador de carga
       },
       error: (error) => {
         console.error('Error en la solicitud:', error);
+        this.loading = false; // Asegurarse de desactivar el loading en caso de error
       }
     });
   }
 
-  openDeleteUserDialog(id: string) {
+  openDeleteUserDialog(id: string): void {
     const dialogRef = this._matDialog.open(YesNoDialogComponent);
 
     dialogRef.afterClosed().subscribe((confirm) => {

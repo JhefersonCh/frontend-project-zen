@@ -11,7 +11,6 @@ import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { UserService } from '../../../shared/services/user.service';
 import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -30,7 +29,6 @@ import { MatMenuModule } from '@angular/material/menu';
     RouterModule,
     CommonModule,
     MatFormFieldModule,
-    BasePageComponent,
     BaseCardComponent,
     LoaderComponent,
     MatMenuModule

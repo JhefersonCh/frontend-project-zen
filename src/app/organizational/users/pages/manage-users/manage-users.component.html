@@ -88,12 +88,6 @@
           <mat-label>Teléfono</mat-label>
           <input matInput formControlName="phone" />
           <mat-icon matPrefix>phone</mat-icon>
-          <mat-error *ngIf="userForm.get('phone')?.hasError('required')">
-            Email requerido
-          </mat-error>
-          <mat-error *ngIf="userForm.get('phone')?.hasError('pattern')">
-            El número debe empezar por 3 y tener un máximo de 10 números
-          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
