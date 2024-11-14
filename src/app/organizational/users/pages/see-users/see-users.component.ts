@@ -96,7 +96,7 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
       placeholder: 'Buscar por identificación'
     },
     {
-      name: 'identificationType',
+      name: 'identificationTypeId',
       label: 'Tipo de identificación',
       type: 'select',
       options: [],
@@ -139,8 +139,12 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
       next: (res) => {
         // Roles
         const roles = res.data?.roles || [];
+        const identificationTypes = res.data?.identificationTypes || [];
         const roleOption = this.searchFields.find(
           (field) => field.name === 'roleId'
+        );
+        const identificationTypeOption = this.searchFields.find(
+          (field) => field.name === 'identificationTypeId'
         );
 
         if (roleOption) {
@@ -149,30 +153,38 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
             label: role.name || ''
           }));
         }
+        if (identificationTypeOption) {
+          identificationTypeOption.options = identificationTypes.map(
+            (type) => ({
+              value: type.id,
+              label: type.type || ''
+            })
+          );
+        }
       }
     });
-    this._usersService.createUsersRelatedData().subscribe({
-      next: (res) => {
-        const identificationTypes = res.data?.identificationTypes || [];
+    // this._usersService.createUsersRelatedData().subscribe({
+    //   next: (res) => {
+    //     const identificationTypes = res.data?.identificationTypes || [];
 
-        // Buscamos el campo relacionado con 'identificationType'
-        const idoption = this.searchFields.find(
-          (field) => field.name === 'identificationType'
-        );
+    //     // Buscamos el campo relacionado con 'identificationType'
+    //     const idoption = this.searchFields.find(
+    //       (field) => field.name === 'identificationType'
+    //     );
 
-        // Si encontramos el campo 'identificationType', actualizamos sus opciones
-        if (idoption) {
-          identificationTypes.forEach((type) => {
-            idoption.options?.push({
-              value: type.id, // El valor será el 'id' del tipo de identificación
-              label: type.type || 'Desconocido' // La etiqueta será el 'type' del tipo de identificación, si está disponible
-            });
-          });
-        }
-      },
-      error: (error) =>
-        console.error('Error al cargar tipos de identificación:', error)
-    });
+    //     // Si encontramos el campo 'identificationType', actualizamos sus opciones
+    //     if (idoption) {
+    //       identificationTypes.forEach((type) => {
+    //         idoption.options?.push({
+    //           value: type.id, // El valor será el 'id' del tipo de identificación
+    //           label: type.type || 'Desconocido' // La etiqueta será el 'type' del tipo de identificación, si está disponible
+    //         });
+    //       });
+    //     }
+    //   },
+    //   error: (error) =>
+    //     console.error('Error al cargar tipos de identificación:', error)
+    // });
   }
 
   onSearchSubmit(values: any): void {
