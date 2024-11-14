@@ -50,4 +50,11 @@ export class UsersService {
   deleteUser(userId: string): Observable<unknown> {
     return this._httpClient.delete(`${environment.apiUrl}user/${userId}`);
   }
+
+  updateUser(userId: string, body: unknown): Observable<void> {
+    return this._httpClient.patch<void>(
+      `${environment.apiUrl}user/${userId}`,
+      body
+    );
+  }
 }
