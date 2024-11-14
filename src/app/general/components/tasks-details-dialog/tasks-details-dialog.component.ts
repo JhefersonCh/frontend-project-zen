@@ -1,5 +1,13 @@
 import { Priority, TasksInterface } from './../../interfaces/tasks.interface';
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { BaseDialogComponent } from '../../../shared/components/base-dialog/base-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DatePipe, NgClass, NgIf } from '@angular/common';
@@ -46,7 +54,9 @@ import { UserInterface } from '../../../shared/interfaces/user.interface';
   templateUrl: './tasks-details-dialog.component.html',
   styleUrl: './tasks-details-dialog.component.scss'
 })
-export class TasksDetailsDialogComponent implements OnInit {
+export class TasksDetailsDialogComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   private _dialogRef: MatDialogRef<TasksDetailsDialogComponent> = inject(
     MatDialogRef<TasksDetailsDialogComponent>
   );
@@ -63,6 +73,8 @@ export class TasksDetailsDialogComponent implements OnInit {
   isUpdating: boolean = false;
   userLogged!: UserInterface;
   commentsIsViewed: boolean = false;
+  @ViewChild('tagsContainer') tagsContainer!: ElementRef;
+  showArrows: boolean = false;
 
   constructor() {
     this.form = this._fb.group({
@@ -137,5 +149,32 @@ export class TasksDetailsDialogComponent implements OnInit {
       default:
         return 'info';
     }
+  }
+
+  ngAfterViewInit() {
+    this.checkIfArrowsNeeded();
+    // Observar cambios en el tamaño de la ventana
+    window.addEventListener('resize', () => this.checkIfArrowsNeeded());
+  }
+
+  checkIfArrowsNeeded() {
+    const container = this.tagsContainer.nativeElement;
+    this.showArrows = container.scrollWidth > container.clientWidth;
+  }
+
+  scrollTags(direction: 'left' | 'right') {
+    const container = this.tagsContainer.nativeElement;
+    const scrollAmount = 100;
+
+    if (direction === 'left') {
+      container.scrollLeft -= scrollAmount;
+    } else {
+      container.scrollLeft += scrollAmount;
+    }
+  }
+
+  // No olvides limpiar el event listener
+  ngOnDestroy() {
+    window.removeEventListener('resize', () => this.checkIfArrowsNeeded());
   }
 }

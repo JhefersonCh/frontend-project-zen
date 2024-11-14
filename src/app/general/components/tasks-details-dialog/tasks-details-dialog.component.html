@@ -28,18 +28,44 @@
   </section>
   <section content class="d-flex flex-column gap-2">
     @if (!isEditing) {
-      <div
-        class="mt-2 mx-0 w-100 d-flex flex-row gap-1 justify-content-center tag-container"
-      >
-        @for (taskTag of data.task.taskTags; track $index) {
-          <span class="tag brand-text-body-l fw-semibold"
-            >#{{ taskTag.tag.title }}</span
-          >
-        }
-      </div>
-      <span class="brand-text-body-xl text-black-50 fw-medium">
+      <span class="brand-text-body-xl text-black-50 fw-medium my-3">
         {{ data.task.description }}
       </span>
+      <hr />
+      <div class="tags-slider-container">
+        @if (showArrows) {
+          <button
+            mat-icon-button
+            class="slider-arrow"
+            (click)="scrollTags('left')"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+        }
+
+        <div
+          class="tags-slider"
+          #tagsContainer
+          [ngClass]="{ 'd-flex justify-content-center': !showArrows }"
+        >
+          @for (taskTag of data.task.taskTags; track $index) {
+            <span class="tag brand-text-body-l fw-semibold"
+              >#{{ taskTag.tag.title }}</span
+            >
+          }
+        </div>
+
+        @if (showArrows) {
+          <button
+            mat-icon-button
+            class="slider-arrow"
+            (click)="scrollTags('right')"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        }
+      </div>
+      <hr />
       <app-comments
         [rowId]="data.task.id"
         [rowTable]="'Tasks'"
@@ -130,7 +156,7 @@
             class="w-100"
             (click)="isEditing ? (isEditing = false) : close()"
           >
-            {{ isEditing ? 'Volver' : 'Cancelar' }}
+            {{ isEditing ? 'Volver' : 'Cerrar' }}
           </button>
         </div>
         <div class="col-6 col-md-3 px-1">

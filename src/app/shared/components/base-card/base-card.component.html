@@ -1,38 +1,62 @@
 <mat-card
   [ngClass]="{
     'p-0 not-hover': isProfileCard,
-    'clickeable-card': isClickeable
+    'clickeable-card': isClickeable,
+    'mini-card': isMiniCard
   }"
   class="base-info-card h-100 w-100"
   matRipple
   [matRippleDisabled]="!ripple"
 >
-  @if (withHeader) {
-    <mat-card-header
-      class="fw-semibold pt-0 title px-1"
-      [ngClass]="{
-        'base-info-header': withHeader,
-        'border-0 brand-text-body-l pb-0 mb-0': isMiniCard,
-        'brand-text-headline-s pb-3 mb-2': !isMiniCard
-      }"
-    >
-      <ng-content select="[header]"></ng-content>
-    </mat-card-header>
-  }
-  <mat-card-content
-    class="brand-text-body-m"
+  <div
     [ngClass]="{
-      'mt-0 p-0 px-0': isProfileCard,
-      'mt-2 px-1': !isProfileCard,
-      'd-none': isMiniCard
+      'd-flex row align-items-center justify-content-between w-100 mx-0':
+        isMiniCard,
+      'd-flex flex-column h-100': !isMiniCard
     }"
   >
-    <ng-content select="[content]"></ng-content>
-  </mat-card-content>
-  @if (withActions) {
-    <hr class="mb-0" />
-  }
-  <mat-card-actions class="d-flex justify-content-end">
-    <ng-content select="[actions]"></ng-content>
-  </mat-card-actions>
+    @if (withHeader) {
+      <mat-card-header
+        class="fw-semibold title"
+        [ngClass]="{
+          'base-info-header': withHeader,
+          'border-0 brand-text-body-l p-2 px-3 col-6 col-md-7': isMiniCard,
+          'pt-0 brand-text-headline-s pb-3 mb-2': !isMiniCard
+        }"
+      >
+        <ng-content select="[header]"></ng-content>
+      </mat-card-header>
+    }
+
+    @if (!isMiniCard) {
+      <mat-card-content
+        class="brand-text-body-m flex-grow-1"
+        [ngClass]="{
+          'mt-0 p-0': isProfileCard,
+          'mt-2 px-1': !isProfileCard
+        }"
+      >
+        <ng-content select="[content]"></ng-content>
+      </mat-card-content>
+    }
+
+    @if (withActions) {
+      <mat-card-actions
+        [ngClass]="{
+          'mt-auto': !isMiniCard,
+          'm-0 p-2 col-6 col-md-5': isMiniCard,
+          'd-flex justify-content-end': true
+        }"
+      >
+        <div class="d-flex flex-column gap-2 w-100">
+          @if (!isMiniCard) {
+            <hr class="mb-0 mt-2 w-100" />
+          }
+          <div class="d-flex justify-content-end">
+            <ng-content select="[actions]"></ng-content>
+          </div>
+        </div>
+      </mat-card-actions>
+    }
+  </div>
 </mat-card>

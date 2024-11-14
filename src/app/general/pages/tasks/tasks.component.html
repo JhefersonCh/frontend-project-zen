@@ -48,6 +48,7 @@
       <div class="mt-5">
         @if (!loading) {
           <app-search-results
+            [IsMinicard]="true"
             [results]="results"
             [withPagination]="true"
             [paginationParams]="paginationResults"
@@ -114,6 +115,7 @@
           <div class="mt-3 p-3 pt-0">
             @if (!loading) {
               <app-search-results
+                [IsMinicard]="true"
                 [results]="results"
                 [withPagination]="true"
                 [paginationParams]="paginationResults"

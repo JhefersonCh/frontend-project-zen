@@ -4,20 +4,28 @@
   border-radius: 25px;
   padding: 5px 10px;
 }
-.tag-container {
-  overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  padding-bottom: 10px;
+.tags-slider-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
   position: relative;
+}
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+.tags-slider {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding: 0 1rem;
+  flex: 1;
+}
 
-  .tag:first-child {
-    margin-left: 0;
-    transition: margin-left 0.3s ease;
+.slider-arrow {
+  position: sticky;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.9);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 }
 

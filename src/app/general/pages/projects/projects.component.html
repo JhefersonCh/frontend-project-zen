@@ -13,6 +13,7 @@
               [routerLink]="project.id ? [project.id] : []"
               class="brand-cursor-pointer"
               [ripple]="true"
+              [withActions]="userLoggedIsLeader(project)"
             >
               <div header>
                 {{ project.title }}
