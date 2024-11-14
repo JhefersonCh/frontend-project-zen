@@ -9,7 +9,7 @@
     [cdkDropListData]="tasksList"
     [cdkDropListConnectedTo]="dropListConnectedTo"
     (cdkDropListDropped)="onDrop($event)"
-    class="d-flex flex-column gap-2 mt-3 flex-grow-1 brand-cards-container"
+    class="d-flex flex-column gap-3 mt-3 flex-grow-1 brand-cards-container"
   >
     @if (tasksList?.length) {
       @for (item of tasksList; track $index) {
@@ -19,9 +19,12 @@
             class="brand-cursor-move"
             [ripple]="true"
             [cdkDragDisabled]="isMobile"
+            [isMiniCard]="true"
           >
-            <div header>{{ item.title | truncate: 20 }}</div>
-            <div content class="d-flex flex-column gap-2">
+            <div header>
+              {{ !isMobile ? item.title : (item.title | truncate: 20) }}
+            </div>
+            <!-- <div content class="d-flex flex-column gap-2">
               <span class="brand-text-body-m text-black-50 fw-medium">
                 {{ item.description | truncate }}
               </span>
@@ -55,7 +58,7 @@
                   >{{ getMemberAssigned(item.memberId) }}</span
                 >
               }
-            </div>
+            </div> -->
             <section actions>
               @if (isLeader) {
                 <button
