@@ -11,10 +11,12 @@ import {
   ProjectInterface,
   ProjectRelatedData
 } from '../interfaces/projects.interface';
+import { HttpUtilitiesService } from '../../shared/utilities/http-utilities.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
   private _httpClient: HttpClient = inject(HttpClient);
+  private _httpUtilities: HttpUtilitiesService = inject(HttpUtilitiesService);
 
   getProjectsByUser(): Observable<ApiResponseInterface<ProjectInterface[]>> {
     return this._httpClient.get<ApiResponseInterface<ProjectInterface[]>>(
@@ -50,6 +52,16 @@ export class ProjectsService {
   ): Observable<ApiResponseInterface<ProjectInterface>> {
     return this._httpClient.get<ApiResponseInterface<ProjectInterface>>(
       `${environment.apiUrl}projects/${id}`
+    );
+  }
+
+  getProjectsWithPagination(
+    query: object
+  ): Observable<ApiResponseInterface<ProjectInterface[]>> {
+    const params = this._httpUtilities.httpParamsFromObject(query);
+    return this._httpClient.get<ApiResponseInterface<ProjectInterface[]>>(
+      `${environment.apiUrl}projects/paginated-list`,
+      { params }
     );
   }
 }

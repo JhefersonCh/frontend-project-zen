@@ -30,10 +30,13 @@
               [matAutocomplete]="auto"
               [placeholder]="field.placeholder || ''"
             />
-            <mat-autocomplete #auto="matAutocomplete">
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              [displayWith]="field.displayWith || null"
+            >
               @for (option of field.autocompleteOptions; track $index) {
                 <mat-option [value]="option">
-                  {{ option }}
+                  {{ option.fullName || option.title }}
                 </mat-option>
               }
             </mat-autocomplete>
@@ -62,7 +65,7 @@
         >
           <mat-label>{{ field.label }}</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate [formControlName]="field.name + 'Start'" />
+            <input matStartDate [formControlName]="field.name + 'Init'" />
             <input matEndDate [formControlName]="field.name + 'End'" />
           </mat-date-range-input>
           <mat-datepicker-toggle matSuffix [for]="picker">

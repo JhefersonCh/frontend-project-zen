@@ -1,0 +1,52 @@
+<app-base-page title="Tareas" subtitle="Gestiona las tareas de la aplicación">
+  <section content>
+    <app-search-fields
+      [searchFields]="searchFields"
+      (searchChange)="onSearchChange($event)"
+      (searchSubmit)="onSearchSubmit($event)"
+      [debounceTime]="300"
+    />
+    <div
+      class="d-flex flex-row justify-content-center justify-content-md-end row"
+    >
+      <div
+        class="row col-12 col-md-3 d-flex gap-1 gap-md-0 justify-content-center justify-content-md-end"
+      >
+        <div class="col-12 col-md-6 px-1">
+          <button
+            class="w-100"
+            mat-fab
+            extended="true"
+            color="warn"
+            (click)="searchComponent.reset()"
+            [disabled]="!showClearButton"
+          >
+            Limpiar filtros
+          </button>
+        </div>
+
+        <div class="col-12 col-md-6 px-1">
+          <button
+            class="w-100"
+            mat-fab
+            extended="true"
+            (click)="searchComponent.submitSearch()"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+    @if (!loading) {
+      <app-search-results
+        [IsMinicard]="false"
+        [results]="results"
+        [withPagination]="true"
+        [paginationParams]="paginationResults"
+        (chagePagination)="onChangePagination($event)"
+      />
+    } @else {
+      <app-loader />
+    }
+  </section>
+</app-base-page>

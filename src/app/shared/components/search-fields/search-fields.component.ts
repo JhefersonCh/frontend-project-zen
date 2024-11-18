@@ -75,7 +75,7 @@ export class SearchFieldsComponent implements OnInit {
       if (field.type !== 'dateRange') {
         group[field.name] = [field.defaultValue || '', field.validators || []];
       } else {
-        group[field.name + 'Start'] = [''];
+        group[field.name + 'Init'] = [''];
         group[field.name + 'End'] = [''];
       }
     });
@@ -85,7 +85,7 @@ export class SearchFieldsComponent implements OnInit {
 
   private emitSearchChange(value: any): void {
     const filteredValues = Object.entries(value).reduce((acc, [key, val]) => {
-      if (val !== null && val !== '' && val !== undefined) {
+      if (val !== null && val !== undefined) {
         acc[key] = val;
       }
       return acc;
