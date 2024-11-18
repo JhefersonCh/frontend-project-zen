@@ -163,28 +163,6 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
         }
       }
     });
-    // this._usersService.createUsersRelatedData().subscribe({
-    //   next: (res) => {
-    //     const identificationTypes = res.data?.identificationTypes || [];
-
-    //     // Buscamos el campo relacionado con 'identificationType'
-    //     const idoption = this.searchFields.find(
-    //       (field) => field.name === 'identificationType'
-    //     );
-
-    //     // Si encontramos el campo 'identificationType', actualizamos sus opciones
-    //     if (idoption) {
-    //       identificationTypes.forEach((type) => {
-    //         idoption.options?.push({
-    //           value: type.id, // El valor será el 'id' del tipo de identificación
-    //           label: type.type || 'Desconocido' // La etiqueta será el 'type' del tipo de identificación, si está disponible
-    //         });
-    //       });
-    //     }
-    //   },
-    //   error: (error) =>
-    //     console.error('Error al cargar tipos de identificación:', error)
-    // });
   }
 
   onSearchSubmit(values: any): void {

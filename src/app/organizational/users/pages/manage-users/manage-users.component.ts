@@ -142,11 +142,26 @@ export class ManageUserComponent implements OnInit {
       };
 
       if (this.userId) {
-        console.log(userToRegister);
+        const userUpdate = {
+          username: this.userForm.get('username')?.value,
+          fullName: this.userForm.get('fullName')?.value,
+          phone: Number(this.userForm.get('phone')?.value),
+          avatarUrl: this.userForm.get('avatarUrl')?.value
+        };
+
+        if (this.userForm.invalid) return;
+        this._usersService.updateUser(this.userId, userUpdate).subscribe({
+          next: () => {
+            this._router.navigateByUrl('/organizational/users/list');
+          },
+          error: (error) => {
+            console.error('Error al actualizar el usuario', error);
+          }
+        });
       } else {
         this._usersService.createUser(userToRegister).subscribe({
           next: () => {
-            this._router.navigate(['../list']);
+            this._router.navigateByUrl('/organizational/users/list');
           },
           error: (err) => {
             if (err.error && err.error.message) {
