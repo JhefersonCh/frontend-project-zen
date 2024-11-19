@@ -46,6 +46,11 @@ export const organizationalRoutes: Routes = [
               )
           }
         ]
+      },
+      {
+        path: 'tasks',
+        loadComponent: () =>
+          import('./pages/tasks/tasks.component').then((m) => m.TasksComponent)
       }
     ]
   }

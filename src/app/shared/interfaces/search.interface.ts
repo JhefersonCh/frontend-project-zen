@@ -20,6 +20,7 @@ export interface SearchField {
   validators?: any[];
   autocompleteOptions?: any[];
   defaultValue?: any;
+  displayWith?: (value: any) => string;
 }
 
 export interface SearchResult {

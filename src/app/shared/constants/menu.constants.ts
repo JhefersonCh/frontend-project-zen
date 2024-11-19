@@ -30,22 +30,18 @@ export const MENU_CONST: MenuInterface[] = [
         route: '/organizational/users/list',
         icon: 'person',
         order: 1
-        // subItems: [
-        //   {
-        //     name: 'Crear usuario',
-        //     route: '/organizational/users/create'
-        //   },
-        //   {
-        //     name: 'Ver usuarios',
-        //     route: '/organizational/users/list'
-        //   }
-        // ]
       },
       {
         name: 'Panel de Admin',
         route: '/organizational/panel',
         icon: 'security',
         order: 2
+      },
+      {
+        name: 'Lista de Tareas',
+        route: '/organizational/tasks',
+        icon: 'list',
+        order: 3
       }
     ]
   }
