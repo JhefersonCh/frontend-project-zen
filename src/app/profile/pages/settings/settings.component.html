@@ -3,22 +3,97 @@
   subtitle="Aquí podrás administrar tu cuenta"
   previusUrl="../../"
 >
-  <div content>
-    <div header>Cambia tu contraseña</div>
-    <div content>
-      <p class="card-text">
-        Cambia tu contraseña actual para evitar inicios de sesión fallidos.
-      </p>
-      <div class="col-12 col-md-3">
+  <section content class="row">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="changePasswordForm">
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
+          <mat-label>Contraseña actual</mat-label>
+          <input
+            matInput
+            [type]="showOldPassword ? 'text' : 'password'"
+            formControlName="oldPassword"
+            placeholder="Ingresa tu contraseña actual"
+          />
+          <mat-icon matPrefix>lock_open</mat-icon>
+          <button
+            matSuffix
+            mat-icon-button
+            (click)="showOldPassword = !showOldPassword"
+          >
+            <mat-icon>{{
+              showOldPassword ? 'visibility' : 'visibility_off'
+            }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="changePasswordForm.get('oldPassword')?.hasError('required')"
+          >
+            La contraseña actual es requerida.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
+          <mat-label>Nueva contraseña</mat-label>
+          <input
+            matInput
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="newPassword"
+            placeholder="Ingresa tu nueva contraseña"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button
+            matSuffix
+            mat-icon-button
+            (click)="showPassword = !showPassword"
+          >
+            <mat-icon>{{
+              showPassword ? 'visibility' : 'visibility_off'
+            }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="changePasswordForm.get('newPassword')?.hasError('required')"
+          >
+            La nueva contraseña es requerida.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
+          <mat-label>Confirmar nueva contraseña</mat-label>
+          <input
+            matInput
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            formControlName="confirmNewPassword"
+            placeholder="Confirma tu nueva contraseña"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button
+            matSuffix
+            mat-icon-button
+            (click)="showConfirmPassword = !showConfirmPassword"
+          >
+            <mat-icon>{{
+              showConfirmPassword ? 'visibility' : 'visibility_off'
+            }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="
+              changePasswordForm.get('confirmNewPassword')?.hasError('required')
+            "
+          >
+            Es necesario confirmar tu nueva contraseña.
+          </mat-error>
+        </mat-form-field>
+
         <button
-          mat-stroked-button
-          routerLink="/change-password"
+          mat-fab
+          extended="true"
+          type="button"
           color="primary"
-          class="w-100"
+          [disabled]="changePasswordForm.invalid || passwordMismatch"
+          (ngSubmit)="onChangePassword()"
         >
           Cambiar contraseña
         </button>
-      </div>
+      </form>
     </div>
-  </div>
+  </section>
 </app-base-page>

@@ -8,7 +8,7 @@ import {
 } from '../interfaces/api-response.interface';
 import { RegisterUserInterface } from '../../auth/interfaces/register.interface';
 import { environment } from '../../../environments/environment.development';
-import { UserInterface } from '../interfaces/user.interface';
+import { ChangePassword, UserInterface } from '../interfaces/user.interface';
 import { IdentificationType } from '../../organizational/users/interfaces/users.interface';
 
 @Injectable({
@@ -48,6 +48,15 @@ export class UserService {
     return this._httpClient.patch<void>(
       `${environment.apiUrl}user/${userId}`,
       body
+    );
+  }
+
+  updateUserPassword(
+    changePasswordPayload: ChangePassword
+  ): Observable<ApiResponseInterface<ChangePassword>> {
+    return this._httpClient.post<ApiResponseInterface<ChangePassword>>(
+      `${environment.apiUrl}/api/user/change-password`,
+      changePasswordPayload
     );
   }
 }

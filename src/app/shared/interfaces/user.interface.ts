@@ -16,3 +16,9 @@ export interface UserInterface {
   deletedAt?: Date;
   password?: string;
 }
+
+export interface ChangePassword {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
