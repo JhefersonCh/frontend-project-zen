@@ -24,9 +24,15 @@ import { BasePageComponent } from '../../../../shared/components/base-page/base-
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from '../../../../shared/components/yes-no-dialog/yes-no-dialog.component';
-import { SearchField } from '../../../../shared/interfaces/search.interface';
+import {
+  SearchField,
+  SearchResult
+} from '../../../../shared/interfaces/search.interface';
 import { SearchFieldsComponent } from '../../../../shared/components/search-fields/search-fields.component';
 import { ApiResponseInterface } from '../../../../shared/interfaces/api-response.interface';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { SearchResultsComponent } from '../../../../shared/components/search-results/search-results.component';
 @Component({
   selector: 'app-see-users',
   standalone: true,
@@ -41,7 +47,11 @@ import { ApiResponseInterface } from '../../../../shared/interfaces/api-response
     BasePageComponent,
     MatTableModule,
     RouterLink,
-    SearchFieldsComponent
+    SearchFieldsComponent,
+    LoaderComponent,
+    MatTab,
+    MatTabGroup,
+    SearchResultsComponent
   ],
   templateUrl: './see-users.component.html',
   styleUrls: ['./see-users.component.scss']
@@ -68,8 +78,9 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   projectId: string = '';
   showClearButton: boolean = false;
   selectedTabIndex = 0;
-
   loading: boolean = false;
+  isMobile: boolean = false;
+  results: SearchResult[] = [];
   paginationParams = { order: 'ASC', page: 1, perPage: 5 };
   params: any = {};
   paginationResults = {
@@ -132,6 +143,11 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
     this.loadUsers();
     this._getDataForFields();
     this.projectId = this._activatedRoute.snapshot.params?.['email'];
+  }
+
+  constructor() {
+    this.isMobile = window.innerWidth <= 768;
+    if (this.isMobile) this.paginationResults.perPage = 5;
   }
 
   private _getDataForFields(): void {
@@ -198,6 +214,7 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   }
 
   loadUsers(filter: string = ''): void {
+    this.loading = true; // Inicia el estado de carga
     const query = {
       page: this.currentPage + 1,
       perPage: this.pageSize,
@@ -210,8 +227,12 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
         this.dataSource.data = res.data || [];
         this.totalItems = res.pagination?.total || 0;
         this.paginator.length = this.totalItems;
+        this.loading = false; // Detén la carga al terminar
       },
-      error: (error) => console.error('Error en la solicitud:', error)
+      error: (error) => {
+        console.error('Error en la solicitud:', error);
+        this.loading = false; // Detén la carga en caso de error
+      }
     });
   }
 
