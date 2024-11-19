@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Component,
-  inject,
-  OnInit,
-  ViewChild,
-  AfterViewInit
-} from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
   MatPaginator,
   MatPaginatorModule,
@@ -24,15 +18,12 @@ import { BasePageComponent } from '../../../../shared/components/base-page/base-
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from '../../../../shared/components/yes-no-dialog/yes-no-dialog.component';
-import {
-  SearchField,
-  SearchResult
-} from '../../../../shared/interfaces/search.interface';
+import { SearchField } from '../../../../shared/interfaces/search.interface';
 import { SearchFieldsComponent } from '../../../../shared/components/search-fields/search-fields.component';
-import { ApiResponseInterface } from '../../../../shared/interfaces/api-response.interface';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { SearchResultsComponent } from '../../../../shared/components/search-results/search-results.component';
+import { PaginationInterface } from '../../../../shared/interfaces/pagination.interface';
 @Component({
   selector: 'app-see-users',
   standalone: true,
@@ -56,7 +47,7 @@ import { SearchResultsComponent } from '../../../../shared/components/search-res
   templateUrl: './see-users.component.html',
   styleUrls: ['./see-users.component.scss']
 })
-export class SeeUsersComponent implements OnInit, AfterViewInit {
+export class SeeUsersComponent implements OnInit {
   private readonly _usersService: UsersService = inject(UsersService);
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _router = inject(Router);
@@ -72,18 +63,13 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   ];
 
   form!: FormGroup;
-  totalItems: number = 0;
-  pageSize: number = 5;
-  currentPage: number = 0;
   projectId: string = '';
   showClearButton: boolean = false;
-  selectedTabIndex = 0;
   loading: boolean = false;
   isMobile: boolean = false;
-  results: SearchResult[] = [];
-  paginationParams = { order: 'ASC', page: 1, perPage: 5 };
   params: any = {};
-  paginationResults = {
+  selectedTabIndex: number = 0;
+  paginationParams: PaginationInterface = {
     page: 1,
     perPage: 5,
     total: 0,
@@ -147,7 +133,7 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
 
   constructor() {
     this.isMobile = window.innerWidth <= 768;
-    if (this.isMobile) this.paginationResults.perPage = 5;
+    if (this.isMobile) this.paginationParams.perPage = 5;
   }
 
   private _getDataForFields(): void {
@@ -190,6 +176,7 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
   onChangePagination(event: PageEvent): void {
     this.paginationParams.page = event.pageIndex + 1;
     this.paginationParams.perPage = event.pageSize;
+
     this.loadUsers();
   }
 
@@ -205,28 +192,21 @@ export class SeeUsersComponent implements OnInit, AfterViewInit {
     this._router.navigate(['/users/create']);
   }
 
-  ngAfterViewInit(): void {
-    this.paginator.page.subscribe(() => {
-      this.currentPage = this.paginator.pageIndex;
-      this.pageSize = this.paginator.pageSize;
-      this.loadUsers();
-    });
-  }
-
   loadUsers(filter: string = ''): void {
     this.loading = true; // Inicia el estado de carga
     const query = {
-      page: this.currentPage + 1,
-      perPage: this.pageSize,
+      page: this.paginationParams.page,
+      perPage: this.paginationParams.perPage,
       search: filter,
       ...this.params
     };
 
+    console.log(query);
+
     this._usersService.getUserWithPagination(query).subscribe({
-      next: (res: ApiResponseInterface<UsersInterface[]>) => {
+      next: (res) => {
         this.dataSource.data = res.data || [];
-        this.totalItems = res.pagination?.total || 0;
-        this.paginator.length = this.totalItems;
+        this.paginationParams = res?.pagination;
         this.loading = false; // Detén la carga al terminar
       },
       error: (error) => {

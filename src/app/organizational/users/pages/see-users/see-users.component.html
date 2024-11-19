@@ -118,8 +118,10 @@
             <app-loader></app-loader>
           }
           <mat-paginator
-            [pageSize]="pageSize"
-            [pageSizeOptions]="[5, 10, 25, 100]"
+            [length]="paginationParams?.total"
+            [pageSize]="paginationParams?.perPage"
+            [pageSizeOptions]="[5, 10, 20]"
+            [pageIndex]="(paginationParams?.page || 0) - 1"
             (page)="onChangePagination($event)"
           ></mat-paginator>
         </div>
@@ -226,6 +228,13 @@
                 ></tr>
               </table>
             </div>
+            <mat-paginator
+              [length]="paginationParams?.total"
+              [pageSize]="paginationParams?.perPage"
+              [pageSizeOptions]="[5, 10, 20]"
+              [pageIndex]="(paginationParams?.page || 0) - 1"
+              (page)="onChangePagination($event)"
+            ></mat-paginator>
             <div *ngIf="!loading && dataSource.data.length === 0">
               <p>No se encontraron usuarios.</p>
             </div>
