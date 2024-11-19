@@ -9,26 +9,24 @@ import {
   SearchResult
 } from '../../../shared/interfaces/search.interface';
 import { ProjectsService } from '../../../general/services/projects.service';
-import { TasksService } from '../../../general/services/tasks.service';
 import { UsersService } from '../../users/services/users.service';
 import { UsersInterface } from '../../users/interfaces/users.interface';
-import { ProjectInterface } from '../../../general/interfaces/projects.interface';
 import { MatButtonModule } from '@angular/material/button';
 import {
   PaginationInterface,
   ParamsPaginationInterface
 } from '../../../shared/interfaces/pagination.interface';
 import { finalize } from 'rxjs';
-import { TasksInterface } from '../../../general/interfaces/tasks.interface';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatDialog } from '@angular/material/dialog';
+import { ProjectInterface } from '../../../general/interfaces/projects.interface';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { ItemDetailsDialogComponent } from '../../components/item-details-dialog/item-details-dialog.component';
 
 @Component({
-  selector: 'app-tasks',
+  selector: 'app-projects',
   standalone: true,
   imports: [
     BasePageComponent,
@@ -39,18 +37,17 @@ import { ItemDetailsDialogComponent } from '../../components/item-details-dialog
     LoaderComponent,
     MatTabsModule
   ],
-  templateUrl: './tasks.component.html',
-  styleUrl: './tasks.component.scss'
+  templateUrl: './projects.component.html',
+  styleUrl: './projects.component.scss'
 })
-export class TasksComponent implements OnInit {
+export class ProjectsComponent implements OnInit {
   @ViewChild(SearchFieldsComponent) searchComponent!: SearchFieldsComponent;
   private _projectsService: ProjectsService = inject(ProjectsService);
-  private _tasksService: TasksService = inject(TasksService);
   private _usersService: UsersService = inject(UsersService);
   private _dialog: MatDialog = inject(MatDialog);
 
   showClearButton: boolean = false;
-  results: TasksInterface[] = [];
+  results: ProjectInterface[] = [];
   loading: boolean = false;
   paginationParams: ParamsPaginationInterface = {
     order: 'ASC',
@@ -80,18 +77,6 @@ export class TasksComponent implements OnInit {
       type: 'text'
     },
     {
-      name: 'statusId',
-      label: 'Estado',
-      type: 'select',
-      options: []
-    },
-    {
-      name: 'priorityId',
-      label: 'Prioridad',
-      type: 'select',
-      options: []
-    },
-    {
       name: 'createdAt',
       label: 'Fecha de creación',
       type: 'dateRange'
@@ -101,32 +86,27 @@ export class TasksComponent implements OnInit {
       label: 'Usuario asignado',
       type: 'autocomplete',
       autocompleteOptions: [],
-      displayWith: (user?: UsersInterface) => user?.fullName || '',
+      displayWith: (user: UsersInterface) => user.fullName,
       onAutocompleteChange: (value: any) => {
         this._getUsers(value);
       }
-    },
-    {
-      name: 'project',
-      label: 'Proyecto',
-      type: 'autocomplete',
-      autocompleteOptions: [],
-      displayWith: (project?: ProjectInterface) => project?.title || '',
-      onAutocompleteChange: (value: any) => {
-        this._getProjects(value);
-      }
     }
   ];
+
   searchActions: ActionInterface[] = [
     {
       label: 'Eliminar',
       icon: 'delete',
-      action: (item?: SearchResult) => this._openDeleteDialog(item || {})
+      action: (item?: SearchResult) => {
+        this._openDeleteDialog(item || {});
+      }
     },
     {
       label: 'Ver',
       icon: 'visibility',
-      action: (item?: SearchResult) => this._openDetailsDialog(item || {})
+      action: (item?: SearchResult) => {
+        this._openDetailsDialog(item || {});
+      }
     }
   ];
 
@@ -136,34 +116,7 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {
     this._getPaginatedList();
-    this._getSelectOptions();
     this._getUsers();
-    this._getProjects();
-  }
-
-  private _openDeleteDialog(item: SearchResult): void {
-    const dialogRef = this._dialog.open(YesNoDialogComponent, {
-      data: {
-        title: 'Eliminar tarea',
-        message: '¿Estás seguro de querer eliminar esta tarea?'
-      }
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) this._deleteTask(item.id as number);
-    });
-  }
-
-  private _openDetailsDialog(item: SearchResult): void {
-    this._dialog.open(ItemDetailsDialogComponent, {
-      data: { item }
-    });
-  }
-
-  private _deleteTask(taskId: number): void {
-    this._tasksService.deleteTask(taskId).subscribe({
-      next: () => this._getPaginatedList(),
-      error: (error) => console.error(error)
-    });
   }
 
   public onSearchChange(values: any): void {
@@ -174,15 +127,41 @@ export class TasksComponent implements OnInit {
     }
   }
 
+  private _openDeleteDialog(project: SearchResult): void {
+    const dialogRef = this._dialog.open(YesNoDialogComponent, {
+      data: {
+        title: 'Eliminar proyecto',
+        message: '¿Estás seguro de querer eliminar este proyecto?'
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._deleteProject(project.id as number);
+      }
+    });
+  }
+
+  private _openDetailsDialog(project: SearchResult): void {
+    this._dialog.open(ItemDetailsDialogComponent, {
+      data: { item: project }
+    });
+  }
+
+  private _deleteProject(projectId: number): void {
+    this._projectsService.deleteProject(projectId).subscribe({
+      next: () => this._getPaginatedList(),
+      error: (error) => console.error(error)
+    });
+  }
+
   public onSearchSubmit(values: any): void {
-    const { user, project, ...remainingValues } = values;
+    const { user, ...remainingValues } = values;
 
     const queryParams = {
       ...remainingValues,
       createdAtEnd: values.createdAtEnd.toString(),
       createdAtInit: values.createdAtInit.toString(),
-      userId: user?.id || null,
-      projectId: project?.id || null
+      userId: user?.id || null
     };
 
     this.params = queryParams;
@@ -191,8 +170,8 @@ export class TasksComponent implements OnInit {
 
   private _getPaginatedList(): void {
     this.loading = true;
-    this._tasksService
-      .tasksWithPagination({
+    this._projectsService
+      .getProjectsWithPagination({
         ...this.params,
         ...this.paginationParams
       })
@@ -206,46 +185,6 @@ export class TasksComponent implements OnInit {
       });
   }
 
-  private _getSelectOptions(): void {
-    this._projectsService.getProjectsByUser().subscribe({
-      next: (res) => {
-        const projects = res?.data || [];
-        const option = this.searchFields.find(
-          (field) => field.name === 'project'
-        );
-        projects.map((project) => {
-          option?.options?.push({ value: project.id, label: project.title });
-        });
-      },
-      error: (error) => console.error(error)
-    });
-    this._tasksService.getRelatedData().subscribe({
-      next: (res) => {
-        const priorities = res?.data.priorities || [];
-        const statuses = res?.data.statuses || [];
-        const priorityOption = this.searchFields.find(
-          (field) => field.name === 'priorityId'
-        );
-        const statusOption = this.searchFields.find(
-          (field) => field.name === 'statusId'
-        );
-        priorities.map((priority) => {
-          priorityOption?.options?.push({
-            value: priority.id,
-            label: priority.title
-          });
-        });
-        statuses.map((status) => {
-          statusOption?.options?.push({
-            value: status.id,
-            label: status.title
-          });
-        });
-      },
-      error: (error) => console.error(error)
-    });
-  }
-
   private _getUsers(search: string = ''): void {
     this._usersService.getUserWithPagination({ search }).subscribe({
       next: (res) => {
@@ -254,20 +193,6 @@ export class TasksComponent implements OnInit {
         option!.autocompleteOptions = users;
       }
     });
-  }
-
-  private _getProjects(search: string = ''): void {
-    this._projectsService
-      .getProjectsWithPagination({ title: search })
-      .subscribe({
-        next: (res) => {
-          const projects: ProjectInterface[] = res?.data || [];
-          const option = this.searchFields.find(
-            (field) => field.name === 'project'
-          );
-          option!.autocompleteOptions = projects;
-        }
-      });
   }
 
   onChangePagination(pageEvent: PageEvent): void {

@@ -58,7 +58,6 @@ export class SearchFieldsComponent implements OnInit {
 
     this.form.valueChanges
       .pipe(
-        debounceTime(this.debounceTime),
         distinctUntilChanged(
           (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
         )
@@ -66,6 +65,21 @@ export class SearchFieldsComponent implements OnInit {
       .subscribe((value) => {
         this.emitSearchChange(value);
       });
+
+    this._listenAutocompleteChanges();
+  }
+
+  private _listenAutocompleteChanges(): void {
+    this.searchFields.map((field) => {
+      if (field.type === 'autocomplete') {
+        this.form
+          .get(field.name)
+          ?.valueChanges.pipe(debounceTime(this.debounceTime))
+          .subscribe((value) => {
+            field.onAutocompleteChange?.(value);
+          });
+      }
+    });
   }
 
   private initializeForm(): void {
@@ -85,7 +99,7 @@ export class SearchFieldsComponent implements OnInit {
 
   private emitSearchChange(value: any): void {
     const filteredValues = Object.entries(value).reduce((acc, [key, val]) => {
-      if (val !== null && val !== undefined) {
+      if (val !== null && val !== '' && val !== undefined) {
         acc[key] = val;
       }
       return acc;

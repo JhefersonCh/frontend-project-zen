@@ -1,6 +1,7 @@
 import { Priority, TasksInterface } from './../../interfaces/tasks.interface';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   inject,
@@ -66,6 +67,7 @@ export class TasksDetailsDialogComponent
   );
   private _fb: FormBuilder = inject(FormBuilder);
   private _taskService: TasksService = inject(TasksService);
+  private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   isEditing: boolean = false;
   form: FormGroup;
   statuses!: Priority[];
@@ -74,7 +76,7 @@ export class TasksDetailsDialogComponent
   userLogged!: UserInterface;
   commentsIsViewed: boolean = false;
   @ViewChild('tagsContainer') tagsContainer!: ElementRef;
-  showArrows: boolean = false;
+  showArrows?: boolean;
 
   constructor() {
     this.form = this._fb.group({
@@ -152,14 +154,20 @@ export class TasksDetailsDialogComponent
   }
 
   ngAfterViewInit() {
-    this.checkIfArrowsNeeded();
-    // Observar cambios en el tamaño de la ventana
-    window.addEventListener('resize', () => this.checkIfArrowsNeeded());
+    setTimeout(() => {
+      this.checkIfArrowsNeeded();
+    });
+    const resizeObserver = new ResizeObserver(() => {
+      this.checkIfArrowsNeeded();
+    });
+
+    resizeObserver.observe(this.tagsContainer.nativeElement);
   }
 
   checkIfArrowsNeeded() {
     const container = this.tagsContainer.nativeElement;
     this.showArrows = container.scrollWidth > container.clientWidth;
+    this.cdr.detectChanges();
   }
 
   scrollTags(direction: 'left' | 'right') {

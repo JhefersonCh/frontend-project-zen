@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { BaseDialogComponent } from '../base-dialog/base-dialog.component';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class YesNoDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<YesNoDialogComponent>);
+  public data: { title: string; message: string } = inject(MAT_DIALOG_DATA);
 
   closeDialog(confirm: boolean): void {
     this.dialogRef.close(confirm);

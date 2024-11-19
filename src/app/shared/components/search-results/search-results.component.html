@@ -30,17 +30,20 @@
             {{ item?.deadline | date: 'dd-MMM-yyyy' }}
           </span>
         </section>
-        @if (redirectionCards) {
+        @if (actions?.length) {
           <section actions>
-            <button
-              mat-icon-button
-              color="primary"
-              [matTooltip]="toolTipMessage"
-              [routerLink]="['../projects', item.projectId]"
-              [queryParams]="{ taskId: item.id, previusUrl: '../../tasks' }"
-            >
-              <mat-icon>link</mat-icon>
-            </button>
+            @for (action of actions; track $index) {
+              <button
+                mat-icon-button
+                color="primary"
+                [matTooltip]="action.label"
+                (click)="action?.action?.(item)"
+                [routerLink]="action?.routerLink"
+                [queryParams]="action?.queryParams"
+              >
+                <mat-icon>{{ action.icon }}</mat-icon>
+              </button>
+            }
           </section>
         }
       </app-base-card>

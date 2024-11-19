@@ -1,18 +1,15 @@
 <app-base-page
-  title="Tareas"
-  subtitle="Maneja las tareas que te han sido asignadas"
-  previusUrl="./home"
+  title="Proyectos"
+  subtitle="Gestiona los proyectos de la aplicación"
 >
   <section content>
     @if (!isMobile) {
       <app-search-fields
         [searchFields]="searchFields"
-        [form]="searchForm"
-        [debounceTime]="0"
-        (searchSubmit)="onSearchSubmit($event)"
         (searchChange)="onSearchChange($event)"
-      >
-      </app-search-fields>
+        (searchSubmit)="onSearchSubmit($event)"
+        [debounceTime]="300"
+      />
       <div
         class="d-flex flex-row justify-content-center justify-content-md-end row"
       >
@@ -44,21 +41,18 @@
           </div>
         </div>
       </div>
-
-      <div class="mt-5">
-        @if (!loading) {
-          <app-search-results
-            [IsMinicard]="true"
-            [results]="results"
-            [withPagination]="true"
-            [paginationParams]="paginationResults"
-            [actions]="searchActions"
-            (chagePagination)="onChangePagination($event)"
-          ></app-search-results>
-        } @else {
-          <app-loader></app-loader>
-        }
-      </div>
+      @if (!loading) {
+        <app-search-results
+          [IsMinicard]="false"
+          [results]="results"
+          [withPagination]="true"
+          [paginationParams]="paginationResults"
+          (chagePagination)="onChangePagination($event)"
+          [actions]="searchActions"
+        />
+      } @else {
+        <app-loader />
+      }
     } @else {
       <mat-tab-group
         [(selectedIndex)]="selectedTabIndex"
@@ -68,12 +62,10 @@
           <div class="mt-3 px-2">
             <app-search-fields
               [searchFields]="searchFields"
-              [form]="searchForm"
-              [debounceTime]="0"
+              [debounceTime]="300"
               (searchSubmit)="onSearchSubmit($event)"
               (searchChange)="onSearchChange($event)"
-            >
-            </app-search-fields>
+            />
           </div>
           <div
             class="d-flex flex-row justify-content-center justify-content-md-end row m-0 p-1"
@@ -122,7 +114,7 @@
                 [redirectionCards]="true"
                 [toolTipMessage]="'Ir a la tarea'"
                 (chagePagination)="onChangePagination($event)"
-              ></app-search-results>
+              />
             } @else {
               <app-loader></app-loader>
             }

@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SearchResult } from '../../interfaces/search.interface';
+import {
+  ActionInterface,
+  SearchResult
+} from '../../interfaces/search.interface';
 import { BaseCardComponent } from '../base-card/base-card.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { PaginationInterface } from '../../interfaces/pagination.interface';
@@ -41,6 +44,7 @@ export class SearchResultsComponent {
     hasPreviousPage: false,
     hasNextPage: false
   };
+  @Input() actions: ActionInterface[] = [];
 
   @Input() withPagination: boolean = false;
 

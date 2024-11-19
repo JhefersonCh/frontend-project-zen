@@ -51,6 +51,13 @@ export const organizationalRoutes: Routes = [
         path: 'tasks',
         loadComponent: () =>
           import('./pages/tasks/tasks.component').then((m) => m.TasksComponent)
+      },
+      {
+        path: 'projects',
+        loadComponent: () =>
+          import('./pages/projects/projects.component').then(
+            (m) => m.ProjectsComponent
+          )
       }
     ]
   }

@@ -1,0 +1,36 @@
+<app-base-dialog>
+  <section header>{{ data.item.title }}</section>
+  <section content>
+    <div class="d-flex flex-column gap-2">
+      <span class="brand-text-body-m text-black-50 fw-medium">
+        <strong class="text-black">Descripción:</strong>
+        {{ data.item.description }}
+      </span>
+      <span class="brand-text-body-m text-black-50 fw-medium">
+        <strong class="text-black">Creado en:</strong>
+        {{ data.item.createdAt | date: 'dd/MM/yyyy' }}
+      </span>
+      @if (data.item.deadline) {
+        <span class="brand-text-body-m text-black-50 fw-medium">
+          <strong class="text-black">Fecha límite:</strong>
+          {{ data.item.deadline | date: 'dd/MM/yyyy' }}
+        </span>
+      }
+      @if (data.item.finishDate) {
+        <span class="brand-text-body-m text-black-50 fw-medium">
+          <strong class="text-black">Fecha de finalización:</strong>
+          {{ data.item.finishDate | date: 'dd/MM/yyyy' }}
+        </span>
+      }
+      <span class="brand-text-body-m text-black-50 fw-medium">
+        <strong class="text-black">Última actualización:</strong>
+        {{ data.item.updatedAt | date: 'dd/MM/yyyy' }}
+      </span>
+    </div>
+  </section>
+  <section actions>
+    <button mat-fab extended="true" color="warn" (click)="closeDialog()">
+      Cerrar
+    </button>
+  </section>
+</app-base-dialog>

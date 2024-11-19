@@ -48,7 +48,6 @@ export class CreateOrUpdatePanelElementComponent implements OnInit {
     MAT_DIALOG_DATA
   );
   formTest!: FormGroup;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fieldType!: Record<string, FieldConfig>;
 
   private readonly _elements = elements;

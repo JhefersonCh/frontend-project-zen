@@ -3,6 +3,7 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { SearchFieldsComponent } from '../../../shared/components/search-fields/search-fields.component';
 import {
+  ActionInterface,
   SearchField,
   SearchResult
 } from '../../../shared/interfaces/search.interface';
@@ -20,6 +21,7 @@ import {
 } from '../../../shared/interfaces/pagination.interface';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -40,6 +42,7 @@ export class TasksComponent implements OnInit {
   private readonly _projectsService: ProjectsService = inject(ProjectsService);
   private readonly _tasksService: TasksService = inject(TasksService);
   private readonly _authService: AuthService = inject(AuthService);
+  private readonly _router: Router = inject(Router);
   searchFields: SearchField[] = [
     {
       name: 'title',
@@ -75,6 +78,17 @@ export class TasksComponent implements OnInit {
       name: 'date',
       label: 'Fecha de creación',
       type: 'dateRange'
+    }
+  ];
+  searchActions: ActionInterface[] = [
+    {
+      label: 'Ir a la tarea',
+      icon: 'link',
+      action: (item?: SearchResult) => {
+        this._router.navigate(['/general/projects', item?.projectId], {
+          queryParams: { taskId: item?.id, previusUrl: '../../tasks' }
+        });
+      }
     }
   ];
   results: SearchResult[] = [];

@@ -1,9 +1,9 @@
 <app-base-dialog>
   <div header>
-    <span>Confirmar</span>
+    <span>{{ data.title || 'Confirmar' }}</span>
   </div>
   <div content>
-    <span>¿Está seguro de realizar está acción?</span>
+    <span>{{ data.message || '¿Está seguro de realizar está acción?' }}</span>
   </div>
   <div actions>
     <section class="d-flex flex-row gap-2">

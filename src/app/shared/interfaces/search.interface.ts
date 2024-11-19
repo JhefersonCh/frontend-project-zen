@@ -21,6 +21,7 @@ export interface SearchField {
   autocompleteOptions?: any[];
   defaultValue?: any;
   displayWith?: (value: any) => string;
+  onAutocompleteChange?: (value: any) => void;
 }
 
 export interface SearchResult {
@@ -29,5 +30,15 @@ export interface SearchResult {
   id?: string | number;
   createdAt?: Date;
   deadline?: Date;
+  finishDate?: Date;
   projectId?: number;
+  updatedAt?: Date;
+}
+
+export interface ActionInterface {
+  label: string;
+  icon: string;
+  action?: (item?: SearchResult) => void;
+  routerLink?: string[];
+  queryParams?: any;
 }

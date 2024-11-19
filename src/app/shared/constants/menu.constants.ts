@@ -7,13 +7,13 @@ export const MENU_CONST: MenuInterface[] = [
     order: 1,
     items: [
       {
-        name: 'Proyectos',
+        name: 'Mis Proyectos',
         route: '/general/projects',
         icon: 'assignment',
         order: 1
       },
       {
-        name: 'Tareas',
+        name: 'Mis Tareas',
         route: '/general/tasks',
         icon: 'checklist',
         order: 2
@@ -32,27 +32,33 @@ export const MENU_CONST: MenuInterface[] = [
         order: 1
       },
       {
-        name: 'Panel de Admin',
-        route: '/organizational/panel',
-        icon: 'security',
+        name: 'Proyectos',
+        route: '/organizational/projects',
+        icon: 'summarize',
         order: 2
       },
       {
-        name: 'Lista de Tareas',
+        name: 'Tareas',
         route: '/organizational/tasks',
-        icon: 'list',
+        icon: 'playlist_add_check',
         order: 3
+      },
+      {
+        name: 'Panel de Admin',
+        route: '/organizational/panel',
+        icon: 'security',
+        order: 4
       }
     ]
   }
 ];
 
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
-  user: ['profile', 'Proyectos', 'Tareas']
+  user: ['profile', 'Mis Proyectos', 'Mis Tareas']
 };
 
 export const ROUTE_MAP: Record<string, string> = {
-  Proyectos: '/general/projects',
-  Tareas: '/general/tasks',
+  'Mis Proyectos': '/general/projects',
+  'Mis Tareas': '/general/tasks',
   profile: '/profile'
 };
