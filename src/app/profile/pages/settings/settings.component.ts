@@ -14,6 +14,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../../../shared/services/user.service';
 // import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -41,7 +42,7 @@ export class SettingsComponent {
 
   private readonly _userService: UserService = inject(UserService);
   // private readonly _fb: FormBuilder = inject(FormBuilder);
-  // private readonly _router: Router = inject(Router);
+  private readonly _router: Router = inject(Router);
 
   constructor(private fb: FormBuilder) {
     this.changePasswordForm = this.fb.group({
@@ -62,7 +63,6 @@ export class SettingsComponent {
 
     this.passwordMismatch = false;
 
-    // Llamada al servicio para cambiar la contraseña
     this._userService
       .updateUserPassword({
         oldPassword,
@@ -72,9 +72,8 @@ export class SettingsComponent {
       .subscribe({
         next: () => {
           // Navegación al perfil después de un cambio exitoso
-          // this._router.navigate(['../../profile']);
-          // this.changePasswordForm.reset();
-          console.log(newPassword);
+          this._router.navigate(['/profile']); // Ajusta el path si es necesario
+          this.changePasswordForm.reset();
         },
         error: (err) => {
           console.error('Error al cambiar la contraseña:', err);

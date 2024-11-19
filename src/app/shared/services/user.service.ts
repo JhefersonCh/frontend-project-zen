@@ -55,7 +55,7 @@ export class UserService {
     changePasswordPayload: ChangePassword
   ): Observable<ApiResponseInterface<ChangePassword>> {
     return this._httpClient.post<ApiResponseInterface<ChangePassword>>(
-      `${environment.apiUrl}/api/user/change-password`,
+      `${environment.apiUrl}user/change-password`,
       changePasswordPayload
     );
   }

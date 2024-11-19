@@ -5,7 +5,7 @@
 >
   <section content class="row">
     <div class="col-12 col-md-6">
-      <form [formGroup]="changePasswordForm">
+      <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()">
         <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Contraseña actual</mat-label>
           <input
@@ -18,7 +18,8 @@
           <button
             matSuffix
             mat-icon-button
-            (click)="showOldPassword = !showOldPassword"
+            type="button"
+            (click)="toggleOldPasswordVisibility()"
           >
             <mat-icon>{{
               showOldPassword ? 'visibility' : 'visibility_off'
@@ -43,7 +44,8 @@
           <button
             matSuffix
             mat-icon-button
-            (click)="showPassword = !showPassword"
+            type="button"
+            (click)="togglePasswordVisibility()"
           >
             <mat-icon>{{
               showPassword ? 'visibility' : 'visibility_off'
@@ -68,7 +70,8 @@
           <button
             matSuffix
             mat-icon-button
-            (click)="showConfirmPassword = !showConfirmPassword"
+            type="button"
+            (click)="toggleConfirmPasswordVisibility()"
           >
             <mat-icon>{{
               showConfirmPassword ? 'visibility' : 'visibility_off'
@@ -83,14 +86,7 @@
           </mat-error>
         </mat-form-field>
 
-        <button
-          mat-fab
-          extended="true"
-          type="button"
-          color="primary"
-          [disabled]="changePasswordForm.invalid || passwordMismatch"
-          (ngSubmit)="onChangePassword()"
-        >
+        <button mat-fab extended="true" type="submit" color="primary">
           Cambiar contraseña
         </button>
       </form>
