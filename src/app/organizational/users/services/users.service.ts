@@ -12,6 +12,7 @@ import {
   UsersInterface
 } from '../interfaces/users.interface';
 import { RegisterUserInterface } from '../../../auth/interfaces/register.interface';
+import { PaginationInterface } from '../../../shared/interfaces/pagination.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
@@ -20,14 +21,15 @@ export class UsersService {
   private readonly _httpUtilities: HttpUtilitiesService =
     inject(HttpUtilitiesService);
 
-  getUserWithPagination(
-    query: object
-  ): Observable<ApiResponseInterface<UsersInterface[]>> {
+  getUserWithPagination(query: object): Observable<{
+    pagination: PaginationInterface;
+    data: UsersInterface[];
+  }> {
     const params = this._httpUtilities.httpParamsFromObject(query);
-    return this._httpClient.get<ApiResponseInterface<UsersInterface[]>>(
-      `${environment.apiUrl}user/paginated-list`,
-      { params }
-    );
+    return this._httpClient.get<{
+      pagination: PaginationInterface;
+      data: UsersInterface[];
+    }>(`${environment.apiUrl}user/paginated-list`, { params });
   }
 
   createUsersRelatedData(): Observable<
