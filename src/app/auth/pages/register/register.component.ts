@@ -61,6 +61,8 @@ export class RegisterComponent implements OnInit {
    * @param constructor - Creación del formulario.
    * @param formStep1 - Formulario 1 de información personal.
    * @param formStep2 - Formulario 2 de cuenta.
+   * @param passwordStrength - Válida que la contraseña poseea más de 6 carácteres, 1 minúscula, 1 mayúscula y 1 carácter especial.
+   * @param passwordsMatch - Válida que la contraseña sea igual a confirmar contraseña.
    */
   constructor(private _fb: FormBuilder) {
     this.formStep1 = this._fb.group({

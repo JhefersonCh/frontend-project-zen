@@ -15,6 +15,7 @@ import { UserService } from '../../../shared/services/user.service';
 // import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
 
 @Component({
   selector: 'app-settings',
@@ -41,17 +42,45 @@ export class SettingsComponent {
   showConfirmPassword: boolean = false;
 
   private readonly _userService: UserService = inject(UserService);
-  // private readonly _fb: FormBuilder = inject(FormBuilder);
   private readonly _router: Router = inject(Router);
+  private readonly _customValidations: CustomValidationsService = inject(
+    CustomValidationsService
+  );
+  private readonly _passwordValidationService: CustomValidationsService =
+    inject(CustomValidationsService);
 
+  /**
+   * Se recibe la información diligenciada en el formulario.
+   * @param constructor - Creación del formulario.
+   * @param oldPassword - Formulario 1 de información personal.
+   * @param passwordStrength - Válida que la contraseña poseea más de 6 carácteres, 1 minúscula, 1 mayúscula y 1 carácter especial.
+   * @param passwordsMatch - Válida que la contraseña sea igual a confirmar contraseña.
+   */
   constructor(private fb: FormBuilder) {
-    this.changePasswordForm = this.fb.group({
-      oldPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
-      confirmNewPassword: ['', Validators.required]
-    });
+    this.changePasswordForm = this.fb.group(
+      {
+        oldPassword: ['', Validators.required],
+        newPassword: [
+          '',
+          [
+            Validators.required,
+            this._passwordValidationService.passwordStrength()
+          ]
+        ],
+        confirmNewPassword: ['', Validators.required]
+      },
+      {
+        validators: this._customValidations.passwordsMatch(
+          'newPassword',
+          'confirmNewPassword'
+        )
+      }
+    );
   }
 
+  /**
+   * @param onChangePassword - Trae la contraseña antigua y cambia las contraseñas nuevas.
+   */
   onChangePassword(): void {
     const { oldPassword, newPassword, confirmNewPassword } =
       this.changePasswordForm.value;
@@ -71,16 +100,15 @@ export class SettingsComponent {
       })
       .subscribe({
         next: () => {
-          // Navegación al perfil después de un cambio exitoso
-          this._router.navigate(['/profile']); // Ajusta el path si es necesario
+          this._router.navigate(['/profile']);
           this.changePasswordForm.reset();
         },
         error: (err) => {
           console.error('Error al cambiar la contraseña:', err);
-          // Aquí podrías mostrar un mensaje de error al usuario si algo sale mal
         }
       });
   }
+
   /**
    * @param toggleOldPasswordVisibility - Ver antigua contraseña.
    */
