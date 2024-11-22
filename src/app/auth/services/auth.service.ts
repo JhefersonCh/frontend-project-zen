@@ -27,6 +27,16 @@ export class AuthService {
   _isLoggedSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
   private readonly _router: Router = inject(Router);
 
+  // /**
+  //  * Enviar solicitud de recuperación de contraseña
+  //  * @param email - Correo electrónico del usuario
+  //  * @returns Observable con la respuesta del servidor
+  //  */
+  // sendPasswordResetEmail(email: string): Observable<any> {
+  //   const endpoint = `${environment.apiUrl}auth/recovery-password`; // Endpoint para recuperar contraseña
+  //   return this._httpClient.post(endpoint, { email });
+  // }
+
   login(
     credentials: LoginCredentials
   ): Observable<ApiResponseInterface<LoginSuccessInterface>> {

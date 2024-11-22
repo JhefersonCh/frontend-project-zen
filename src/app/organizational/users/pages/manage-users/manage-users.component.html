@@ -24,22 +24,6 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
-          <mat-label>Identificación</mat-label>
-          <mat-icon matPrefix>credit_card</mat-icon>
-          <input
-            matInput
-            formControlName="identification"
-            (blur)="setPassword()"
-            required
-          />
-          <mat-error
-            *ngIf="userForm.get('identification')?.hasError('required')"
-          >
-            Número de identificación requerido
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
           <mat-label>Tipo de Identificación</mat-label>
           <mat-select formControlName="identificationTypeId" required>
             <mat-option value="" disabled selected
@@ -57,6 +41,22 @@
             *ngIf="userForm.get('identificationTypeId')?.hasError('required')"
           >
             Tipo de identificación requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 mt-3 mb-2 mt-md-0">
+          <mat-label>Identificación</mat-label>
+          <mat-icon matPrefix>credit_card</mat-icon>
+          <input
+            matInput
+            formControlName="identification"
+            (blur)="setPassword()"
+            required
+          />
+          <mat-error
+            *ngIf="userForm.get('identification')?.hasError('required')"
+          >
+            Número de identificación requerido
           </mat-error>
         </mat-form-field>
 
