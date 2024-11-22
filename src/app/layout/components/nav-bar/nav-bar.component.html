@@ -33,7 +33,7 @@
               class="user-avatar me-"
               style="width: 30px; height: 30px; border-radius: 50%"
             />
-            <span>{{ userName || 'Invitado' }}</span>
+            <span>{{ user?.fullName || 'Invitado' }}</span>
           </button>
         } @else {
           <div class="loader-container">
@@ -133,7 +133,7 @@
             <app-loader></app-loader>
           </div>
         }
-        <span>{{ user?.fullName || userName || 'Invitado' }}</span>
+        <span>{{ user?.fullName || 'Invitado' }}</span>
       </button>
 
       <button mat-menu-item (click)="manageAuthButton()">Cerrar sesión</button>
