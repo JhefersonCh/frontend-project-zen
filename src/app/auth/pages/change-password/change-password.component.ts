@@ -1,26 +1,24 @@
 import { Component, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
+import { Router } from '@angular/router';
+import { UserService } from '../../../shared/services/user.service';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { MatIcon } from '@angular/material/icon';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from '../../../shared/services/user.service';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
 
 @Component({
-  selector: 'app-settings',
+  selector: 'app-change-password',
   standalone: true,
   imports: [
-    BasePageComponent,
     MatButtonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
@@ -28,10 +26,10 @@ import { CustomValidationsService } from '../../../shared/validators/customValid
     MatIcon,
     CommonModule
   ],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss'
+  templateUrl: './change-password.component.html',
+  styleUrl: './change-password.component.scss'
 })
-export class SettingsComponent {
+export class ChangePasswordComponent {
   changePasswordForm: FormGroup;
   passwordMismatch = false;
   eyeOpen = faEye;

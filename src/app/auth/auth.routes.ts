@@ -12,12 +12,23 @@ export const authRoutes: Routes = [
       {
         path: 'register',
         loadComponent: () =>
-          import('./pages/register/register.component').then((m) => m.RegisterComponent)
+          import('./pages/register/register.component').then(
+            (m) => m.RegisterComponent
+          )
       },
       {
         path: 'recover-password',
         loadComponent: () =>
-          import('./pages/recover-password/recover-password.component').then((m) => m.RecoverPasswordComponent)
+          import('./pages/recover-password/recover-password.component').then(
+            (m) => m.RecoverPasswordComponent
+          )
+      },
+      {
+        path: 'change-password',
+        loadComponent: () =>
+          import('./pages/change-password/change-password.component').then(
+            (m) => m.ChangePasswordComponent
+          )
       }
     ]
   }

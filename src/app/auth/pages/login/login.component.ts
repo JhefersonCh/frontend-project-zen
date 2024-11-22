@@ -14,7 +14,6 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +26,7 @@ import { BasePageComponent } from '../../../shared/components/base-page/base-pag
     FontAwesomeModule,
     MatButtonModule,
     CommonModule,
-    RouterModule,
-    BasePageComponent
+    RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
