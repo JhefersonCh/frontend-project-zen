@@ -80,40 +80,199 @@
           }}</span>
         </div>
 
-        <section class="px-4 px-md-5 mt-3 d-flex flex-column gap-3">
-          <div>
-            <p class="fw-bold brand-text-headline-s text-decoration-underline">
-              Información destacáda
-            </p>
-            <p class="brand-text-body-l">
-              <strong>Identificación:</strong>
-              <span class="fw-medium text-black-50">
-                {{ user?.identification }}
-              </span>
-            </p>
-            <p class="brand-text-body-l">
-              <strong>Correo electrónico:</strong>
-              <span class="fw-medium text-black-50">
-                {{ user?.email }}
-              </span>
-            </p>
-            <p class="brand-text-body-l">
-              <strong>Teléfono:</strong>
-              <span class="fw-medium text-black-50">
-                {{ user?.phone }}
-              </span>
-            </p>
-            <p class="brand-text-body-l">
-              <strong>Miembro desde:</strong>
-              <span class="fw-medium text-black-50">
-                {{ user?.createdAt | date: "dd 'de' MM 'del' yyyy" }}
-              </span>
-            </p>
-          </div>
-          <div>
-            <p class="fw-bold brand-text-headline-s text-decoration-underline">
-              Estadísticas
-            </p>
+        <section class="px-4 py-5">
+          <div class="row g-4">
+            <!-- Información Personal -->
+            <div class="col-12 col-lg-6">
+              <div class="card dashboard-card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-4">
+                    <mat-icon class="text-primary me-2">person</mat-icon>
+                    <h5 class="card-title m-0">Información destacada</h5>
+                  </div>
+
+                  <div class="d-flex flex-column gap-3">
+                    <div class="info-item bg-light rounded p-3">
+                      <div class="d-flex align-items-center">
+                        <mat-icon class="text-primary me-3">badge</mat-icon>
+                        <div
+                          class="info-content d-flex justify-content-between flex-fill"
+                        >
+                          <span class="fw-medium">Identificación:</span>
+                          <span class="text-secondary">{{
+                            user?.identification
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="info-item bg-light rounded p-3">
+                      <div class="d-flex align-items-center">
+                        <mat-icon class="text-primary me-3">email</mat-icon>
+                        <div
+                          class="info-content d-flex justify-content-between flex-fill"
+                        >
+                          <span class="fw-medium">Correo:</span>
+                          <span class="text-secondary">{{ user?.email }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="info-item bg-light rounded p-3">
+                      <div class="d-flex align-items-center">
+                        <mat-icon class="text-primary me-3">phone</mat-icon>
+                        <div
+                          class="info-content d-flex justify-content-between flex-fill"
+                        >
+                          <span class="fw-medium">Teléfono:</span>
+                          <span class="text-secondary">{{ user?.phone }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="info-item bg-light rounded p-3">
+                      <div class="d-flex align-items-center">
+                        <mat-icon class="text-primary me-3"
+                          >calendar_today</mat-icon
+                        >
+                        <div
+                          class="info-content d-flex justify-content-between flex-fill"
+                        >
+                          <span class="fw-medium">Miembro desde:</span>
+                          <span class="text-secondary">{{
+                            user?.createdAt | date: "dd 'de' MMMM 'del' yyyy"
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="col-12 col-lg-6">
+              <div class="card dashboard-card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-4">
+                    <mat-icon class="text-primary me-2">analytics</mat-icon>
+                    <h5 class="card-title m-0">Estadísticas</h5>
+                  </div>
+
+                  <!-- Sección de Tareas -->
+                  <div class="stats-section rounded p-3 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <mat-icon class="text-primary me-2">task_alt</mat-icon>
+                      <h6 class="m-0 fw-bold">Gestión de Tareas</h6>
+                    </div>
+
+                    <div class="row g-3">
+                      <div class="col-6 col-xl-3">
+                        <div class="stat-card rounded p-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <mat-icon class="text-primary me-2"
+                              >assignment</mat-icon
+                            >
+                            <span class="text-secondary small"
+                              >Tareas Totales</span
+                            >
+                          </div>
+                          <div class="stat-value">
+                            {{ statistics?.tasks?.total }}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-xl-3">
+                        <div class="stat-card rounded p-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <mat-icon class="text-primary me-2"
+                              >check_circle</mat-icon
+                            >
+                            <span class="text-secondary small"
+                              >Completadas</span
+                            >
+                          </div>
+                          <div class="stat-value">
+                            {{ statistics?.tasks?.completed }}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-xl-3">
+                        <div class="stat-card rounded p-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <mat-icon class="text-primary me-2"
+                              >pending_actions</mat-icon
+                            >
+                            <span class="text-secondary small">Pendientes</span>
+                          </div>
+                          <div class="stat-value">
+                            {{ statistics?.tasks?.notStarted }}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-xl-3">
+                        <div class="stat-card rounded p-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <mat-icon class="text-primary me-2"
+                              >trending_up</mat-icon
+                            >
+                            <span class="text-secondary small"
+                              >En Progreso</span
+                            >
+                          </div>
+                          <div class="stat-value">
+                            {{ statistics?.tasks?.inProgress }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Sección de Proyectos -->
+                  <div class="stats-section rounded p-3">
+                    <div class="d-flex align-items-center mb-3">
+                      <mat-icon class="text-primary me-2"
+                        >folder_special</mat-icon
+                      >
+                      <h6 class="m-0 fw-bold">Gestión de Proyectos</h6>
+                    </div>
+
+                    <div class="row g-3">
+                      <div class="col-6">
+                        <div class="stat-card rounded p-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <mat-icon class="text-primary me-2"
+                              >folder</mat-icon
+                            >
+                            <span class="text-secondary small"
+                              >Proyectos Totales</span
+                            >
+                          </div>
+                          <div class="stat-value">
+                            {{ statistics?.projects?.total }}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="stat-card rounded p-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <mat-icon class="text-primary me-2">star</mat-icon>
+                            <span class="text-secondary small">Liderando</span>
+                          </div>
+                          <div class="stat-value">
+                            {{ statistics?.projects?.leader }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </div>

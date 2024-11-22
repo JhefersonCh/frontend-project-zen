@@ -9,13 +9,13 @@ export const MENU_CONST: MenuInterface[] = [
       {
         name: 'Mis Proyectos',
         route: '/general/projects',
-        icon: 'assignment',
+        icon: 'folder',
         order: 1
       },
       {
         name: 'Mis Tareas',
         route: '/general/tasks',
-        icon: 'checklist',
+        icon: 'pending_actions',
         order: 2
       }
     ]

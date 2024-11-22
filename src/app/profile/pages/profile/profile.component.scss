@@ -1,3 +1,5 @@
+@import 'breackpoints';
+
 /* Fondo de profile */
 .profile-cover {
   position: relative;
@@ -35,4 +37,54 @@
   top: 5px;
   left: 5px;
   border: none !important;
+}
+
+.dashboard-card {
+  transition: transform 0.2s;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.info-item {
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  @media (max-width: 767px) {
+    .info-content {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+}
+
+.stats-section {
+  background-color: #f8f9fa;
+
+  .stat-card {
+    background-color: white;
+    height: 100%;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: #2196f3;
+    }
+  }
+}
+
+mat-icon {
+  @include media-desktop {
+    display: flex;
+  }
+  @include media-phone {
+    display: none;
+  }
 }

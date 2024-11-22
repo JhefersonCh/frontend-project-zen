@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { StatisticsInterface } from '../../interfaces/profile.interface';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -41,13 +43,16 @@ export class ProfileComponent implements OnInit {
   isLoading = true;
   userId: string = '';
   isPhone: boolean = false;
+  statistics?: StatisticsInterface;
 
-  private readonly _profileService: UserService = inject(UserService);
+  private readonly _userService: UserService = inject(UserService);
+  private readonly _profileService: ProfileService = inject(ProfileService);
   private readonly _localStorageService: LocalStorageService =
     inject(LocalStorageService);
 
   ngOnInit(): void {
     this.loadUserProfile();
+    this._getStatistics();
   }
 
   constructor() {
@@ -57,7 +62,7 @@ export class ProfileComponent implements OnInit {
     this.userId = this._localStorageService.getAllSessionData()?.user?.id;
 
     this.userId &&
-      this._profileService.getUserProfile(this.userId).subscribe({
+      this._userService.getUserProfile(this.userId).subscribe({
         next: (response) => {
           this.pageLoading = false;
           this.user = response?.data;
@@ -66,5 +71,16 @@ export class ProfileComponent implements OnInit {
           console.error('Error al cargar el usuario', error);
         }
       });
+  }
+
+  private _getStatistics(): void {
+    this._profileService.getStatistics().subscribe({
+      next: (response) => {
+        this.statistics = response.data;
+      },
+      error: (error) => {
+        console.error('Error al obtener las estadísticas', error);
+      }
+    });
   }
 }
