@@ -73,7 +73,6 @@
         <div class="overflow-auto mb-3">
           @if (!loading) {
             <table mat-table [dataSource]="dataSource">
-              <!-- Definición de Columnas -->
               <ng-container matColumnDef="identificationType">
                 <th mat-header-cell *matHeaderCellDef>Identificación</th>
                 <td mat-cell *matCellDef="let user">

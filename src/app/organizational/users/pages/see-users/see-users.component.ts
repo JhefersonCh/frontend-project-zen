@@ -22,7 +22,6 @@ import { SearchField } from '../../../../shared/interfaces/search.interface';
 import { SearchFieldsComponent } from '../../../../shared/components/search-fields/search-fields.component';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
-import { SearchResultsComponent } from '../../../../shared/components/search-results/search-results.component';
 import { PaginationInterface } from '../../../../shared/interfaces/pagination.interface';
 @Component({
   selector: 'app-see-users',
@@ -41,8 +40,7 @@ import { PaginationInterface } from '../../../../shared/interfaces/pagination.in
     SearchFieldsComponent,
     LoaderComponent,
     MatTab,
-    MatTabGroup,
-    SearchResultsComponent
+    MatTabGroup
   ],
   templateUrl: './see-users.component.html',
   styleUrls: ['./see-users.component.scss']
@@ -200,8 +198,6 @@ export class SeeUsersComponent implements OnInit {
       search: filter,
       ...this.params
     };
-
-    console.log(query);
 
     this._usersService.getUserWithPagination(query).subscribe({
       next: (res) => {
