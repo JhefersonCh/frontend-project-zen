@@ -58,6 +58,13 @@ export const generalRoutes: Routes = [
               )
           }
         ]
+      },
+      {
+        path: 'reports',
+        loadComponent: () =>
+          import('./pages/reports/reports.component').then(
+            (m) => m.ReportsComponent
+          )
       }
     ]
   }

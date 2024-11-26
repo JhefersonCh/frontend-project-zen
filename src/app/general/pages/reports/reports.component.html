@@ -1,0 +1,33 @@
+<app-base-page
+  title="Reportes"
+  subtitle="Visualiza los avances de tus proyectos"
+  previusUrl="/home"
+>
+  <section content>
+    <mat-tab-group
+      [(selectedIndex)]="selectedTabIndex"
+      (selectedIndexChange)="
+        onTabChange($event); reloadAllSizes = !reloadAllSizes
+      "
+    >
+      <mat-tab [label]="'Proyectos'">
+        <div class="mt-3 px-2">
+          <app-area-or-line-chart [chartConfig]="areaOrLineChartConfig" />
+          <app-stacked-area-chart [configuration]="stackedAreaConfig" />
+        </div>
+      </mat-tab>
+      <mat-tab [label]="'Tareas'">
+        <div class="mt-3 px-2">
+          <app-area-or-line-chart [chartConfig]="areaOrLineChartConfig" />
+          <app-stacked-area-chart [configuration]="stackedAreaConfig" />
+        </div>
+      </mat-tab>
+      <mat-tab [label]="'Miembros'">
+        <div class="mt-3 px-2">
+          <app-area-or-line-chart [chartConfig]="areaOrLineChartConfig" />
+          <app-stacked-area-chart [configuration]="stackedAreaConfig" />
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+</app-base-page>

@@ -17,6 +17,12 @@ export const MENU_CONST: MenuInterface[] = [
         route: '/general/tasks',
         icon: 'pending_actions',
         order: 2
+      },
+      {
+        name: 'Reportes',
+        route: '/general/reports',
+        icon: 'query_stats',
+        order: 3
       }
     ]
   },
