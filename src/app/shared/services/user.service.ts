@@ -59,4 +59,13 @@ export class UserService {
       changePasswordPayload
     );
   }
+
+  recoveryPasswordByUserId(
+    changePasswordPayload: ChangePassword
+  ): Observable<ApiResponseInterface<ChangePassword>> {
+    return this._httpClient.patch<ApiResponseInterface<ChangePassword>>(
+      `${environment.apiUrl}user/recovery-password`,
+      changePasswordPayload
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,7 +6,7 @@ import {
   Validators
 } from '@angular/forms';
 import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,7 @@ import { MatIcon } from '@angular/material/icon';
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss'
 })
-export class ChangePasswordComponent {
+export class ChangePasswordComponent implements OnInit {
   changePasswordForm: FormGroup;
   passwordMismatch = false;
   eyeOpen = faEye;
@@ -40,6 +40,7 @@ export class ChangePasswordComponent {
 
   private readonly _userService: UserService = inject(UserService);
   private readonly _router: Router = inject(Router);
+  private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _customValidations: CustomValidationsService = inject(
     CustomValidationsService
   );
@@ -56,7 +57,8 @@ export class ChangePasswordComponent {
   constructor(private fb: FormBuilder) {
     this.changePasswordForm = this.fb.group(
       {
-        oldPassword: ['', Validators.required],
+        userId: [''],
+        resetToken: [''],
         newPassword: [
           '',
           [
@@ -75,11 +77,19 @@ export class ChangePasswordComponent {
     );
   }
 
+  ngOnInit(): void {
+    const userId: string =
+      this._activatedRoute.snapshot.paramMap.get('userId')!;
+    const resetToken: string =
+      this._activatedRoute.snapshot.queryParamMap.get('resetToken')!;
+    this.changePasswordForm.patchValue({ userId, resetToken });
+  }
+
   /**
    * @param onChangePassword - Trae la contraseña antigua y cambia las contraseñas nuevas.
    */
   onChangePassword(): void {
-    const { oldPassword, newPassword, confirmNewPassword } =
+    const { userId, newPassword, confirmNewPassword, resetToken } =
       this.changePasswordForm.value;
 
     if (newPassword !== confirmNewPassword) {
@@ -90,14 +100,15 @@ export class ChangePasswordComponent {
     this.passwordMismatch = false;
 
     this._userService
-      .updateUserPassword({
-        oldPassword,
+      .recoveryPasswordByUserId({
+        userId,
         newPassword,
-        confirmNewPassword
+        confirmNewPassword,
+        resetToken
       })
       .subscribe({
         next: () => {
-          this._router.navigate(['/profile']);
+          this._router.navigate(['/auth/login']);
           this.changePasswordForm.reset();
         },
         error: (err) => {

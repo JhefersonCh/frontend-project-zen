@@ -18,7 +18,9 @@ export interface UserInterface {
 }
 
 export interface ChangePassword {
-  oldPassword: string;
+  oldPassword?: string;
   newPassword: string;
   confirmNewPassword: string;
+  userId?: string;
+  resetToken?: string;
 }

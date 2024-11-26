@@ -22,13 +22,6 @@ export const authRoutes: Routes = [
           import('./pages/recover-password/recover-password.component').then(
             (m) => m.RecoverPasswordComponent
           )
-      },
-      {
-        path: 'change-password',
-        loadComponent: () =>
-          import('./pages/change-password/change-password.component').then(
-            (m) => m.ChangePasswordComponent
-          )
       }
     ]
   }

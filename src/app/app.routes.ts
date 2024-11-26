@@ -39,9 +39,19 @@ export const routes: Routes = [
       {
         path: 'organizational',
         canActivate: [authGuard],
-        loadChildren: () => import('./organizational/organizational.routes').then(m => m.organizationalRoutes)
+        loadChildren: () =>
+          import('./organizational/organizational.routes').then(
+            (m) => m.organizationalRoutes
+          )
       }
     ]
+  },
+  {
+    path: 'auth/:userId/change-password',
+    loadComponent: () =>
+      import('./auth/pages/change-password/change-password.component').then(
+        (m) => m.ChangePasswordComponent
+      )
   },
   {
     path: '**',
