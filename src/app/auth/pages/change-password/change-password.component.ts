@@ -81,7 +81,7 @@ export class ChangePasswordComponent implements OnInit {
     const userId: string =
       this._activatedRoute.snapshot.paramMap.get('userId')!;
     const resetToken: string =
-      this._activatedRoute.snapshot.queryParamMap.get('resetToken')!;
+      this._activatedRoute.snapshot.queryParamMap.get('token')!;
     this.changePasswordForm.patchValue({ userId, resetToken });
   }
 
