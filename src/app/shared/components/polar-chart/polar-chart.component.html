@@ -1,0 +1,16 @@
+<section class="row d-flex justify-content-center mx-0">
+  <div class="col-12 col-md-6">
+    <div #chartContainer class="chart-container">
+      <apx-chart
+        #chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [labels]="chartOptions.labels"
+        [stroke]="chartOptions.stroke"
+        [fill]="chartOptions.fill"
+        [title]="chartOptions.title"
+        [legend]="chartOptions.legend"
+      ></apx-chart>
+    </div>
+  </div>
+</section>
