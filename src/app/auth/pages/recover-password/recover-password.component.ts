@@ -9,13 +9,22 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../services/auth.service';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 
 @Component({
   selector: 'app-recover-password',
   standalone: true,
   templateUrl: './recover-password.component.html',
   styleUrls: ['./recover-password.component.scss'],
-  imports: [ReactiveFormsModule, NgIf, MatFormFieldModule, MatInputModule]
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    BasePageComponent
+  ]
 })
 export class RecoverPasswordComponent {
   resetPasswordForm: FormGroup;

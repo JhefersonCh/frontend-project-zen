@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { MatIcon } from '@angular/material/icon';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-user',
@@ -25,7 +26,8 @@ import { LoaderComponent } from '../../../shared/components/loader/loader.compon
     MatButtonModule,
     BasePageComponent,
     MatIcon,
-    LoaderComponent
+    LoaderComponent,
+    CommonModule
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss'
