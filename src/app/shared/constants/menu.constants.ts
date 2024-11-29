@@ -60,11 +60,12 @@ export const MENU_CONST: MenuInterface[] = [
 ];
 
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
-  user: ['profile', 'Mis Proyectos', 'Mis Tareas']
+  user: ['profile', 'Mis Proyectos', 'Mis Tareas', 'Reportes']
 };
 
 export const ROUTE_MAP: Record<string, string> = {
   'Mis Proyectos': '/general/projects',
   'Mis Tareas': '/general/tasks',
+  Reportes: '/general/reports',
   profile: '/profile'
 };

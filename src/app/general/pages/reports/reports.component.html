@@ -11,10 +11,19 @@
       <mat-tab [label]="'Proyectos'" class="h-auto overflow-none">
         <div class="mt-3 px-2">
           @if (selectedTab === 'Proyectos') {
-            <app-bar-chart
-              [chartOptions]="chartOptions"
-              chartId="projects-chart"
-            />
+            @if (projectsTime && projectsTime.colors?.length) {
+              <app-bar-chart
+                [chartOptions]="projectsTime"
+                chartId="projects-chart"
+              />
+            } @else {
+              <div class="my-5">
+                <app-empty-panel
+                  title="No tienes proyectos aún"
+                  text="¡Prueba participando en algunos!"
+                />
+              </div>
+            }
             <hr />
             <app-polar-chart [chartOptions]="polarChartOptions" />
           }

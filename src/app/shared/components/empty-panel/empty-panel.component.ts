@@ -9,4 +9,5 @@ import { Component, Input } from '@angular/core';
 })
 export class EmptyPanelComponent {
   @Input() text: string = '';
+  @Input() title: string = '';
 }
