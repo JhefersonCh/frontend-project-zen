@@ -75,7 +75,7 @@ export class SeeUsersComponent implements OnInit {
     hasPreviousPage: false,
     hasNextPage: false
   };
-  subtitle: string = 'Gestiona los miembros registrados en la aplicación.';
+  subtitle: string = 'Gestiona los miembros registrados en la aplicación';
   searchFields: SearchField[] = [
     {
       name: 'roleId',

@@ -24,16 +24,21 @@
             class="d-flex align-items-center"
             [ngClass]="{ active: optionSelected === 'user' }"
           >
-            <img
-              [src]="
-                user?.avatarUrl ||
-                '../../assets/login_and_register/userdefault.png'
-              "
-              alt="User Image"
-              class="user-avatar me-"
-              style="width: 30px; height: 30px; border-radius: 50%"
-            />
-            <span>{{ user?.fullName || 'Invitado' }}</span>
+            <div class="d-flex justify-content-start gap-2 align-items-center">
+              <div>
+                <img
+                  [src]="
+                    user?.avatarUrl ||
+                    '../../assets/login_and_register/userdefault.png'
+                  "
+                  alt="User Image"
+                  class="user-avatar"
+                />
+              </div>
+              <div>
+                <span>{{ user?.fullName || 'Invitado' }}</span>
+              </div>
+            </div>
           </button>
         } @else {
           <div class="loader-container">
@@ -88,13 +93,18 @@
       [matMenuTriggerFor]="options"
     >
       @if (!pageLoading) {
-        <img
-          [src]="
-            user?.avatarUrl || '../../assets/login_and_register/userdefault.png'
-          "
-          alt="User Image"
-          class="user-avatar ml-3"
-        />
+        <div class="d-flex justify-content-start gap-2 align-items-center">
+          <div>
+            <img
+              [src]="
+                user?.avatarUrl ||
+                '../../assets/login_and_register/userdefault.png'
+              "
+              alt="User Image"
+              class="user-avatar"
+            />
+          </div>
+        </div>
       } @else {
         <div class="loader-container w-50 h-50">
           <app-loader></app-loader>
@@ -119,21 +129,26 @@
         [ngClass]="{ active: optionSelected === 'user' }"
       >
         @if (!pageLoading) {
-          <img
-            [src]="
-              user?.avatarUrl ||
-              '../../assets/login_and_register/userdefault.png'
-            "
-            alt="User Image"
-            class="user-avatar mr-2"
-            style="width: 30px; height: 30px; border-radius: 50%"
-          />
+          <div class="d-flex justify-content-start gap-2 align-items-center">
+            <div>
+              <img
+                [src]="
+                  user?.avatarUrl ||
+                  '../../assets/login_and_register/userdefault.png'
+                "
+                alt="User Image"
+                class="user-avatar"
+              />
+            </div>
+            <div>
+              <span>{{ user?.fullName || 'Invitado' }}</span>
+            </div>
+          </div>
         } @else {
           <div class="loader-container">
             <app-loader></app-loader>
           </div>
         }
-        <span>{{ user?.fullName || 'Invitado' }}</span>
       </button>
 
       <button mat-menu-item (click)="manageAuthButton()">Cerrar sesión</button>
