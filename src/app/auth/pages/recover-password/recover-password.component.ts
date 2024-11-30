@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../services/auth.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-recover-password',
@@ -23,7 +23,7 @@ import { BasePageComponent } from '../../../shared/components/base-page/base-pag
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    BasePageComponent
+    RouterLink
   ]
 })
 export class RecoverPasswordComponent {

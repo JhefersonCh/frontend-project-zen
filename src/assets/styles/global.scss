@@ -512,3 +512,11 @@
   border-radius: 35px;
   height: 50px;
 }
+
+.brand-center-content {
+  height: calc($brand-height-router-outlet-container - $heigth-nav-bar);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
