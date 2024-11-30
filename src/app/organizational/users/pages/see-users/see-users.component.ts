@@ -76,6 +76,10 @@ export class SeeUsersComponent implements OnInit {
     hasNextPage: false
   };
   subtitle: string = 'Gestiona los miembros registrados en la aplicación';
+
+  /**
+   * @param searchFields - Creación del buscador.
+   */
   searchFields: SearchField[] = [
     {
       name: 'roleId',
@@ -123,6 +127,9 @@ export class SeeUsersComponent implements OnInit {
     }
   ];
 
+  /**
+   * @param ngOnInit - Inicialización de las funciones.
+   */
   ngOnInit(): void {
     this.loadUsers();
     this._getDataForFields();
@@ -134,10 +141,12 @@ export class SeeUsersComponent implements OnInit {
     if (this.isMobile) this.paginationParams.perPage = 5;
   }
 
+  /**
+   * @param _getDataForFields - Obtiene los select de roles y tipos de identificación.
+   */
   private _getDataForFields(): void {
     this._usersService.createUsersRelatedData().subscribe({
       next: (res) => {
-        // Roles
         const roles = res.data?.roles || [];
         const identificationTypes = res.data?.identificationTypes || [];
         const roleOption = this.searchFields.find(
@@ -165,19 +174,27 @@ export class SeeUsersComponent implements OnInit {
     });
   }
 
+  /**
+   * @param onSearchSubmit - Botón de búsqueda.
+   */
   onSearchSubmit(values: any): void {
     this.params = values;
     this.paginationParams.page = 1;
     this.loadUsers();
   }
 
+  /**
+   * @param onChangePagination - Cambio de paginación.
+   */
   onChangePagination(event: PageEvent): void {
     this.paginationParams.page = event.pageIndex + 1;
     this.paginationParams.perPage = event.pageSize;
-
     this.loadUsers();
   }
 
+  /**
+   * @param onTabChange - Cambio de tabla.
+   */
   onTabChange(index: number): void {
     this.selectedTabIndex = index;
   }
@@ -186,12 +203,19 @@ export class SeeUsersComponent implements OnInit {
     this.showClearButton = !!values.length;
   }
 
+  /**
+   * @param goToCreateUser - Ir a crear usuarios
+   */
   goToCreateUser(): void {
     this._router.navigate(['/users/create']);
   }
 
+  /**
+   * @param loadUsers - Carga de usuarios.
+   * @param getUserWithPagination - Obtiene los usuarios con paginación.
+   */
   loadUsers(filter: string = ''): void {
-    this.loading = true; // Inicia el estado de carga
+    this.loading = true;
     const query = {
       page: this.paginationParams.page,
       perPage: this.paginationParams.perPage,
@@ -203,30 +227,35 @@ export class SeeUsersComponent implements OnInit {
       next: (res) => {
         this.dataSource.data = res.data || [];
         this.paginationParams = res?.pagination;
-        this.loading = false; // Detén la carga al terminar
+        this.loading = false;
       },
       error: (error) => {
         console.error('Error en la solicitud:', error);
-        this.loading = false; // Detén la carga en caso de error
+        this.loading = false;
       }
     });
   }
 
+  /**
+   * @param _deleteUser - Ellimina un usuario.
+   */
   private _deleteUser(id: string): void {
-    this.loading = true; // Establecer loading a true para mostrar indicador de carga
+    this.loading = true;
     this._usersService.deleteUser(id).subscribe({
       next: () => {
-        // Recargar usuarios después de la eliminación
         this.loadUsers();
-        this.loading = false; // Desactivar el indicador de carga
+        this.loading = false;
       },
       error: (error) => {
         console.error('Error en la solicitud:', error);
-        this.loading = false; // Asegurarse de desactivar el loading en caso de error
+        this.loading = false;
       }
     });
   }
 
+  /**
+   * @param openDeleteUserDialog - Abre un modal para eliminar un usuario.
+   */
   openDeleteUserDialog(id: string): void {
     const dialogRef = this._matDialog.open(YesNoDialogComponent);
 

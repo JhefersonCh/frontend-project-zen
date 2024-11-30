@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../services/auth.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-recover-password',
@@ -31,23 +31,26 @@ export class RecoverPasswordComponent {
   message: string = '';
 
   private readonly _authService: AuthService = inject(AuthService);
+  private readonly _router: Router = inject(Router);
 
+  /**
+   * @param resetPasswordForm - Recibe el email para cambiar contraseña.
+   */
   constructor(private fb: FormBuilder) {
     this.resetPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
   }
+
+  /**
+   * @param sendPasswordResetEmail - Servicio que envía el correo al backend para la respectiva
+   * redirrción al cambio de contraseña.
+   */
   onResetPassword(): void {
     const email = this.resetPasswordForm.get('email')?.value;
     this._authService.sendPasswordResetEmail(email).subscribe({
       next: () => {
-        this.message =
-          'Si el correo está registrado, recibirás un mensaje con instrucciones.';
-      },
-      error: (err) => {
-        console.error('Error al enviar el correo de recuperación:', err);
-        this.message =
-          'Hubo un problema al procesar tu solicitud. Inténtalo más tarde.';
+        this._router.navigate(['/auth/login']);
       }
     });
   }

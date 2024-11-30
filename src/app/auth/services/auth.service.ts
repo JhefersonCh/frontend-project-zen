@@ -36,9 +36,8 @@ export class AuthService {
    * @returns Observable con la respuesta del servidor
    */
   sendPasswordResetEmail(email: string): Observable<ChangePassword> {
-    const endpoint = `${environment.apiUrl}auth/recovery-password`; // Endpoint para recuperar contraseña
+    const endpoint = `${environment.apiUrl}auth/recovery-password`;
 
-    // Validación básica del email antes de enviar la solicitud
     if (!email || !this.isValidEmail(email)) {
       throw new Error('El correo electrónico proporcionado no es válido.');
     }

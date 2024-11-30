@@ -50,11 +50,17 @@ export class ProfileComponent implements OnInit {
   private readonly _localStorageService: LocalStorageService =
     inject(LocalStorageService);
 
+  /**
+   * @param ngOnInit - Se encarga de inicializar las funciones.
+   */
   ngOnInit(): void {
     this.loadUserProfile();
     this._getStatistics();
   }
 
+  /**
+   * @param loadUserProfile - Carga el usuario.
+   */
   constructor() {
     this.isPhone = window.innerWidth <= 768;
   }
@@ -73,6 +79,9 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+  /**
+   * @param _getStatistics - Carga las estadísticas del usuario.
+   */
   private _getStatistics(): void {
     this._profileService.getStatistics().subscribe({
       next: (response) => {

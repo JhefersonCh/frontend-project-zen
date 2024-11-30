@@ -37,7 +37,6 @@ export class EditUserComponent implements OnInit {
   user?: UserInterface;
   pageLoading: boolean = true;
   isLoading = true;
-
   form: FormGroup;
 
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -45,6 +44,9 @@ export class EditUserComponent implements OnInit {
   private readonly _fb: FormBuilder = inject(FormBuilder);
   private readonly _router: Router = inject(Router);
 
+  /**
+   * @param constructor - Formulario de como va a llegar la data del usuario.
+   */
   constructor() {
     this.form = this._fb.group({
       fullName: [''],
@@ -57,11 +59,18 @@ export class EditUserComponent implements OnInit {
       identificationTypeId: ['']
     });
   }
+
+  /**
+   * @param ngOnInit - Inicializa las funciones.
+   */
   ngOnInit(): void {
     this.userId = this._activatedRoute.snapshot.params?.['id'];
     this.getUserData(this.userId);
   }
 
+  /**
+   * @param getUserData - Obtiene los datos del usuario.
+   */
   getUserData(userId: string): void {
     this._userService.getUserProfile(userId).subscribe({
       next: (response) => {
@@ -75,6 +84,9 @@ export class EditUserComponent implements OnInit {
     });
   }
 
+  /**
+   * @param updateFormData - Actualiza los datos del formulario.
+   */
   updateFormData(): void {
     this.form?.patchValue({
       fullName: this.user?.fullName,
@@ -86,6 +98,9 @@ export class EditUserComponent implements OnInit {
     });
   }
 
+  /**
+   * @param saveInfo - Guarda la información del usuario.
+   */
   saveInfo(): void {
     const userUpdate = {
       username: this.form.get('username')?.value,
