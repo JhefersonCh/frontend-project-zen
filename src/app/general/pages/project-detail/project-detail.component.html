@@ -5,13 +5,13 @@
   [previusUrl]="queryParams?.['previusUrl'] || '../'"
 >
   <div content class="h-100 d-flex flex-column">
-    @if (project && project.id) {
+    <!-- @if (project && project.id) {
       <app-comments
         [rowId]="project.id"
         [rowTable]="'Projects'"
         [userLoggedId]="userLogged.id || ''"
       ></app-comments>
-    }
+    } -->
     @if (!loadingPage) {
       <ng-container>
         @if (project?.finishDate) {
