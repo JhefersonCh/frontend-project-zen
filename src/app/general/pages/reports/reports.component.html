@@ -47,7 +47,7 @@
                 <app-bar-chart
                   [chartOptions]="projectsTime"
                   chartId="projects-chart"
-                  title="Projectos por mes"
+                  title="Proyectos por mes"
                 />
               } @else {
                 <div class="my-5">
@@ -161,8 +161,7 @@
               </div>
             }
             <hr />
-
-            <div class="my-5 row mx-0">
+            @if (projects?.length) {            <div class="my-5 row mx-0">
               <mat-form-field
                 appearance="outline"
                 class="px-0 px-md-1 col-12 col-md-10"
@@ -188,9 +187,9 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </div>}
             @if (!isLoadingMembers) {
-              @if (membersProgress && membersProgress.series) {
+              @if (membersProgress && membersProgress.series?.length) {
                 <app-polar-chart-percent
                   [chartData]="membersProgress"
                   title="Tareas completadas por miembro"
@@ -198,8 +197,8 @@
               } @else {
                 <div class="my-5">
                   <app-empty-panel
-                    title="No eres líder de ningún proyecto aún"
-                    text="¡Prueba creando en algunos!"
+                    title="Aún no hay tareas completadas"
+                    text="¡Prueba completando algunas!"
                   />
                 </div>
               }
