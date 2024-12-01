@@ -8,6 +8,7 @@ import {
   ApexPlotOptions,
   ApexStroke,
   ApexTitleSubtitle,
+  ApexTooltip,
   ApexYAxis
 } from 'ng-apexcharts';
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
@@ -49,6 +50,7 @@ export type ChartOptions = {
       };
     };
   }[];
+  tooltip: ApexTooltip;
 };
 
 export interface BarChartOptions {

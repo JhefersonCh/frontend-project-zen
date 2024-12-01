@@ -11,24 +11,57 @@ import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 import { ChartOptions } from '../../interfaces/charts.interface';
 
 @Component({
-  selector: 'app-polar-chart',
+  selector: 'app-polar-chart-percent',
   standalone: true,
   imports: [NgApexchartsModule],
-  templateUrl: './polar-chart.component.html',
-  styleUrl: './polar-chart.component.scss'
+  templateUrl: './polar-chart-percent.component.html',
+  styleUrl: './polar-chart-percent.component.scss'
 })
-export class PolarChartComponent implements AfterViewInit, OnDestroy, OnInit {
+export class PolarChartPercentComponent
+  implements AfterViewInit, OnDestroy, OnInit
+{
   @ViewChild('chart') chart!: ChartComponent;
   @ViewChild('chartContainer') chartContainer!: ElementRef;
+  @Input() chartData!: {
+    series: string[];
+    labels: string[];
+    title: {
+      text: string;
+      align: string;
+      margin: number;
+      style: { fontSize: string };
+    };
+  };
 
-  @Input() chartOptions!: Partial<ChartOptions>;
+  chartOptions: Partial<ChartOptions> = {};
   @Input() title: string = '';
   private resizeObserver: ResizeObserver | undefined;
-
   isMobile: boolean = false;
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth <= 768;
+    this.processChartData();
+  }
+
+  private processChartData(): void {
+    const processedSeries = this.chartData.series.map((fraction) => {
+      const [numerator, denominator] = fraction
+        .split('/')
+        .map((num) => parseFloat(num.trim()));
+      return (numerator / denominator) * 100;
+    });
+
+    this.chartOptions = {
+      series: processedSeries,
+      labels: this.chartData.labels,
+      tooltip: {
+        y: {
+          formatter: (value, { seriesIndex }) => {
+            return `${this.chartData.series[seriesIndex]} (${value.toFixed(1)}%)`;
+          }
+        }
+      }
+    };
   }
 
   ngAfterViewInit(): void {
@@ -38,7 +71,6 @@ export class PolarChartComponent implements AfterViewInit, OnDestroy, OnInit {
         this.initializeChart();
       }
 
-      // Observe changes in the container's size
       this.resizeObserver = new ResizeObserver(() => {
         if (this.chartContainer) {
           this.handleResize();
@@ -46,39 +78,23 @@ export class PolarChartComponent implements AfterViewInit, OnDestroy, OnInit {
       });
 
       this.resizeObserver.observe(this.chartContainer.nativeElement);
-
-      // Handle window resizing
       window.addEventListener('resize', this.handleResize);
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
-    this.chart.destroy();
-    window.removeEventListener('resize', this.handleResize);
   }
 
   private async waitForContainerWidth(): Promise<number> {
     let attempts = 0;
     while (attempts < 10) {
       const containerWidth = this.getContainerWidth();
-      if (containerWidth > 0) {
-        return containerWidth;
-      }
+      if (containerWidth > 0) return containerWidth;
       attempts++;
-      await new Promise((resolve) => setTimeout(resolve, 100)); // Wait 100 ms
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
-    return 400; // Default value if container width is not available
+    return 400;
   }
 
   private getContainerWidth(): number {
-    const containerWidth = this.chartContainer?.nativeElement?.offsetWidth;
-    if (!containerWidth) {
-      return 0;
-    }
-    return containerWidth;
+    return this.chartContainer?.nativeElement?.offsetWidth || 0;
   }
 
   private initializeChart(): void {
@@ -98,7 +114,7 @@ export class PolarChartComponent implements AfterViewInit, OnDestroy, OnInit {
       },
       legend: {
         position: 'right',
-        show: this.isMobile ? false : true
+        show: !this.isMobile
       },
       responsive: [
         {
@@ -109,7 +125,7 @@ export class PolarChartComponent implements AfterViewInit, OnDestroy, OnInit {
             },
             legend: {
               position: 'bottom',
-              show: this.isMobile ? false : true
+              show: false
             }
           }
         }
@@ -117,7 +133,7 @@ export class PolarChartComponent implements AfterViewInit, OnDestroy, OnInit {
     };
   }
 
-  private handleResize = () => {
+  private handleResize = (): void => {
     const containerWidth = this.getContainerWidth();
     if (containerWidth > 0 && this.chartOptions.chart) {
       this.chartOptions.chart = {
@@ -127,4 +143,10 @@ export class PolarChartComponent implements AfterViewInit, OnDestroy, OnInit {
       };
     }
   };
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
+    this.chart.destroy();
+    window.removeEventListener('resize', this.handleResize);
+  }
 }
