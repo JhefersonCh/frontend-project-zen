@@ -34,7 +34,7 @@
               <button
                 mat-icon-button
                 class="bg-body-secondary text-black option-button text-center"
-                [matMenuTriggerFor]="menu"
+                [routerLink]="[userId + '/user-settings']"
               >
                 <mat-icon class="text-center not-include-icon"
                   >more_vert</mat-icon
@@ -45,13 +45,13 @@
                 mat-fab
                 extended="true"
                 class="bg-body-secondary text-black option-button text-center"
-                [matMenuTriggerFor]="menu"
+                [routerLink]="[userId + '/user-settings']"
               >
                 <mat-icon class="text-center">more_vert</mat-icon>
-                {{ isPhone ? '' : 'Opciones' }}
+                {{ isPhone ? ' ' : 'Configuraciones' }}
               </button>
             }
-            <mat-menu #menu="matMenu">
+            <!-- <mat-menu #menu="matMenu">
               <button
                 mat-menu-item
                 type="button"
@@ -68,7 +68,7 @@
               >
                 Configuración
               </button>
-            </mat-menu>
+            </mat-menu> -->
           </div>
         </div>
 
