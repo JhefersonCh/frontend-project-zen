@@ -86,4 +86,10 @@ export class TasksService {
       data: TasksInterface[];
     }>(`${environment.apiUrl}tasks/paginated-list`, { params });
   }
+
+  getTasksToCalendar(): Observable<ApiResponseInterface<TasksInterface[]>> {
+    return this._httpClient.get<ApiResponseInterface<TasksInterface[]>>(
+      `${environment.apiUrl}tasks/get/calendar`
+    );
+  }
 }

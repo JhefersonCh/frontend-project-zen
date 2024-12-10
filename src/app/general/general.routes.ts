@@ -65,6 +65,13 @@ export const generalRoutes: Routes = [
           import('./pages/reports/reports.component').then(
             (m) => m.ReportsComponent
           )
+      },
+      {
+        path: 'calendar',
+        loadComponent: () =>
+          import('./pages/calendar/calendar.component').then(
+            (m) => m.CalendarComponent
+          )
       }
     ]
   }

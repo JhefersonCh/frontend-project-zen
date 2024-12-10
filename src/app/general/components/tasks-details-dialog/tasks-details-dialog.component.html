@@ -27,9 +27,45 @@
     </div>
   </section>
   <section content class="d-flex flex-column gap-2">
+    <div class="row w-100 mx-0 mt-2">
+      <div>
+        <form [formGroup]="form" class="row w-100 mx-auto">
+          <mat-form-field
+            appearance="outline"
+            class="col-12 col-md-6 gap-2 gap-md-0"
+          >
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="statusId" placeholder="Elije un valor">
+              @for (status of statuses; track $index) {
+                <mat-option [value]="status.id">{{ status.title }}</mat-option>
+              }
+            </mat-select>
+            @if (form.get('statusId')?.hasError('required')) {
+              <mat-error> El estado es requerido </mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-12 col-md-6">
+            <mat-label>Miembro</mat-label>
+            <mat-select formControlName="memberId" placeholder="Elije un valor">
+              @for (member of data.members; track $index) {
+                <mat-option [value]="member.id">{{
+                  member.user.fullName
+                }}</mat-option>
+              }
+            </mat-select>
+            @if (form.get('memberId')?.hasError('required')) {
+              <mat-error> El miembro es requerido </mat-error>
+            }
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+    <hr class="mx-2" />
     @if (!isEditing) {
-      <span class="brand-text-body-xl text-black-50 fw-medium my-3">
-        {{ data.task.description }}
+      <span
+        class="brand-text-body-xl fw-medium my-3"
+        [innerHTML]="data.task.description"
+      >
       </span>
       <hr />
       <div class="tags-slider-container">
@@ -72,7 +108,8 @@
         [userLoggedId]="userLogged.id || ''"
         (panelExpanded)="commentsIsViewed = $event"
       ></app-comments>
-    } @else {
+    }
+    <!-- } @else {
       <form [formGroup]="form" class="d-flex flex-column gap-2 mt-3">
         <div class="row w-100 mx-0">
           <mat-form-field appearance="outline">
@@ -143,7 +180,7 @@
           </mat-form-field>
         </div>
       </form>
-    }
+    } -->
   </section>
   @if (!commentsIsViewed) {
     <section actions class="w-100">
@@ -154,9 +191,9 @@
             extended="true"
             color="warn"
             class="w-100"
-            (click)="isEditing ? (isEditing = false) : close()"
+            (click)="close()"
           >
-            {{ isEditing ? 'Volver' : 'Cerrar' }}
+            Cerrar
           </button>
         </div>
         <div class="col-6 col-md-3 px-1">
@@ -165,10 +202,10 @@
             extended="true"
             color="primary"
             class="w-100"
-            (click)="!isEditing ? (isEditing = true) : save()"
+            (click)="save()"
             [disabled]="isEditing && isUpdating"
           >
-            {{ isEditing ? 'Guardar' : 'Editar' }}
+            Guardar
           </button>
         </div>
       </div>

@@ -11,8 +11,7 @@ import {
 } from '@angular/core';
 import { BaseDialogComponent } from '../../../shared/components/base-dialog/base-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DatePipe, NgClass, NgIf } from '@angular/common';
-import { ArrayInlineFormaterPipe } from '../../../shared/pipes/array-inline-formater.pipe';
+import { NgClass } from '@angular/common';
 import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,14 +31,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommentsComponent } from '../../../shared/components/comments/comments.component';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserInterface } from '../../../shared/interfaces/user.interface';
+import { configEditor } from '../../constants/editor.constants';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @Component({
   selector: 'app-tasks-details-dialog',
   standalone: true,
   imports: [
     BaseDialogComponent,
-    DatePipe,
-    ArrayInlineFormaterPipe,
     TimeAgoPipe,
     MatTooltipModule,
     MatFormFieldModule,
@@ -47,10 +46,10 @@ import { UserInterface } from '../../../shared/interfaces/user.interface';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    NgIf,
     MatIconModule,
     NgClass,
-    CommentsComponent
+    CommentsComponent,
+    EditorModule
   ],
   templateUrl: './tasks-details-dialog.component.html',
   styleUrl: './tasks-details-dialog.component.scss'
@@ -58,6 +57,7 @@ import { UserInterface } from '../../../shared/interfaces/user.interface';
 export class TasksDetailsDialogComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  @ViewChild('tagsContainer') tagsContainer!: ElementRef;
   private _dialogRef: MatDialogRef<TasksDetailsDialogComponent> = inject(
     MatDialogRef<TasksDetailsDialogComponent>
   );
@@ -75,21 +75,13 @@ export class TasksDetailsDialogComponent
   isUpdating: boolean = false;
   userLogged!: UserInterface;
   commentsIsViewed: boolean = false;
-  @ViewChild('tagsContainer') tagsContainer!: ElementRef;
   showArrows?: boolean;
+  editorConfig = configEditor;
 
   constructor() {
     this.form = this._fb.group({
-      title: [this.data?.task.title, [Validators.required]],
-      description: [this.data?.task.description, [Validators.required]],
-      priority: [this.data?.task.priority],
       statusId: [this.data?.task.statusId, [Validators.required]],
-      deadline: [this.data?.task.deadline],
-      memberId: [this.data?.task.memberId, [Validators.required]],
-      tagIds: [
-        this.data?.task.taskTags?.map((tag) => tag.tagId),
-        [Validators.required]
-      ]
+      memberId: [this.data?.task.memberId, [Validators.required]]
     });
   }
 
@@ -102,6 +94,11 @@ export class TasksDetailsDialogComponent
     this._taskService.getRelatedData().subscribe({
       next: (res) => {
         this.statuses = res?.data?.statuses || [];
+        if (!this.userLoggedIsLeader()) {
+          this.statuses = this.statuses.filter(
+            (status) => status.title !== 'Revisada'
+          );
+        }
         this.tags = res?.data?.tags || [];
       }
     });
@@ -117,12 +114,12 @@ export class TasksDetailsDialogComponent
     }
     const taskToUpdate = {
       id: this.data?.task.id,
-      title: this.form.value.title,
-      description: this.form.value.description,
-      priorityId: this.form.value.priority.id,
+      title: this.data?.task?.title,
+      description: this.data?.task?.description,
+      priorityId: this.data?.task?.priority.id,
       statusId: this.form.value.statusId,
       memberId: this.form.value.memberId,
-      tagIds: this.form.value.tagIds
+      tagIds: this.data?.task?.taskTags?.map((tag) => tag.tagId)
     };
     this.isUpdating = true;
     this._taskService
@@ -184,5 +181,13 @@ export class TasksDetailsDialogComponent
   // No olvides limpiar el event listener
   ngOnDestroy() {
     window.removeEventListener('resize', () => this.checkIfArrowsNeeded());
+  }
+
+  userLoggedIsLeader(): boolean {
+    const members = this.data?.members;
+    const member = members?.find((mem) => mem.userId === this.userLogged.id);
+    return member
+      ? ['Líder', 'Moderador'].includes(member.projectRole.roleName)
+      : false;
   }
 }

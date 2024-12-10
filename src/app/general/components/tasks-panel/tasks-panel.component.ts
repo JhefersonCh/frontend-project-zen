@@ -8,10 +8,8 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { ArrayInlineFormaterPipe } from '../../../shared/pipes/array-inline-formater.pipe';
 import { BaseCardComponent } from '../../../shared/components/base-card/base-card.component';
 import { TasksInterface } from '../../interfaces/tasks.interface';
-import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,19 +18,20 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Members } from '../../interfaces/projects.interface';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
+import { MatMenuModule } from '@angular/material/menu';
+import { AssignTasksDialogComponent } from '../assign-tasks-dialog/assign-tasks-dialog.component';
 
 @Component({
   selector: 'app-tasks-panel',
   standalone: true,
   imports: [
-    ArrayInlineFormaterPipe,
     DragDropModule,
     BaseCardComponent,
-    DatePipe,
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    TruncatePipe
+    TruncatePipe,
+    MatMenuModule
   ],
   templateUrl: './tasks-panel.component.html',
   styleUrl: './tasks-panel.component.scss'
@@ -75,6 +74,23 @@ export class TasksPanelComponent implements OnInit {
       data: {
         task,
         members: this.members
+      }
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.updated.emit(true);
+      }
+    });
+  }
+
+  openEditTaskDialog(task: TasksInterface, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const dialogRef = this._matDialog.open(AssignTasksDialogComponent, {
+      data: {
+        members: this.members,
+        projectId: task.projectId,
+        task
       }
     });
     dialogRef.afterClosed().subscribe((res) => {

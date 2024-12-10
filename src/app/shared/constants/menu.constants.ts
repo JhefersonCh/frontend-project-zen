@@ -23,6 +23,12 @@ export const MENU_CONST: MenuInterface[] = [
         route: '/general/reports',
         icon: 'query_stats',
         order: 3
+      },
+      {
+        name: 'Calendario',
+        route: '/general/calendar',
+        icon: 'calendar_month',
+        order: 4
       }
     ]
   },
@@ -60,12 +66,13 @@ export const MENU_CONST: MenuInterface[] = [
 ];
 
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
-  user: ['profile', 'Mis Proyectos', 'Mis Tareas', 'Reportes']
+  user: ['profile', 'Mis Proyectos', 'Mis Tareas', 'Reportes', 'Calendario']
 };
 
 export const ROUTE_MAP: Record<string, string> = {
   'Mis Proyectos': '/general/projects',
   'Mis Tareas': '/general/tasks',
   Reportes: '/general/reports',
+  Calendario: '/general/calendar',
   profile: '/profile'
 };

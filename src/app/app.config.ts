@@ -34,10 +34,15 @@ import {
   provideNativeDateAdapter
 } from '@angular/material/core';
 import { ToastrModule } from 'ngx-toastr';
+import { TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 registerLocaleData(localeEs);
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    {
+      provide: TINYMCE_SCRIPT_SRC,
+      useValue: 'tinymce/tinymce.min.js'
+    },
     provideRouter(routes),
     provideNativeDateAdapter(MAT_NATIVE_DATE_FORMATS),
     provideAnimations(),

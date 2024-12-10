@@ -60,7 +60,45 @@
               }
             </div> -->
             <section actions>
-              @if (isLeader) {
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                [disabled]="isDropping"
+              >
+                <mat-icon [color]="isDropping ? 'accent' : 'primary'"
+                  >more_vert</mat-icon
+                >
+              </button>
+              <mat-menu #menu="matMenu">
+                @if (isLeader) {
+                  <button
+                    mat-menu-item
+                    type="button"
+                    color="primary"
+                    (click)="openDeleteTaskDialog(item.id, $event)"
+                  >
+                    Eliminar
+                  </button>
+                  <button
+                    mat-menu-item
+                    type="button"
+                    color="primary"
+                    (click)="openEditTaskDialog(item, $event)"
+                  >
+                    Editar
+                  </button>
+                }
+
+                <button
+                  mat-menu-item
+                  type="button"
+                  color="primary"
+                  (click)="openShowTaskInfoDialog(item, $event)"
+                >
+                  Ver detalles
+                </button>
+              </mat-menu>
+              <!-- @if (isLeader) {
                 <button
                   mat-icon-button
                   matTooltip="Eliminar"
@@ -81,7 +119,7 @@
                 <mat-icon [color]="isDropping ? 'accent' : 'primary'"
                   >visibility</mat-icon
                 >
-              </button>
+              </button> -->
             </section>
           </app-base-card>
         </ng-container>

@@ -80,7 +80,7 @@
   }
 }
 
-mat-icon {
+mat-icon:not(.not-include-icon) {
   @include media-desktop {
     display: flex;
   }

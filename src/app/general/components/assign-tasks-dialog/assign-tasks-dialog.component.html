@@ -17,13 +17,25 @@
         </mat-form-field>
       </div>
       <div class="row w-100 mx-0">
-        <mat-form-field appearance="outline" class="col-12 mt-2">
+        <!-- <mat-form-field appearance="outline" class="col-12 mt-2">
           <mat-label>Descripción</mat-label>
           <textarea matInput formControlName="description" rows="2"></textarea>
           @if (form.get('description')?.hasError('required')) {
             <mat-error> La descripción es requerida </mat-error>
           }
-        </mat-form-field>
+        </mat-form-field> -->
+
+        <div class="mb-4">
+          <editor formControlName="description" [init]="editorConfig" />
+          @if (
+            form.get('description')?.hasError('required') &&
+            form.get('description')?.touched
+          ) {
+            <mat-error class="position-absolute">
+              La descripción es requerida
+            </mat-error>
+          }
+        </div>
       </div>
       <div class="row w-100 mx-0">
         <mat-form-field appearance="outline" class="col-12 col-md-6 mt-2">
@@ -128,7 +140,7 @@
           extended="true"
           color="primary"
           class="w-100"
-          (click)="createTask()"
+          (click)="save()"
           [disabled]="creating"
         >
           Guardar

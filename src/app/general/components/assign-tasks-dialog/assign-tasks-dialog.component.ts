@@ -1,4 +1,4 @@
-import { Priority } from './../../interfaces/tasks.interface';
+import { Priority, TasksInterface } from './../../interfaces/tasks.interface';
 import { Component, inject, OnInit } from '@angular/core';
 import { BaseDialogComponent } from '../../../shared/components/base-dialog/base-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Members } from '../../interfaces/projects.interface';
 import { TasksService } from '../../services/tasks.service';
 import { CustomValidationsService } from '../../../shared/validators/customValidations.service';
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { configEditor } from '../../constants/editor.constants';
 
 @Component({
   selector: 'app-assign-tasks-dialog',
@@ -27,7 +29,8 @@ import { CustomValidationsService } from '../../../shared/validators/customValid
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    EditorModule
   ],
   templateUrl: './assign-tasks-dialog.component.html',
   styleUrl: './assign-tasks-dialog.component.scss'
@@ -44,12 +47,14 @@ export class AssignTasksDialogComponent implements OnInit {
   public readonly data = inject<{
     members: Members[];
     projectId: number;
+    task: TasksInterface;
   }>(MAT_DIALOG_DATA);
   form!: FormGroup;
   priorities: Priority[] = [];
   statuses: Priority[] = [];
   tags: Priority[] = [];
   creating: boolean = false;
+  editorConfig = configEditor;
 
   constructor() {
     this.form = this._fb.group({
@@ -73,6 +78,10 @@ export class AssignTasksDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this._getRelatedData();
+    this.form.patchValue({
+      ...this.data?.task,
+      tagIds: this.data.task.taskTags?.map((tag) => tag.tagId)
+    });
   }
 
   private _getRelatedData(): void {
@@ -85,17 +94,34 @@ export class AssignTasksDialogComponent implements OnInit {
     });
   }
 
-  createTask(): void {
+  save(): void {
     if (!this.form.valid) return this.form.markAllAsTouched();
     this.creating = true;
-    this._tasksService.createTask(this.form.value).subscribe({
-      next: () => {
-        this.creating = false;
-        this._dialogRef.close(true);
-      },
-      error: () => {
-        this.creating = false;
-      }
-    });
+    if (!this.data.task.id) {
+      this._tasksService.createTask(this.form.value).subscribe({
+        next: () => {
+          this.creating = false;
+          this._dialogRef.close(true);
+        },
+        error: () => {
+          this.creating = false;
+        }
+      });
+    } else {
+      const taskToUpdate = {
+        ...this.form.value,
+        id: this.data.task.id,
+        projectId: undefined
+      };
+      this._tasksService.updateTask(taskToUpdate).subscribe({
+        next: () => {
+          this.creating = false;
+          this._dialogRef.close(true);
+        },
+        error: () => {
+          this.creating = false;
+        }
+      });
+    }
   }
 }

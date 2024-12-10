@@ -34,6 +34,7 @@ export interface TasksInterface extends BaseTaskInterface {
   status: Priority;
   member: Members;
   taskTags?: TaskTags[];
+  projectid?: number;
 }
 
 export interface TaskTags {
