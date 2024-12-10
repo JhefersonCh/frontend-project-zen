@@ -530,10 +530,41 @@
   align-items: center;
 }
 
-.brand-only-phone,
-.brand-only-desktop {
+.brand-only-desktop-test {
   object-fit: cover;
   width: 100%;
   height: 100%;
-  // filter: drop-shadow(2px 2px 20px rgb(74, 130, 221));
+  display: block; /* Asegura que se comporte bien dentro de contenedores */
+  max-width: 100%; /* Escala la imagen para que no exceda el contenedor */
+  border-radius: 8px; /* Opcional: redondea las esquinas */
+  border: 2px solid #ddd; /* Color y tamaño del borde */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra del borde */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Transiciones para efecto al pasar el cursor */
+}
+
+.brand-only-phone-test {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  display: none; /* Asegura que se comporte bien dentro de contenedores */
+  max-width: 100%; /* Escala la imagen para que no exceda el contenedor */
+  border-radius: 8px; /* Opcional: redondea las esquinas */
+  border: 2px solid #ddd; /* Color y tamaño del borde */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra del borde */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Transiciones para efecto al pasar el cursor */
+}
+
+@media screen and (max-width: 768px) {
+  /* Vista móvil */
+  .brand-only-desktop-test {
+    display: none; /* Oculta la imagen de escritorio */
+  }
+
+  .brand-only-phone-test {
+    display: block; /* Muestra la imagen móvil */
+  }
 }
