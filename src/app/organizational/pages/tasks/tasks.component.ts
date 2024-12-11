@@ -92,7 +92,7 @@ export class TasksComponent implements OnInit {
       options: []
     },
     {
-      name: 'createdAt',
+      name: 'date',
       label: 'Fecha de creación',
       type: 'dateRange'
     },
@@ -179,8 +179,8 @@ export class TasksComponent implements OnInit {
 
     const queryParams = {
       ...remainingValues,
-      createdAtEnd: values.createdAtEnd.toString(),
-      createdAtInit: values.createdAtInit.toString(),
+      dateEnd: values.dateEnd?.toString(),
+      dateInit: values.dateInit?.toString(),
       userId: user?.id || null,
       projectId: project?.id || null
     };

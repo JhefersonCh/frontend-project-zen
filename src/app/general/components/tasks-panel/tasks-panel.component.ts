@@ -81,13 +81,13 @@ export class TasksPanelComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
-        this.updated.emit(true);
-      }
       this._router.navigate([], {
         queryParams: { taskId: null },
         queryParamsHandling: 'merge'
       });
+      if (res) {
+        this.updated.emit(true);
+      }
     });
   }
 

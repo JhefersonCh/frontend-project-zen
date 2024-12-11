@@ -33,6 +33,8 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { UserInterface } from '../../../shared/interfaces/user.interface';
 import { configEditor } from '../../constants/editor.constants';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { SafeHtml } from '@angular/platform-browser';
+import { HtmlSanitizerService } from '../../services/htmlSanitizer.service';
 
 @Component({
   selector: 'app-tasks-details-dialog',
@@ -189,5 +191,12 @@ export class TasksDetailsDialogComponent
     return member
       ? ['Líder', 'Moderador'].includes(member.projectRole.roleName)
       : false;
+  }
+
+  private readonly htmlSanitizerService: HtmlSanitizerService =
+    inject(HtmlSanitizerService);
+
+  sanitizeHtmlContent(content: string): SafeHtml {
+    return this.htmlSanitizerService.sanitizeContent(content, this.data.task);
   }
 }

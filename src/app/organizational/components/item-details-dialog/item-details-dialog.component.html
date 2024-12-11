@@ -3,13 +3,16 @@
   <section content>
     <div class="d-flex flex-column gap-2">
       <span class="brand-text-body-m text-black-50 fw-medium">
-        <strong class="text-black">Descripción:</strong>
-        {{ data.item.description }}
+        <strong class="text-black">Descripción: </strong>
+        <span
+          [innerHTML]="sanitizeHtmlContent(data?.item?.description || '')"
+        ></span>
       </span>
       <span class="brand-text-body-m text-black-50 fw-medium">
         <strong class="text-black">Creado en:</strong>
         {{ data.item.createdAt | date: 'dd/MM/yyyy' }}
       </span>
+
       @if (data.item.deadline) {
         <span class="brand-text-body-m text-black-50 fw-medium">
           <strong class="text-black">Fecha límite:</strong>

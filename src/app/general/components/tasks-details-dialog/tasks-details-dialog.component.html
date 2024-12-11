@@ -62,11 +62,10 @@
     </div>
     <hr class="mx-2" />
     @if (!isEditing) {
-      <span
+      <div
         class="brand-text-body-xl fw-medium my-3"
-        [innerHTML]="data.task.description"
-      >
-      </span>
+        [innerHTML]="sanitizeHtmlContent(data.task?.description || '')"
+      ></div>
       <hr />
       <div class="tags-slider-container">
         @if (showArrows) {

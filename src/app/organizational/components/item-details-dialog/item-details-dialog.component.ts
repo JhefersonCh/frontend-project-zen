@@ -4,6 +4,7 @@ import { SearchResult } from '../../../shared/interfaces/search.interface';
 import { BaseDialogComponent } from '../../../shared/components/base-dialog/base-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-item-details-dialog',
@@ -18,5 +19,11 @@ export class ItemDetailsDialogComponent {
 
   public closeDialog(): void {
     this._dialogRef.close();
+  }
+
+  private readonly _sanitizer: DomSanitizer = inject(DomSanitizer);
+
+  sanitizeHtmlContent(content: string): SafeHtml {
+    return this._sanitizer.bypassSecurityTrustHtml(content);
   }
 }

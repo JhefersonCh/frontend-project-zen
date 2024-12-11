@@ -86,7 +86,7 @@ export class ProjectsComponent implements OnInit {
       label: 'Usuario asignado',
       type: 'autocomplete',
       autocompleteOptions: [],
-      displayWith: (user: UsersInterface) => user.fullName,
+      displayWith: (user: UsersInterface) => user?.fullName,
       onAutocompleteChange: (value: any) => {
         this._getUsers(value);
       }
@@ -159,8 +159,8 @@ export class ProjectsComponent implements OnInit {
 
     const queryParams = {
       ...remainingValues,
-      createdAtEnd: values.createdAtEnd.toString(),
-      createdAtInit: values.createdAtInit.toString(),
+      createdAtEnd: values.createdAtEnd?.toString(),
+      createdAtInit: values.createdAtInit?.toString(),
       userId: user?.id || null
     };
 

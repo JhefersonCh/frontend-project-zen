@@ -21,13 +21,14 @@
           {{ item?.title || '' | truncate: 16 }}
         </section>
         <section content class="d-flex flex-column gap-2">
-          <span class="brand-text-body-l fw-medium text-black-50">{{
-            item?.description || '' | truncate: 50
-          }}</span>
+          <span
+            class="brand-text-body-l fw-medium text-black-50"
+            [innerHTML]="sanitizeHtmlContent(item?.description || '')"
+          ></span>
           <span class="brand-text-body-m">
-            <strong>Inició / termina en: </strong>
+            <strong>Inició / fin: </strong>
             {{ item?.createdAt | date: 'dd-MMM-yyyy' }} &rarr;
-            {{ item?.deadline | date: 'dd-MMM-yyyy' }}
+            {{ item?.deadline ?? item?.finishDate | date: 'dd-MMM-yyyy' }}
           </span>
         </section>
         @if (actions?.length) {

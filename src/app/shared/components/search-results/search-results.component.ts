@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import {
   ActionInterface,
   SearchResult
@@ -13,6 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EmptyPanelComponent } from '../empty-panel/empty-panel.component';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
 import { DatePipe } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search-results',
@@ -52,5 +53,21 @@ export class SearchResultsComponent {
 
   onPageChange(event: PageEvent) {
     this.chagePagination.emit(event);
+  }
+
+  private readonly _sanitizer: DomSanitizer = inject(DomSanitizer);
+
+  sanitizeHtmlContent(content: string): SafeHtml {
+    if (!content) return '';
+
+    // Eliminar etiquetas HTML
+    const textOnly = content.replace(/<[^>]*>/g, '').trim();
+
+    // Limitar a 50 caracteres
+    const truncatedText =
+      textOnly.length > 50 ? textOnly.substring(0, 50) + '...' : textOnly;
+
+    // Retornar texto seguro para innerHTML
+    return this._sanitizer.bypassSecurityTrustHtml(truncatedText);
   }
 }
