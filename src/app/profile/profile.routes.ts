@@ -11,19 +11,25 @@ export const profileRoutes: Routes = [
             (m) => m.ProfileComponent
           )
       },
+      // {
+      //   path: ':id/settings',
+      //   loadComponent: () =>
+      //     import('./pages/settings/settings.component').then(
+      //       (m) => m.SettingsComponent
+      //     )
+      // },
+      // {
+      //   path: ':id/edit',
+      //   loadComponent: () =>
+      //     import('./pages/edit-user/edit-user.component').then(
+      //       (m) => m.EditUserComponent
+      //     )
+      // },
       {
-        path: ':id/settings',
+        path: ':id/user-settings',
         loadComponent: () =>
-          import('./pages/settings/settings.component').then(
-            (m) => m.SettingsComponent
-          )
-      },
-
-      {
-        path: ':id/edit',
-        loadComponent: () =>
-          import('./pages/edit-user/edit-user.component').then(
-            (m) => m.EditUserComponent
+          import('./pages/user-settings/user-settings.component').then(
+            (m) => m.UserSettingsComponent
           )
       }
     ]
