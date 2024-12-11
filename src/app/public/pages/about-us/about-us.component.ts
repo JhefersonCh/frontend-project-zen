@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { PqrsService } from '../../services/pqrs.service';
 
 @Component({
   selector: 'app-about-us',
@@ -29,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutUsComponent {
+  private readonly _pqrService: PqrsService = inject(PqrsService);
   faqs = [
     {
       pregunta: '¿Cómo puedo registrarme en la plataforma?',
@@ -58,11 +60,12 @@ export class AboutUsComponent {
     this.form = this._fb.group({
       email: ['', Validators.required],
       name: [''],
-      message: ['', Validators.required]
+      description: ['', Validators.required]
     });
   }
 
   sendPqrs(): void {
     if (this.form.invalid) return this.form.markAllAsTouched();
+    this._pqrService.sendPqr(this.form.value).subscribe();
   }
 }
