@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../auth/services/auth.service';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
@@ -23,6 +24,7 @@ import { SearchFieldsComponent } from '../../../../shared/components/search-fiel
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { PaginationInterface } from '../../../../shared/interfaces/pagination.interface';
+import { UserInterface } from '../../../../shared/interfaces/user.interface';
 @Component({
   selector: 'app-see-users',
   standalone: true,
@@ -50,6 +52,7 @@ export class SeeUsersComponent implements OnInit {
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   private readonly _matDialog: MatDialog = inject(MatDialog);
+  private readonly _authService: AuthService = inject(AuthService);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(SearchFieldsComponent) searchComponent!: SearchFieldsComponent;
   dataSource = new MatTableDataSource<UsersInterface>([]);
@@ -59,6 +62,8 @@ export class SeeUsersComponent implements OnInit {
     'role',
     'actions'
   ];
+
+  userLogged: UserInterface;
 
   form!: FormGroup;
   projectId: string = '';
@@ -139,6 +144,7 @@ export class SeeUsersComponent implements OnInit {
   constructor() {
     this.isMobile = window.innerWidth <= 768;
     if (this.isMobile) this.paginationParams.perPage = 5;
+    this.userLogged = this._authService.getUserLoggedIn();
   }
 
   /**
@@ -264,5 +270,19 @@ export class SeeUsersComponent implements OnInit {
         this._deleteUser(id);
       }
     });
+  }
+
+  validateIfCanEditUserOrDelete(user: UserInterface): boolean {
+    if (this.userLogged?.role?.name === 'Super Administrador') {
+      return true;
+    }
+    if (
+      user.role?.name === 'Usuario' &&
+      (this.userLogged?.role?.name === 'Super Administrador' ||
+        this.userLogged?.role?.name === 'Administrador')
+    ) {
+      return true;
+    }
+    return false;
   }
 }

@@ -55,4 +55,16 @@ export class LocalStorageService {
   getAccessToken(): string {
     return this.getAllSessionData()?.tokens?.accessToken || '';
   }
+
+  setRedirectUrl(url: string): void {
+    localStorage.setItem('redirectUrl', url);
+  }
+
+  getRedirectUrl(): string {
+    return localStorage.getItem('redirectUrl') || '';
+  }
+
+  cleanRedirectUrl(): void {
+    localStorage.removeItem('redirectUrl');
+  }
 }

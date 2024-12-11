@@ -22,7 +22,19 @@
             [isMiniCard]="true"
           >
             <div header>
-              {{ !isMobile ? item.title : (item.title | truncate: 20) }}
+              <div class="d-flex align-items-center gap-2">
+                @if ([1, 2].includes(item.statusId)) {
+                  <div class="d-flex align-items-center">
+                    <mat-icon
+                      class="icon-{{ getIconColor(getTitleIcon(item)) }}"
+                      >{{ getTitleIcon(item) }}</mat-icon
+                    >
+                  </div>
+                }
+                <span>
+                  {{ !isMobile ? item.title : (item.title | truncate: 20) }}
+                </span>
+              </div>
             </div>
             <!-- <div content class="d-flex flex-column gap-2">
               <span class="brand-text-body-m text-black-50 fw-medium">
@@ -79,6 +91,8 @@
                   >
                     Eliminar
                   </button>
+                }
+                @if (isLeader || isMod) {
                   <button
                     mat-menu-item
                     type="button"

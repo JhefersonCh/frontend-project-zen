@@ -11,7 +11,6 @@ import { BaseCardComponent } from '../../../shared/components/base-card/base-car
 import { MatIconModule } from '@angular/material/icon';
 import { ArrayInlineFormaterPipe } from '../../../shared/pipes/array-inline-formater.pipe';
 import { RouterLink } from '@angular/router';
-import { BaseDialogComponent } from '../../../shared/components/base-dialog/base-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EditProjectDialogComponent } from '../../components/edit-project-dialog/edit-project-dialog.component';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
@@ -32,7 +31,6 @@ import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
     MatIconModule,
     ArrayInlineFormaterPipe,
     RouterLink,
-    BaseDialogComponent,
     EmptyPanelComponent,
     LoaderComponent,
     DatePipe,

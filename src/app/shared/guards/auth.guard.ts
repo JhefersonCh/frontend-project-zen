@@ -14,6 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   return authService.isAuthenticatedToGuard().pipe(
     map((isAuthenticated) => {
       if (!isAuthenticated) {
+        authService.setRedirectUrl(state.url);
         router.navigate(['/auth/login']);
         return false;
       }

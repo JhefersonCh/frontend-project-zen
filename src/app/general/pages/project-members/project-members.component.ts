@@ -92,7 +92,10 @@ export class ProjectMembersComponent implements OnInit {
     const matRef = this._matDialog.open(AddOrEditMembersComponent, {
       data: {
         projectId: this.projectId,
-        member: row
+        member: row,
+        leader: this.members.find(
+          (member) => member.projectRole?.roleName === 'Líder'
+        )
       }
     });
 

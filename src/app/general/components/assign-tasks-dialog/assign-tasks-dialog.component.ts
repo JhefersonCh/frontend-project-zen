@@ -80,7 +80,7 @@ export class AssignTasksDialogComponent implements OnInit {
     this._getRelatedData();
     this.form.patchValue({
       ...this.data?.task,
-      tagIds: this.data.task.taskTags?.map((tag) => tag.tagId)
+      tagIds: this.data.task?.taskTags?.map((tag) => tag.tagId)
     });
   }
 
@@ -96,8 +96,10 @@ export class AssignTasksDialogComponent implements OnInit {
 
   save(): void {
     if (!this.form.valid) return this.form.markAllAsTouched();
+    console.log(this.form.value);
+
     this.creating = true;
-    if (!this.data.task.id) {
+    if (!this.data?.task?.id) {
       this._tasksService.createTask(this.form.value).subscribe({
         next: () => {
           this.creating = false;

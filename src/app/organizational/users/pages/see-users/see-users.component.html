@@ -93,20 +93,22 @@
               <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
                 <td mat-cell *matCellDef="let user">
-                  <button
-                    mat-icon-button
-                    color="primary"
-                    [routerLink]="['..', user.id, 'edit']"
-                  >
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button
-                    mat-icon-button
-                    color="warn"
-                    (click)="openDeleteUserDialog(user.id)"
-                  >
-                    <mat-icon>delete</mat-icon>
-                  </button>
+                  @if (validateIfCanEditUserOrDelete(user)) {
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      [routerLink]="['..', user.id, 'edit']"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      color="warn"
+                      (click)="openDeleteUserDialog(user.id)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  }
                 </td>
               </ng-container>
 

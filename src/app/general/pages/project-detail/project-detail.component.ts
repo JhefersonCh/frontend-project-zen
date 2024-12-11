@@ -29,6 +29,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CommentsComponent } from '../../../shared/components/comments/comments.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-project-detail',
@@ -45,7 +46,8 @@ import { CommentsComponent } from '../../../shared/components/comments/comments.
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
-    CommentsComponent
+    CommentsComponent,
+    MatTabsModule
   ],
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']
@@ -109,9 +111,9 @@ export class ProjectDetailComponent implements OnInit {
         next: (response) => {
           this.project = response?.data;
           this.loadingPage = false;
-          this.userLoggedIsLeader();
+          this.userLoggedIsLeaderOrMod();
           this._getMemberData();
-          if (this.userLoggedIsLeader()) {
+          if (this.userLoggedIsLeaderOrMod()) {
             this._getTasks();
           } else {
             this._getTasks(this.memberLoggedIn?.id);
@@ -135,7 +137,7 @@ export class ProjectDetailComponent implements OnInit {
     this.loadingPage = true;
     this._reloadArrays();
 
-    if (!memberId && this.userLoggedIsLeader()) {
+    if (!memberId && this.userLoggedIsLeaderOrMod()) {
       this._tasksService
         .getByProjectId(Number(this.projectId))
         .pipe(finalize(() => (this.loadingPage = false)))
@@ -254,6 +256,12 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   userLoggedIsLeader(): boolean {
+    const members = this.project?.members;
+    const member = members?.find((mem) => mem.userId === this.userLogged.id);
+    return member ? ['Líder'].includes(member.projectRole.roleName) : false;
+  }
+
+  userLoggedIsLeaderOrMod(): boolean {
     const members = this.project?.members;
     const member = members?.find((mem) => mem.userId === this.userLogged.id);
     return member

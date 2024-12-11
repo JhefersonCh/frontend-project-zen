@@ -22,6 +22,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserInterface } from '../../../../shared/interfaces/user.interface';
 import { IdentificationType } from '../../interfaces/users.interface';
 import { Roles } from '../../../../auth/interfaces/login.interface';
+import { AuthService } from '../../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -51,11 +52,13 @@ export class ManageUserComponent implements OnInit {
   user?: UserInterface;
   identificationTypes: IdentificationType[] = [];
   roles: Roles[] = [];
+  userLogged: UserInterface;
   private readonly _usersService: UsersService = inject(UsersService);
   private readonly _usersSharedService: UsersSharedService =
     inject(UsersSharedService);
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _router: Router = inject(Router);
+  private readonly _authService: AuthService = inject(AuthService);
 
   constructor(private _fb: FormBuilder) {
     this.userForm = this._fb.group({
@@ -73,6 +76,7 @@ export class ManageUserComponent implements OnInit {
       ],
       roleId: ['', Validators.required]
     });
+    this.userLogged = this._authService.getUserLoggedIn();
   }
 
   ngOnInit(): void {
@@ -93,8 +97,6 @@ export class ManageUserComponent implements OnInit {
   }
 
   private _getUserToEdit(userId: string): void {
-    console.log(userId);
-
     this._usersSharedService.getUserProfile(userId).subscribe({
       next: (res) => {
         this.user = res.data;
@@ -174,6 +176,7 @@ export class ManageUserComponent implements OnInit {
       }
     } else {
       console.error('Formulario no válido', this.userForm.errors);
+      return this.userForm.markAllAsTouched();
     }
   }
 }

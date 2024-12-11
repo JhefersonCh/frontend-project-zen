@@ -48,9 +48,20 @@ export class LoginComponent {
 
   login(): void {
     if (this.form.invalid) return;
+
+    const redirectUrl = this._authService.getRedirectUrl();
     this._authService.login(this.form.value).subscribe({
       next: () => {
-        this._router.navigateByUrl('./home');
+        if (redirectUrl) {
+          if (redirectUrl.includes('/general/projects/')) {
+            this._router.navigateByUrl(redirectUrl);
+            this._authService.cleanRedirectUrl();
+          } else {
+            this._router.navigateByUrl('./home');
+          }
+        } else {
+          this._router.navigateByUrl('./home');
+        }
       },
       error: (error) => {
         console.error(error);

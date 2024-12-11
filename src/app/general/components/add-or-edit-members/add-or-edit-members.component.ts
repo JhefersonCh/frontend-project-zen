@@ -17,6 +17,8 @@ import { UsersService } from '../../../organizational/users/services/users.servi
 import { UsersInterface } from '../../../organizational/users/interfaces/users.interface';
 import { MatInputModule } from '@angular/material/input';
 import { debounceTime } from 'rxjs';
+import { AuthService } from '../../../auth/services/auth.service';
+import { UserInterface } from '../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-add-or-edit-members',
@@ -37,12 +39,16 @@ export class AddOrEditMembersComponent implements OnInit {
   private readonly _membersService: MembersService = inject(MembersService);
   private readonly _usersService: UsersService = inject(UsersService);
   private readonly _dialogRef = inject(MatDialogRef<AddOrEditMembersComponent>);
-  public readonly data = inject<{ member?: Members; projectId?: number }>(
-    MAT_DIALOG_DATA
-  );
+  private readonly _authService: AuthService = inject(AuthService);
+  public readonly data = inject<{
+    member?: Members;
+    projectId?: number;
+    leader?: Members;
+  }>(MAT_DIALOG_DATA);
   form: FormGroup;
   users: UsersInterface[] = [];
   projectRoles: ProjectRoles[] = [];
+  userLogged: UserInterface = this._authService.getUserLoggedIn();
 
   constructor(private readonly _fb: FormBuilder) {
     this.form = this._fb.group({
@@ -81,6 +87,11 @@ export class AddOrEditMembersComponent implements OnInit {
     this._membersService.getRelatedData().subscribe({
       next: (res) => {
         this.projectRoles = res?.data?.projectRoles || [];
+        if (!(this.data?.member?.userId === this.data?.leader?.userId)) {
+          this.projectRoles = this.projectRoles.filter(
+            (role) => role.roleName !== 'Líder'
+          );
+        }
       },
       error: (error) => console.error(error)
     });
@@ -133,5 +144,11 @@ export class AddOrEditMembersComponent implements OnInit {
         }
       });
     }
+  }
+
+  validateRole(): boolean {
+    const userIsLeader: boolean =
+      this.data?.leader?.user?.id === this.userLogged.id;
+    return userIsLeader;
   }
 }

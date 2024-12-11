@@ -153,4 +153,16 @@ export class AuthService {
   getUserLoggedIn(): UserInterface {
     return this._localStorageService.getUserData();
   }
+
+  setRedirectUrl(url: string): void {
+    this._localStorageService.setRedirectUrl(url);
+  }
+
+  getRedirectUrl(): string | null {
+    return this._localStorageService.getRedirectUrl();
+  }
+
+  cleanRedirectUrl(): void {
+    this._localStorageService.cleanRedirectUrl();
+  }
 }

@@ -44,6 +44,7 @@ export class TasksPanelComponent implements OnInit {
   @Input() isMobile: boolean = false;
   @Input() listTag: string = '';
   @Input() isLeader: boolean = false;
+  @Input() isMod: boolean = false;
   @Input() members: Members[] = [];
   @Output() dropEvent = new EventEmitter<CdkDragDrop<any>>();
   @Output() updated = new EventEmitter<boolean>();
@@ -118,5 +119,42 @@ export class TasksPanelComponent implements OnInit {
   public getMemberAssigned(memberId: number): string {
     const member = this.members.find((m) => m.id === memberId);
     return member ? member.user.fullName : '';
+  }
+
+  public getTitleIcon(task: TasksInterface): string {
+    const currentDate = new Date();
+    const taskDate = new Date(task.deadline);
+    const twoDaysFromNow = new Date(currentDate);
+    twoDaysFromNow.setDate(currentDate.getDate() + 2);
+
+    if (taskDate < currentDate) {
+      return 'dangerous';
+    }
+    if (taskDate > twoDaysFromNow) {
+      return 'schedule_send';
+    }
+    if (taskDate > currentDate && taskDate <= twoDaysFromNow) {
+      return 'report_problem';
+    }
+    if (taskDate.toDateString() === currentDate.toDateString()) {
+      return 'danger';
+    }
+
+    return 'pending';
+  }
+
+  public getIconColor(icon: string): string {
+    switch (icon) {
+      case 'dangerous':
+        return 'red';
+      case 'schedule_send':
+        return 'blue';
+      case 'report_problem':
+        return 'orange';
+      case 'danger':
+        return 'red';
+      default:
+        return 'black';
+    }
   }
 }
