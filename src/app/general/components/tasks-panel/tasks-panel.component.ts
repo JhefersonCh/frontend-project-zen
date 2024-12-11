@@ -20,6 +20,7 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 import { MatMenuModule } from '@angular/material/menu';
 import { AssignTasksDialogComponent } from '../assign-tasks-dialog/assign-tasks-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks-panel',
@@ -52,6 +53,8 @@ export class TasksPanelComponent implements OnInit {
   private _matDialog: MatDialog = inject(MatDialog);
   @Input() isDropping: boolean = false;
 
+  private readonly _router: Router = inject(Router);
+
   ngOnInit(): void {
     if (this.taskId) {
       const taskToShow = this.tasksList.find(
@@ -81,6 +84,10 @@ export class TasksPanelComponent implements OnInit {
       if (res) {
         this.updated.emit(true);
       }
+      this._router.navigate([], {
+        queryParams: { taskId: null },
+        queryParamsHandling: 'merge'
+      });
     });
   }
 
