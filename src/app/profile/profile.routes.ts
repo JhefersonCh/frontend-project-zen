@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
 
 export const profileRoutes: Routes = [
   {
@@ -6,10 +8,7 @@ export const profileRoutes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import('./pages/profile/profile.component').then(
-            (m) => m.ProfileComponent
-          )
+        component: ProfileComponent
       },
       // {
       //   path: ':id/settings',
@@ -27,10 +26,7 @@ export const profileRoutes: Routes = [
       // },
       {
         path: ':id/user-settings',
-        loadComponent: () =>
-          import('./pages/user-settings/user-settings.component').then(
-            (m) => m.UserSettingsComponent
-          )
+        component: UserSettingsComponent
       }
     ]
   }

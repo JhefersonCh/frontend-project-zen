@@ -1,5 +1,12 @@
 import { Routes } from '@angular/router';
 
+// Importaciones estáticas de los componentes
+import { ManageUserComponent } from './users/pages/manage-users/manage-users.component';
+import { SeeUsersComponent } from './users/pages/see-users/see-users.component';
+import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
+
 export const organizationalRoutes: Routes = [
   {
     path: '',
@@ -14,24 +21,15 @@ export const organizationalRoutes: Routes = [
         children: [
           {
             path: 'create',
-            loadComponent: () =>
-              import('./users/pages/manage-users/manage-users.component').then(
-                (m) => m.ManageUserComponent
-              )
+            component: ManageUserComponent // Carga estática
           },
           {
             path: 'list',
-            loadComponent: () =>
-              import('./users/pages/see-users/see-users.component').then(
-                (m) => m.SeeUsersComponent
-              )
+            component: SeeUsersComponent // Carga estática
           },
           {
             path: ':id/edit',
-            loadComponent: () =>
-              import('./users/pages/manage-users/manage-users.component').then(
-                (m) => m.ManageUserComponent
-              )
+            component: ManageUserComponent // Carga estática
           }
         ]
       },
@@ -40,24 +38,17 @@ export const organizationalRoutes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () =>
-              import('./pages/admin-panel/admin-panel.component').then(
-                (m) => m.AdminPanelComponent
-              )
+            component: AdminPanelComponent // Carga estática
           }
         ]
       },
       {
         path: 'tasks',
-        loadComponent: () =>
-          import('./pages/tasks/tasks.component').then((m) => m.TasksComponent)
+        component: TasksComponent // Carga estática
       },
       {
         path: 'projects',
-        loadComponent: () =>
-          import('./pages/projects/projects.component').then(
-            (m) => m.ProjectsComponent
-          )
+        component: ProjectsComponent // Carga estática
       }
     ]
   }

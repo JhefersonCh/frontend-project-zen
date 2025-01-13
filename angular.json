@@ -64,6 +64,8 @@
           },
           "configurations": {
             "production": {
+              "namedChunks": false,
+              "optimization": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

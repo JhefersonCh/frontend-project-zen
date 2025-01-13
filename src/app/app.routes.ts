@@ -2,6 +2,12 @@ import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './layout/default-layout/default-layout.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { isLoggedGuard } from './shared/guards/isLogged.guard';
+import { publicRoutes } from './public/public.routes';
+import { authRoutes } from './auth/auth.routes';
+import { profileRoutes } from './profile/profile.routes';
+import { generalRoutes } from './general/general.routes';
+import { organizationalRoutes } from './organizational/organizational.routes';
+import { ChangePasswordComponent } from './auth/pages/change-password/change-password.component';
 
 export const routes: Routes = [
   {
@@ -15,43 +21,33 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () =>
-          import('./public/public.routes').then((m) => m.publicRoutes)
+        children: publicRoutes
       },
       {
         path: 'auth',
         canActivate: [isLoggedGuard],
-        loadChildren: () =>
-          import('./auth/auth.routes').then((m) => m.authRoutes)
+        children: authRoutes
       },
       {
         path: 'profile',
         canActivate: [authGuard],
-        loadChildren: () =>
-          import('./profile/profile.routes').then((m) => m.profileRoutes)
+        children: profileRoutes
       },
       {
         path: 'general',
         canActivate: [authGuard],
-        loadChildren: () =>
-          import('./general/general.routes').then((m) => m.generalRoutes)
+        children: generalRoutes
       },
       {
         path: 'organizational',
         canActivate: [authGuard],
-        loadChildren: () =>
-          import('./organizational/organizational.routes').then(
-            (m) => m.organizationalRoutes
-          )
+        children: organizationalRoutes
       }
     ]
   },
   {
     path: 'auth/:userId/change-password',
-    loadComponent: () =>
-      import('./auth/pages/change-password/change-password.component').then(
-        (m) => m.ChangePasswordComponent
-      )
+    component: ChangePasswordComponent
   },
   {
     path: '**',

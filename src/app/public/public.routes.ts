@@ -1,34 +1,32 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '../shared/guards/auth.guard';
 
+// Importaciones estáticas de los componentes
+import { HomeComponent } from './pages/home/home.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { TestComponent } from './pages/test/test.component';
+import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+
 export const publicRoutes: Routes = [
   {
     path: '',
     children: [
       {
         path: 'home',
-        loadComponent: () =>
-          import('./pages/home/home.component').then((m) => m.HomeComponent)
+        component: HomeComponent // Carga estática
       },
       {
         path: 'about-us',
-        loadComponent: () =>
-          import('./pages/about-us/about-us.component').then(
-            (m) => m.AboutUsComponent
-          )
+        component: AboutUsComponent // Carga estática
       },
       {
         path: 'test',
-        canActivate: [authGuard],
-        loadComponent: () =>
-          import('./pages/test/test.component').then((m) => m.TestComponent)
+        canActivate: [authGuard], // Guardia de autenticación
+        component: TestComponent // Carga estática
       },
       {
         path: 'access-denied',
-        loadComponent: () =>
-          import('./pages/access-denied/access-denied.component').then(
-            (m) => m.AccessDeniedComponent
-          )
+        component: AccessDeniedComponent // Carga estática
       }
     ]
   }

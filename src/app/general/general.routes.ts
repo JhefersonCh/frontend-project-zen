@@ -1,5 +1,14 @@
 import { Routes } from '@angular/router';
 
+// Importaciones estáticas de los componentes
+import { ProjectsComponent } from './pages/projects/projects.component';
+import { CreateProjectComponent } from './pages/create-project/create-project.component';
+import { ProjectDetailComponent } from './pages/project-detail/project-detail.component';
+import { ProjectMembersComponent } from './pages/project-members/project-members.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
+
 export const generalRoutes: Routes = [
   {
     path: '',
@@ -14,34 +23,22 @@ export const generalRoutes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () =>
-              import('./pages/projects/projects.component').then(
-                (m) => m.ProjectsComponent
-              )
+            component: ProjectsComponent // Carga estática
           },
           {
             path: 'create',
-            loadComponent: () =>
-              import('./pages/create-project/create-project.component').then(
-                (m) => m.CreateProjectComponent
-              )
+            component: CreateProjectComponent // Carga estática
           },
           {
             path: ':id',
             children: [
               {
                 path: '',
-                loadComponent: () =>
-                  import(
-                    './pages/project-detail/project-detail.component'
-                  ).then((m) => m.ProjectDetailComponent)
+                component: ProjectDetailComponent // Carga estática
               },
               {
                 path: 'members',
-                loadComponent: () =>
-                  import(
-                    './pages/project-members/project-members.component'
-                  ).then((m) => m.ProjectMembersComponent)
+                component: ProjectMembersComponent // Carga estática
               }
             ]
           }
@@ -52,26 +49,17 @@ export const generalRoutes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () =>
-              import('./pages/tasks/tasks.component').then(
-                (m) => m.TasksComponent
-              )
+            component: TasksComponent // Carga estática
           }
         ]
       },
       {
         path: 'reports',
-        loadComponent: () =>
-          import('./pages/reports/reports.component').then(
-            (m) => m.ReportsComponent
-          )
+        component: ReportsComponent // Carga estática
       },
       {
         path: 'calendar',
-        loadComponent: () =>
-          import('./pages/calendar/calendar.component').then(
-            (m) => m.CalendarComponent
-          )
+        component: CalendarComponent // Carga estática
       }
     ]
   }

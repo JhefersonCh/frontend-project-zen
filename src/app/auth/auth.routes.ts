@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 
 export const authRoutes: Routes = [
   {
@@ -6,22 +9,15 @@ export const authRoutes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () =>
-          import('./pages/login/login.component').then((m) => m.LoginComponent)
+        component: LoginComponent
       },
       {
         path: 'register',
-        loadComponent: () =>
-          import('./pages/register/register.component').then(
-            (m) => m.RegisterComponent
-          )
+        component: RegisterComponent
       },
       {
         path: 'recover-password',
-        loadComponent: () =>
-          import('./pages/recover-password/recover-password.component').then(
-            (m) => m.RecoverPasswordComponent
-          )
+        component: RecoverPasswordComponent
       }
     ]
   }
