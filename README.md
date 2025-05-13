@@ -31,7 +31,7 @@
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/JhefersonCh/frontend-project-zen.git
-   cd projectzen-frontend
+   cd frontend-project-zen
    
 2. Instala las dependencias:
    ```bash
