@@ -1,27 +1,42 @@
-# FrontendProjectZen
+# 📋 ProjectZen - Gestión de Proyectos Grupales
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.3.
+[**Visita el sitio**](https://project-zen.netlify.app/home)
 
-## Development server
+**ProjectZen** es una plataforma de gestión de proyectos grupales diseñada para facilitar la colaboración, el seguimiento de tareas y la administración de proyectos de manera eficiente. Permite a los usuarios crear proyectos, asignar tareas, gestionar roles y obtener reportes detallados del progreso de los proyectos.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🧱 Tecnologías utilizadas
 
-## Code scaffolding
+- 🚀 **[Angular](https://angular.io/)**: Framework utilizado para desarrollar la interfaz dinámica y modular del frontend.
+- 🎨 **[Tailwind CSS](https://tailwindcss.com/)**: Framework CSS para diseño responsivo y moderno.
+- 🧑‍💻 **[Drag and Drop](https://angular.io/guide/drag-drop)**: Implementación de un sistema Kanban utilizando la funcionalidad de drag and drop.
+- ✉️ **[Nodemailer](https://nodemailer.com/)**: Utilizado para el envío de correos de notificaciones, tareas pendientes, recuperación de contraseña, etc.
+- 📅 **[FullCalendar](https://fullcalendar.io/)**: Para visualizar las tareas pendientes en un calendario interactivo.
+  
+## ✨ Funcionalidades principales
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- 📋 **Gestión de Proyectos**: Creación de proyectos grupales donde se pueden asignar miembros y definir roles.
+  - Roles disponibles: **Creador**, **Moderador**, **Miembro**.
+- 📝 **Gestión de Tareas**: Cada tarea tiene un estado, prioridad, contenido y título. Las tareas pueden ser movidas en un sistema **Kanban** o actualizadas a través de un formulario.
+- 📊 **Reportes**: Visualización de reportes de tareas por persona o grupo, mostrando quién ha completado más tareas y quién tiene tareas pendientes.
+- 📅 **Calendario de Tareas**: Visualización de tareas en un calendario para tener un mejor seguimiento de las fechas de vencimiento.
+- 🔒 **Autenticación**: Los usuarios pueden crear cuentas, iniciar sesión y gestionar su perfil.
+- ⚙️ **Panel Administrativo**: Los administradores pueden gestionar usuarios, tareas, proyectos y más.
+- 📧 **Notificaciones por Correo**:
+  - Avisos de tareas vencidas o pendientes.
+  - PQRs (Preguntas, Quejas y Reclamos).
+  - Recuperación de contraseña.
 
-## Build
+## 🛠️ Instalación y ejecución local
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/JhefersonCh/frontend-project-zen.git
+   cd projectzen-frontend
+   
+2. Instala las dependencias:
+   ```bash
+   npm install
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+3. Inicia el servidor de desarrollo:
+   ```bash
+   ng s
