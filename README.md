@@ -7,7 +7,7 @@
 ## 🧱 Tecnologías utilizadas
 
 - 🚀 **[Angular](https://angular.io/)**: Framework utilizado para desarrollar la interfaz dinámica y modular del frontend.
-- 🎨 **[Tailwind CSS](https://tailwindcss.com/)**: Framework CSS para diseño responsivo y moderno.
+- 🎨 **[Bootstrap](https://getbootstrap.com/)**: Bootstrap es un framework multiplataforma o conjunto de herramientas de código abierto para diseño de sitios y aplicaciones web.
 - 🧑‍💻 **[Drag and Drop](https://angular.io/guide/drag-drop)**: Implementación de un sistema Kanban utilizando la funcionalidad de drag and drop.
 - ✉️ **[Nodemailer](https://nodemailer.com/)**: Utilizado para el envío de correos de notificaciones, tareas pendientes, recuperación de contraseña, etc.
 - 📅 **[FullCalendar](https://fullcalendar.io/)**: Para visualizar las tareas pendientes en un calendario interactivo.
