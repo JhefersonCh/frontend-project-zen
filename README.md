@@ -1,4 +1,4 @@
-# 📋 ProjectZen - Gestión de Proyectos Grupales
+# 📋 Frontend - ProjectZen - Gestión de Proyectos Grupales
 
 [**Visita el sitio**](https://project-zen.netlify.app/home)
 
